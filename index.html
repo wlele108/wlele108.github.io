@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title class="en">Henry Wang | Economics, Data Science</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Updated Font Awesome to v6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script>
+        // tailwind general part
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#FF7D00',
+                        dark: '#1E293B',
+                        light: '#F8FAFC'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+        
+        // email click part
+        document.addEventListener('DOMContentLoaded', function() {
+            // ... existing code ...
+            
+            // Email copy functionality with icon feedback
+            const copyButtons = document.querySelectorAll('.copy-email-btn');
+            
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const email = this.getAttribute('data-email');
+                    const icon = this.querySelector('i');
+                    
+                    // Save original icon
+                    const originalIcon = icon.className;
+                    
+                    // Copy to clipboard
+                    navigator.clipboard.writeText(email).then(() => {
+                        // Change icon to checkmark
+                        icon.className = 'fa-solid fa-check text-green-500';
+                        
+                        // Revert after 2 seconds
+                        setTimeout(() => {
+                            icon.className = originalIcon;
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy email: ', err);
+                        // Change icon to error briefly
+                        icon.className = 'fa-solid fa-xmark text-red-500';
+                        setTimeout(() => {
+                            icon.className = originalIcon;
+                        }, 2000);
+                    });
+                });
+            });
+        })
+        
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .transition-transform-opacity {
+                transition-property: transform, opacity;
+            }
+            .bg-gradient-blue {
+                background: linear-gradient(135deg, #165DFF 0%, #0047AB 100%);
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes fadeOut {
+                from { opacity: 1; transform: translateY(0); }
+                to { opacity: 0; transform: translateY(10px); }
+            }
+            .animate-fade-in {
+                animation: fadeIn 0.3s ease-out forwards;
+            }
+            .animate-fade-out {
+                animation: fadeOut 0.3s ease-out forwards;
+            }
+        }
+        
+    </style>
+
+</head>
+<body class="font-inter text-dark bg-light antialiased">
+    <!-- Header & Navigation -->
+    <header class="fixed w-full bg-white/90 backdrop-blur-md shadow-sm z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="#home" class="flex items-center space-x-2">
+                    <span class="text-primary font-bold text-xl">Henry Wang</span>
+                </a>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8 items-center">
+                    <a href="#home" class="text-dark hover:text-primary transition-colors duration-200 font-medium">
+                        <span class="en">Home</span>
+                        <span class="zh hidden">主页</span>
+                    </a>
+                    <a href="#about" class="text-dark hover:text-primary transition-colors duration-200 font-medium">
+                        <span class="en">About</span>
+                        <span class="zh hidden">关于</span>
+                    </a>
+                    <a href="#experience" class="text-dark hover:text-primary transition-colors duration-200 font-medium">
+                        <span class="en">Experience</span>
+                        <span class="zh hidden">经历</span>
+                    </a>
+                    <a href="#projects" class="text-dark hover:text-primary transition-colors duration-200 font-medium">
+                        <span class="en">Projects</span>
+                        <span class="zh hidden">项目</span>
+                    </a>
+                    <a href="#interests" class="text-dark hover:text-primary transition-colors duration-200 font-medium">
+                        <span class="en">Interests</span>
+                        <span class="zh hidden">兴趣</span>
+                    </a>
+                    <a href="#contact" class="text-dark hover:text-primary transition-colors duration-200 font-medium">
+                        <span class="en">Contact</span>
+                        <span class="zh hidden">联系</span>
+                    </a>
+                    
+                    <!-- Language Switcher -->
+                    <div class="flex items-center space-x-2">
+                        <button id="lang-en" class="px-2 py-1 rounded-md bg-primary text-white text-sm font-medium">EN</button>
+                        <button id="lang-zh" class="px-2 py-1 rounded-md text-dark text-sm font-medium hover:bg-gray-100 transition-colors duration-200">中文</button>
+                    </div>
+                </nav>
+                
+                <!-- Mobile Navigation Toggle -->
+                <button id="mobile-menu-button" class="md:hidden text-dark hover:text-primary focus:outline-none">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg absolute w-full">
+            <div class="px-4 py-2 space-y-1">
+                <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium text-dark hover:bg-primary/10 hover:text-primary transition-colors duration-200">
+                    <span class="en">Home</span>
+                    <span class="zh hidden">主页</span>
+                </a>
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-dark hover:bg-primary/10 hover:text-primary transition-colors duration-200">
+                    <span class="en">About</span>
+                    <span class="zh hidden">关于</span>
+                </a>
+                <a href="#experience" class="block px-3 py-2 rounded-md text-base font-medium text-dark hover:bg-primary/10 hover:text-primary transition-colors duration-200">
+                    <span class="en">Experience</span>
+                    <span class="zh hidden">经历</span>
+                </a>
+                <a href="#projects" class="block px-3 py-2 rounded-md text-base font-medium text-dark hover:bg-primary/10 hover:text-primary transition-colors duration-200">
+                    <span class="en">Projects</span>
+                    <span class="zh hidden">项目</span>
+                </a>
+                <a href="#interests" class="block px-3 py-2 rounded-md text-base font-medium text-dark hover:bg-primary/10 hover:text-primary transition-colors duration-200">
+                    <span class="en">Interests</span>
+                    <span class="zh hidden">兴趣</span>
+                </a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-dark hover:bg-primary/10 hover:text-primary transition-colors duration-200">
+                    <span class="en">Contact</span>
+                    <span class="zh hidden">联系</span>
+                </a>
+                
+                <div class="flex space-x-2 mt-3">
+                    <button id="lang-en-mobile" class="flex-1 px-2 py-1 rounded-md bg-primary text-white text-sm font-medium">EN</button>
+                    <button id="lang-zh-mobile" class="flex-1 px-2 py-1 rounded-md text-dark text-sm font-medium hover:bg-gray-100 transition-colors duration-200">中文</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="pt-24 pb-16 md:pt-32 md:pb-24 bg-gradient-to-br from-primary/5 to-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col lg:flex-row items-center gap-12">
+                    <!-- Left side of the home screen -->
+                    <div class="lg:w-1/2 space-y-6">
+                        <!-- basic information 1 -->
+                        <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold leading-tight text-dark">
+                            <span class="en text-primary">Henry Wang</span>
+                            <div class="en text-dark">Master in <strong>Finance</strong> at UChicago</div>
+                            <span class="zh hidden text-primary">王乐桓</span>
+                            <div class="zh hidden text-dark">芝加哥大学 <strong>金融学</strong> 硕士</div>
+                        </h1>
+                        <!-- basic information 2 -->
+                        <p class="text-[clamp(1rem,2vw,1.25rem)] text-gray-600 leading-relaxed">
+                            <span class="en"><strong>Economics</strong> and <strong>Data Science</strong> double major at USC</span>
+                            <span class="zh hidden">南加州大学<strong> 经济学 </strong>和<strong> 数据科学 </strong>本科</span>
+                            <p class="flex justify-content text-[clamp(1rem,2vw,1.25rem)] text-gray-600 leading-relaxed">
+                                <div class="text-[clamp(1rem,2vw,1.25rem)] text-gray-600 leading-relaxed">
+                                    <span class="copy-email cursor-pointer hover:text-primary transition-colors">wlele0108@gmail.com</span>
+                                    <button class="copy-email-btn ml-2 text-gray-500 hover:text-primary transition-colors" data-email="wlele0108@gmail.com">
+                                    <i class="fa-regular fa-copy"></i></button>
+                                </div>
+                                <div class="text-[clamp(1rem,2vw,1.25rem)] text-gray-600 leading-relaxed">
+                                    <span class="copy-email cursor-pointer hover:text-primary transition-colors">18518230249@163.com</span>
+                                    <button class="copy-email-btn ml-2 text-gray-500 hover:text-primary transition-colors" data-email="18518230249@163.com">
+                                    <i class="fa-regular fa-copy"></i></button>
+                                </div>
+                            </p>
+                        </p>
+                        <!-- Download CV -->
+                        <div class="flex flex-wrap gap-4 pt-4">
+                            <a href="pdf/Resume.pdf" target="_blank" class="en px-6 py-3 bg-white text-primary border border-primary rounded-md font-medium hover:bg-primary/5 transition-all duration-200">
+                                <span class="en">Download CV</span>                            </a>
+                            <a href="pdf/王乐桓中文简历.pdf" target="_blank" class="zh hidden px-6 py-3 bg-white text-primary border border-primary rounded-md font-medium hover:bg-primary/5 transition-all duration-200">
+                                <span class="zh hidden">下载简历</span>
+                            </a>
+                        </div>
+                        <!-- Icons of Ins LinkedIn and Email -->
+                        <div class="flex items-center space-x-4 pt-4">
+                            <a href="https://www.linkedin.com/in/lehuan-wang-361633283/" target="_blank" class="text-gray-500 hover:text-primary transition-colors duration-200">
+                                <i class="fa-brands fa-linkedin text-4xl"></i>
+                            </a>
+                            <a href="https://www.instagram.com/wlele__/" target="_blank" class="text-gray-500 hover:text-primary transition-colors duration-200">
+                                <i class="fa-brands fa-instagram text-4xl"></i>
+                            </a>
+
+                        </div>
+                </div>
+
+                <!-- Selfies and school icons -->
+                <div class="lg:w-1/2 relative">
+                    <div class="w-64 h-64 md:w-80 md:h-80 mx-auto relative">
+                        <div class="absolute inset-0 bg-primary/20 rounded-full blur-3xl"></div>
+                        <img src="img/selfie1.JPG" alt="Lehuan Wang Portrait" 
+                            class="w-full h-full object-cover rounded-2xl shadow-2xl relative z-10">
+                    </div>
+                    
+                    <div class="mt-6 md:mt-12 z-20 w-full max-w-[24rem] md:max-w-[28rem] ml-auto">
+                        <!-- Booth section -->
+                        <div class="flex justify-between text-left max-w-[90%] mb-7">
+                            <div class="text-left flex-grow pr-1 min-w-0">
+                                <a href="https://www.chicagobooth.edu/" target="_blank">
+                                    <h3 class="en text-xl font-bold text-primary">Chicago Booth</h3>
+                                    <h3 class="zh hidden text-xl font-bold text-primary">布斯商学院</h3>
+                                </a>
+                                <p class="en text-gray-600 mt-1">@ University of Chicago</p>
+                                <p class="zh hidden text-gray-600 mt-1">@ 芝加哥大学</p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <div class="relative w-20 h-20 rounded-lg overflow-hidden shadow-md border-2 border-white">
+                                    <img src="img/chicago.jpg" alt="Booth" class="absolute inset-0 w-full h-full object-cover">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- USC section -->
+                        <div class="flex justify-between text-left max-w-[90%]">
+                            <div class="flex-1 min-w-0 text-left mr-auto pr-1">
+                                <a href="https://dornsife.usc.edu/" target="_blank">
+                                    <h3 class="en text-xl font-bold text-primary truncate">USC Dornsife</h3>
+                                    <h3 class="zh hidden text-xl font-bold text-primary truncate">南加大文理学院</h3>
+                                </a>
+                                <p class="en text-gray-600 mt-1 truncate">@ University of Southern California</p>
+                                <p class="zh hidden text-gray-600 mt-1 truncate">@ 南加州大学</p>
+                            </div>
+                            <div class="relative w-20 h-20 flex-shrink-0 ml-4 rounded-lg overflow-hidden shadow-md border-2 border-white">
+                                <img src="img/trojan.jpg" alt="Trojan" class="absolute inset-0 w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>  
+            </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- About me header -->
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-dark mb-4">
+                        <span class="en">About Me</span>
+                        <span class="zh hidden">关于我</span>
+                    </h2>
+                    <div class="w-20 h-1 bg-primary mx-auto rounded-full"></div>
+                </div>
+                <!-- Personal Image  -->
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="relative">
+                        <img src="img/selfie2.JPG" alt="Lehuan Wang at work" class="w-full h-full rounded-2xl shadow-xl">
+                        <!-- <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                                    <i class="fa-solid fa-graduation-cap text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-dark">GPA: 3.91</h4>
+                                    <p class="text-sm text-gray-600">
+                                        <span class="en">Dean's List</span>
+                                        <span class="zh hidden">院长名单</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-dark">
+                            <!-- <span class="en">Economics & Data Science Student</span>
+                            <span class="zh hidden">经济学与数据科学专业学生</span> -->
+                        </h3>
+                        <p class="text-gray-600 leading-relaxed">
+                                <span class="en">
+                                    <p class="en">I am an Economics and Data Science graduate from the <strong>University of Southern California</strong> (GPA: <strong>3.91/4.0</strong>), advancing to the <strong>Master of Finance</strong> program at the <strong>University of Chicago</strong> beginning Fall 2025. My career focus is firmly rooted in <strong>asset management and sales & trading</strong>, where I aim to merge rigorous quantitative analysis with strategic market insights.</p>
+                                    
+                                    <p class="en">My internship at <strong>Invesco Fixed Income (Hong Kong)</strong> solidified my expertise in leveraging <strong>Python</strong> for sophisticated financial applications. I engineered an <strong>NLP model</strong> using Python's Natural Language Toolkit to score Federal Reserve speech hawkishness, developed <strong>Decision Tree models</strong> for credit opinion analysis, and automated geopolitical opportunity frameworks (e.g., US-China tensions impacting Mexico/India markets). Additionally, I utilized <strong>B Quant</strong> in Python for financial report parsing and pricing analytics, directly supporting investment pitches for <strong>six open-end funds</strong>.</p>
+                                    
+                                    <p class="en">Beyond industry experience, my academic research underscores my analytical rigor. At USC, I conducted data-driven studies on <strong>Ghana's cocoa pricing policy</strong> distortions under socialism, cross-referencing Indonesia's success, and authored a published analysis on <strong>China FOREX and US commercial real estate</strong> workouts at CITIC Bank. These projects honed my ability to transform complex datasets into actionable insights.</p>
+                                    
+                                    <p class="en">Proficient in <strong>Bloomberg, Aladdin, SQL, and Power BI</strong>, I thrive in environments demanding technical precision and market intuition. I am now seeking roles where I can apply my <strong>Python-driven modeling</strong>, research-backed analysis, and passion for markets to advance investment or trading strategies.</p>
+                                </span>
+                                <span class="zh hidden">
+                                    <p class="zh hidden">我是王乐桓，<strong class="zh hidden">南加州大学</strong>经济学与数据科学学士（GPA <strong class="zh hidden">3.91/4.0</strong>），将于<strong>2025年秋季</strong>进入<strong>芝加哥大学</strong>攻读金融硕士。我的职业目标聚焦于<strong>资产管理及销售交易</strong>领域，致力于将量化分析与市场策略深度结合。</p>
+                                    
+                                    <br><p class="zh hidden">在<strong>景顺(Invesco)固定收益部（香港）</strong>的实习中，我深度运用<strong>Python</strong>技术解决金融实务问题：通过自然语言工具库(NLTK)构建<strong>美联储政策鹰派指数模型</strong>，利用<strong>决策树算法</strong>开发信用分析框架，并基于<strong>B Quant平台</strong>实现财务报告解析与定价自动化。这些技术直接支撑了<strong>6支开放式基金</strong>的投资方案设计，同时构建了中美地缘风险下墨西哥/印度市场的机会评估体系。</p>
+                                    
+                                    <br><p class="zh hidden">学术研究方面，我主导了多项数据驱动型课题：在南加大完成<strong>加纳可可定价政策</strong>的经济扭曲研究（对比印尼成功案例），在中信银行国际发表<strong>中国外汇政策与美国商业地产</strong>重组分析。这些经历锤炼了我将复杂数据转化为投资洞见的能力。</p>
+                                    
+                                    <br><p class="zh hidden">精通<strong>Bloomberg/Aladdin/SQL/Power BI</strong>等工具，我擅长在快速变化的市场中融合技术工具与金融直觉。现寻求能充分发挥<strong>Python建模能力</strong>与研究经验的岗位，为投资交易策略创造价值。</p>
+                                </span>
+                       </p>
+                        <!-- <p class="text-gray-600 leading-relaxed">
+                            <span class="en">My approach combines quantitative analysis with practical business applications to solve complex economic problems and uncover market insights.</span>
+                            <span class="zh hidden">我的方法将定量分析与实际商业应用相结合，以解决复杂的经济问题并发现市场洞察。</span>
+                        </p> -->
+                        
+                                            <!-- Languages & Tools -->
+                    <div>
+                        <h3 class="text-xl font-bold text-dark mb-6 flex items-center">
+                            <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary mr-3">
+                                <i class="fa-solid fa-wrench"></i>
+                            </div>
+                            <span class="en">Languages & Tools</span>
+                            <span class="zh hidden">语言与工具</span>
+                        </h3>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-gray-50 p-4 rounded-xl flex items-center space-x-3 hover:shadow-md transition-shadow duration-300">
+                                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                                    <i class="fa-solid fa-code"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-dark">
+                                        <span class="en">Python</span>
+                                        <span class="zh hidden">Python</span>
+                                    </h4>
+                                    <p class="text-sm text-gray-500">Pandas, NumPy, Scikit-learn</p>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gray-50 p-4 rounded-xl flex items-center space-x-3 hover:shadow-md transition-shadow duration-300">
+                                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                                    <i class="fa-solid fa-database"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-dark">
+                                        <span class="en">Tools</span>
+                                        <span class="zh hidden">系统</span>
+                                    </h4>
+                                    <p class="text-sm text-gray-500">Bloomberg Terminal, Aladdin, SAS</p>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gray-50 p-4 rounded-xl flex items-center space-x-3 hover:shadow-md transition-shadow duration-300">
+                                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                                    <i class="fa-solid fa-chart-bar"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-dark">
+                                        <span class="en">Data Visualization</span>
+                                        <span class="zh hidden">数据可视化</span>
+                                    </h4>
+                                    <p class="text-sm text-gray-500">Matplotlib, Tableau, Power BI</p>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gray-50 p-4 rounded-xl flex items-center space-x-3 hover:shadow-md transition-shadow duration-300">
+                                <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                                    <i class="fa-solid fa-language"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-dark">
+                                        <span class="en">Languages</span>
+                                        <span class="zh hidden">语言</span>
+                                    </h4>
+                                    <p class="text-sm text-gray-500">
+                                        <span class="en">English (Fluent), Mandarin (Native), Cantonese (Beginner)</span>
+                                        <span class="zh hidden">英语（流利）、普通话（母语）、粤语（初学者）</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience & Education Section -->
+        <section id="experience" class="py-16 md:py-24 bg-gray-50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-dark mb-4">
+                        <span class="en">Experience & Education</span>
+                        <span class="zh hidden">经历与教育</span>
+                    </h2>
+                    <div class="w-20 h-1 bg-primary mx-auto rounded-full"></div>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-12">
+                    <!-- Work Experience -->
+                    <div>
+                        <h3 class="text-xl font-bold text-dark mb-6 flex items-center">
+                            <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary mr-3">
+                                <i class="fa-solid fa-briefcase"></i>
+                            </div>
+                            <span class="en">Work Experience</span>
+                            <span class="zh hidden">工作经历</span>
+                        </h3>
+                        
+                        <div class="space-y-8">
+                            <!-- Invesco -->
+                            <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border-l-4 border-primary">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div>
+                                        <h4 class="font-bold text-dark text-lg">
+                                            <span class="en">Fixed Income Intern</span>
+                                            <span class="zh hidden">固定收益实习生</span>
+                                        </h4>
+                                        <p class="en text-primary font-medium">Invesco, Hong Kong</p>
+                                        <p class="zh hidden text-primary font-medium">景顺亚太，香港</p>
+                                    </div>
+                                    <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                        <span class="en">June 2024 - Dec 2024</span>
+                                        <span class="zh hidden">2024年6月 - 2024年12月</span>
+                                    </span>
+                                </div>
+                                <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                                    <li>
+                                        <span class="en">Developed investment pitches for 6 open-end funds with regional projects like Make in India</span>
+                                        <span class="zh hidden">为6支开放式基金制定投资方案，整合区域项目（如"印度制造"）</span>
+                                    </li>
+                                    <li>
+                                        <span class="en">Compiled credit opinions using Decision Tree models and Python B Quant analysis</span>
+                                        <span class="zh hidden">运用决策树模型生成信贷意见，通过Python B Quant分析财务报告</span>
+                                    </li>
+                                    <li>
+                                        <span class="en">Engineered NLP model to compute market sentiment from Federal Reserve speeches</span>
+                                        <span class="zh hidden">构建自然语言处理模型计算美联储讲话的市场情绪评分</span>
+                                    </li>
+                                    <li>
+                                        <span class="en">Identified US-China geopolitical risks and investment opportunities in Mexico/India</span>
+                                        <span class="zh hidden">分析中美地缘政治风险及墨西哥/印度投资机遇</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <!-- CITIC Bank -->
+                            <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border-l-4 border-primary">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div>
+                                        <h4 class="font-bold text-dark text-lg">
+                                            <span class="en">Research Intern</span>
+                                            <span class="zh hidden">研究实习生</span>
+                                        </h4>
+                                        <p class="en text-primary font-medium">China CITIC Bank International, Alhambra</p>
+                                        <p class="zh hidden text-primary font-medium">中信国际，洛杉矶县</p>
+                                    </div>
+                                    <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                        <span class="en">Aug 2023 - Dec 2023</span>
+                                        <span class="zh hidden">2023年8月 - 2023年12月</span>
+                                    </span>
+                                </div>
+                                <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                                    <li>
+                                        <span class="en">Published research on China FOREX and US Commercial Real Estate loan impacts</span>
+                                        <span class="zh hidden">发表中国外汇及美国商业房地产贷款政策影响研究</span>
+                                    </li>
+                                    <li>
+                                        <span class="en">Analyzed 6 successful real estate restructurings during Financial Crisis/COVID</span>
+                                        <span class="zh hidden">分析6例金融危机/疫情期间成功房地产重组案例</span>
+                                    </li>
+                                    <li>
+                                        <span class="en">Compared capital structures of outperforming vs underperforming companies</span>
+                                        <span class="zh hidden">对比表现优异企业与表现不佳企业的资本结构</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <!-- CLSA -->
+                            <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border-l-4 border-primary">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div>
+                                        <h4 class="font-bold text-dark text-lg">
+                                            <span class="en">Finance Intern</span>
+                                            <span class="zh hidden">金融实习生</span>
+                                        </h4>
+                                        <p class="en text-primary font-medium">CLSA, Hong Kong</p>
+                                         <p class="zh hidden text-primary font-medium">中信里昂证券，香港</p>
+                                    </div>
+                                    <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                        <span class="en">June 2023 - Aug 2023</span>
+                                        <span class="zh hidden">2023年6月 - 2023年8月</span>
+                                    </span>
+                                </div>
+                                <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                                    <li>
+                                        <span class="en">Optimized data systems using Alteryx/UiPath and coordinated 6 cross-department groups</span>
+                                        <span class="zh hidden">使用Alteryx/UiPath优化数据系统，协调6个跨部门小组</span>
+                                    </li>
+                                    <li>
+                                        <span class="en">Automated quarterly reports with Python web scraping from HKEX</span>
+                                        <span class="zh hidden">通过Python爬取港交所数据自动化生成季度报告</span>
+                                    </li>
+                                    <li>
+                                        <span class="en">Researched Consumer Behavior theory in social media applications</span>
+                                        <span class="zh hidden">研究消费者行为理论在社交媒体中的应用</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Education -->
+                    <div>
+                        <h3 class="text-xl font-bold text-dark mb-6 flex items-center">
+                            <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary mr-3">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                            <span class="en">Education</span>
+                            <span class="zh hidden">教育背景</span>
+                        </h3>
+                        
+                        <div class="space-y-8">
+                            <!-- Chicago Booth -->
+                            <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border-l-4 border-secondary">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div>
+                                        <h4 class="font-bold text-dark text-lg">
+                                            <span class="en">Master in Finance</span>
+                                            <span class="zh hidden">金融学硕士</span>
+                                        </h4>
+                                        <p class="en text-secondary font-medium">University of Chicago</p>
+                                        <p class="zh hidden text-primary font-medium">芝加哥大学</p>
+                                    </div>
+                                    <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                        <span class="en">Sep 2025 - Dec 2026 (Expected)</span>
+                                        <span class="zh hidden">2025年9月 - 2026年12月（预计）</span>
+                                    </span>
+                                </div>
+                                <!-- <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                                    <li>
+                                        <span class="en">Advanced studies in financial theory and quantitative methods</span>
+                                        <span class="zh hidden">金融理论与量化方法高级课程</span>
+                                    </li>
+                                </ul> -->
+                            </div>
+                            
+                            <!-- USC -->
+                            <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border-l-4 border-secondary">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div>
+                                        <h4 class="font-bold text-dark text-lg">
+                                            <span class="en">BA in Economics & Data Science</span>
+                                            <span class="zh hidden">经济学与数据科学学士</span>
+                                        </h4>
+                                        <p class="en text-secondary font-medium">University of Southern California</p>
+                                        <p class="zh hidden text-primary font-medium">南加州大学</p>
+                                    </div>
+                                    <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                        <span class="en">Aug 2021 - May 2025</span>
+                                        <span class="zh hidden">2021年8月 - 2025年5月</span>
+                                    </span>
+                                </div>
+                                <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                                    <li>
+                                        <span class="en">GPA: 3.91/4.0 | Dean's List 2021-2025 | Minor in Business Finance</span>
+                                        <span class="zh hidden">GPA: 3.91/4.0 | 2021-2025院长荣誉名单 | 商科金融辅修</span>
+                                    </li>
+                                    <li>
+                                        <span class="en">Relevant coursework: Machine Learning, Econometrics, Financial Accounting, Data Visualization</span>
+                                        <span class="zh hidden">相关课程：机器学习、计量经济学、财务会计、数据可视化</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <!-- RDFZ ICC -->
+                            <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border-l-4 border-secondary">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div>
+                                        <h4 class="font-bold text-dark text-lg">
+                                            <span class="en">RDFZ ICC</span>
+                                            <span class="zh hidden">人大附中</span>
+                                        </h4>
+                                        <p class="en text-secondary font-medium">A Level Curriculum</p>
+                                        <p class="zh hidden text-primary font-medium">A Level 课程体系</p>
+                                    </div>
+                                    <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                        <span class="en">Sep 2018 - June 2021</span>
+                                        <span class="zh hidden">2018年9月 - 2021年6月</span>
+                                    </span>
+                                </div>
+                                <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                                    <li>
+                                        <span class="en">Graded A* in AL Further Mathematics, Mathematics, Economics and Physics</span>
+                                        <span class="zh hidden">在进阶数学、数学、经济和物理选考拿到A*成绩</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-dark mb-4">
+                        <span class="en">Projects & Research</span>
+                        <span class="zh hidden">项目与研究</span>
+                    </h2>
+                    <div class="w-20 h-1 bg-primary mx-auto rounded-full"></div>
+                </div>
+                
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project Derivative Trading -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                        <img src="img/trade.jpg" alt="Education App" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg text-dark mb-2">
+                                <span class="en">Derivative-Trading Simulation Fund</span>
+                                <span class="zh hidden">衍生产品交易策略基金</span>
+                            </h3>
+                            <p class="text-gray-600 mb-4">
+                                <span class="en">Construct a $10M fund and apply derivative trading strategies for fund</span>
+                                <span class="zh hidden">利用衍生产品交易策略模拟1000万美金基金表现</span>
+                            </p>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                    <span class="en">Asset Management</span>
+                                    <span class="zh hidden">资产管理</span>
+                                </span>
+                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                    <span class="en">Derivative Trading</span>
+                                    <span class="zh hidden">衍生产品交易</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Project Econ Consulting -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                        <img src="img/reg.jpg" alt="Housing Model" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg text-dark mb-2">
+                                <span class="en">Real Estate Financial Model</span>
+                                <span class="zh hidden">房地产金融模型</span>
+                            </h3>
+                            <p class="text-gray-600 mb-4">
+                                <span class="en">Layered Regression for Property's Caluation</span>
+                                <span class="zh hidden">房价影响因素的多层递归模型</span>
+                            </p>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                    <span class="en">Modeling</span>
+                                    <span class="zh hidden">建模</span>
+                                </span>
+                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                    <span class="en">Economic Consulting</span>
+                                    <span class="zh hidden">经济咨询</span>
+                                </span>
+                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                    <span class="en">Python</span>
+                                    <span class="zh hidden">Python</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Project Cocoa Research -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                        <img src="img/ghana.jpg" alt="Economic Research Project" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg text-dark mb-2">
+                                <span class="en">Ghana Economic Research</span>
+                                <span class="zh hidden">加纳经济研究</span>
+                            </h3>
+                            <p class="text-gray-600 mb-4">
+                                <span class="en">Analysis of economic distortions under disturbing pricing policies</span>
+                                <span class="zh hidden">加纳可可定价政策研究</span>
+                            </p>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                    <span class="en">Economic Research</span>
+                                    <span class="zh hidden">经济研究</span>
+                                </span>
+                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                    <span class="en">Python</span>
+                                    <span class="zh hidden">Python</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Project E-Payment -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                        <img src="img/epayment.jpg" alt="E-Payment Research" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg text-dark mb-2">
+                                <span class="en">E-Payment Economic Impact</span>
+                                <span class="zh hidden">电子支付的经济影响</span>
+                            </h3>
+                            <p class="text-gray-600 mb-4">
+                                <span class="en">5000-word research with People's Bank of China</span>
+                                <span class="zh hidden">与中国人民银行合作的5000字研究报告</span>
+                            </p>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                    <span class="en">Financial Research</span>
+                                    <span class="zh hidden">金融研究</span>
+                                </span>
+                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                    <span class="en">Python</span>
+                                    <span class="zh hidden">Python</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>  
+                    <!-- Project AF -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                        <img src="img/af.jpg" alt="AF" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg text-dark mb-2">
+                                <span class="en">Camera Autofucos Algorithms Analysis</span>
+                                <span class="zh hidden">相机自动对焦算法分析</span>
+                            </h3>
+                            <p class="text-gray-600 mb-4">
+                                <span class="en">Examine and Reconstruct Autofocus Algorithm with CNN</span>
+                                <span class="zh hidden">使用机器学习CNN分析自动对焦算法</span>
+                            </p>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                    <span class="en">CNN</span>
+                                    <span class="zh hidden">CNN</span>
+                                </span>
+                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                    <span class="en">Machine Learning</span>
+                                    <span class="zh hidden">Machine Learning</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Project Econometrics -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                        <img src="img/stata.jpg" alt="econometrics" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg text-dark mb-2">
+                                <span class="en">Work-From-Home Effects Evaluation</span>
+                                <span class="zh hidden">居家办公效率分析</span>
+                            </h3>
+                            <p class="text-gray-600 mb-4">
+                                <span class="en">Two-step econometrics analysis</span>
+                                <span class="zh hidden">两步法计量经济学分析</span>
+                            </p>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                    <span class="en">Econometrics</span>
+                                    <span class="zh hidden">计量经济学</span>
+                                </span>
+                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                    <span class="en">Stata</span>
+                                    <span class="zh hidden">Stata</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>              
+                    <!-- Project USC Heatmap -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                        <img src="img/figma3.jpg" alt="heatmap" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg text-dark mb-2">
+                                <span class="en">USC Transportation Heatmap</span>
+                                <span class="zh hidden">南加大交通热点地图</span>
+                            </h3>
+                            <p class="text-gray-600 mb-4">
+                                <span class="en">Facilitory heatmap around USC </span>
+                                <span class="zh hidden">南加大附近辅助性热点地图信息</span>
+                            </p>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                    <span class="en">Business Plan</span>
+                                    <span class="zh hidden">商业计划</span>
+                                </span>
+                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                    <span class="en">Web Development</span>
+                                    <span class="zh hidden">Web开发</span>
+                                </span>
+                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                    <span class="en">UX/UI</span>
+                                    <span class="zh hidden">UX/UI</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Project Sickle Cell Anaemia Diet Plan -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                        <img src="img/figma.jpg" alt="Diet Plan App Design" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg text-dark mb-2">
+                                <span class="en">Sickle Cell Anaemia Diet Plan App Design</span>
+                                <span class="zh hidden">镰刀性贫血饮食计划应用设计</span>
+                            </h3>
+                            <p class="text-gray-600 mb-4">
+                                <span class="en">Figma UI design with 300+ user responses</span>
+                                <span class="zh hidden">基于300+用户反馈的Figma UI设计</span>
+                            </p>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                    <span class="en">UI/UX Design</span>
+                                    <span class="zh hidden">UI/UX设计</span>
+                                </span>
+                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                    <span class="en">Figma</span>
+                                    <span class="zh hidden">Figma</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>  
+                    <!-- Project JEP -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                        <img src="img/fossil.jpg" alt="JEP" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg text-dark mb-2">
+                                <span class="en">Assistant Tutoring in Local Schools</span>
+                                <span class="zh hidden">本地学校助教</span>
+                            </h3>
+                            <p class="text-gray-600 mb-4">
+                                <span class="en">Weekly Teaching in Fossils</span>
+                                <span class="zh hidden">化石研究</span>
+                            </p>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                    <span class="en">Volunteer</span>
+                                    <span class="zh hidden">志愿活动</span>
+                                </span>
+                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                    <span class="en">Assistant Tutoring</span>
+                                    <span class="zh hidden">助教</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interests Section -->
+        <section id="interests" class="py-16 md:py-24 bg-gray-50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-dark mb-4">
+                        <span class="en">Interests & Activities</span>
+                        <span class="zh hidden">兴趣与活动</span>
+                    </h2>
+                    <div class="w-20 h-1 bg-primary mx-auto rounded-full"></div>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6"> 
+                    <!-- Interest Photography -->
+                    <div class="bg-gray-50 rounded-xl p-6 text-center hover:bg-primary/5 transition-colors duration-300 relative group">
+                        <!-- Gallery Badge Link - Only visible when photography card is hovered -->
+                        <a href="photo.html" target="_blank" class="absolute top-4 right-4 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <i class="fas fa-external-link-alt text-sm"></i>
+                        </a>
+                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary mx-auto mb-4">
+                            <i class="fa-solid fa-camera text-2xl"></i>
+                        </div>
+                        <h3 class="font-medium text-dark mb-2">
+                            <span class="en">Photography</span>
+                            <span class="zh hidden">摄影</span>
+                        </h3>
+                        <p class="text-sm text-gray-600">
+                            <span class="en">Nikon Z7II - Landscape + Street Photography</span>
+                            <span class="zh hidden">尼康Z7II - 风景+街拍</span>
+                        </p>
+                    </div>
+                    
+                    <!-- Interest Basketball -->
+                    <div class="bg-gray-50 rounded-xl p-6 text-center">
+                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary mx-auto mb-4">
+                            <i class="fa-solid fa-basketball text-2xl"></i>
+                        </div>
+                        <h3 class="font-medium text-dark mb-2">
+                            <span class="en">Basketball</span>
+                            <span class="zh hidden">篮球</span>
+                        </h3>
+                        <p class="text-sm text-gray-600">
+                            <span class="en">Spurs Fan! Let's GO WEMBY</span>
+                            <span class="zh hidden">马刺球迷</span>
+                        </p>
+                    </div>
+                    
+                    <!-- Interest Skiing -->
+                    <div class="bg-gray-50 rounded-xl p-6 text-center">
+                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary mx-auto mb-4">
+                            <i class="fa-solid fa-skiing text-2xl"></i>
+                        </div>
+                        <h3 class="font-medium text-dark mb-2">
+                            <span class="en">Skiing</span>
+                            <span class="zh hidden">滑雪</span>
+                        </h3>
+                        <p class="text-sm text-gray-600">
+                            <span class="en">Beginner Level</span>
+                            <span class="zh hidden">又菜又爱滑</span>
+                        </p>
+                    </div>
+                    
+                    <!-- Interest Cooking -->
+                    <div class="bg-gray-50 rounded-xl p-6 text-center">
+                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary mx-auto mb-4">
+                            <i class="fa-solid fa-utensils text-2xl"></i>
+                        </div>
+                        <h3 class="font-medium text-dark mb-2">
+                            <span class="en">Cooking</span>
+                            <span class="zh hidden">烹饪</span>
+                        </h3>
+                        <p class="text-sm text-gray-600">
+                            <span class="en">Charity cook for community events</span>
+                            <span class="zh hidden">社区慈善烹饪活动参与者</span>
+                        </p>
+                    </div>
+                    
+                    <!-- Interest Tennis -->
+                    <div class="bg-gray-50 rounded-xl p-6 text-center">
+                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary mx-auto mb-4">
+                            <i class="material-icons" style="text-shadow: 0 0 0.5px currentColor; font-size: 30px;">sports_tennis</i>
+                        </div>
+                        <h3 class="font-medium text-dark mb-2">
+                            <span class="en">Tennis</span>
+                            <span class="zh hidden">网球</span>
+                        </h3>
+                        <p class="text-sm text-gray-600">
+                            <span class="en">Novak's Fan</span>
+                            <span class="zh hidden">小徳球迷</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-dark mb-4">
+                        <span class="en">Get In Touch</span>
+                        <span class="zh hidden">联系我</span>
+                    </h2>
+                    <div class="w-20 h-1 bg-primary mx-auto rounded-full"></div>
+                </div>
+                
+                <div class="grid md:grid-cols-1 gap-12">
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <!-- 左侧联系信息 - 中等屏幕以上时占2/3宽度 -->
+    <div class="md:col-span-2 bg-white p-8 rounded-2xl shadow-sm">
+        <h3 class="text-xl font-bold text-dark mb-6">
+            <span class="en">Contact Information</span>
+            <span class="zh hidden">联系方式</span>
+        </h3>
+        
+        <div class="space-y-6">
+            <div class="flex items-start space-x-4">
+                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary flex-shrink-0">
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+                <div>
+                    <h4 class="font-medium text-dark mb-1">
+                        <span class="en">Email</span>
+                        <span class="zh hidden">电子邮箱</span>
+                    </h4>
+                    <div class="font-medium text-gray-600 leading-relaxed flex items-center">
+                        <span class="copy-email cursor-pointer text-primary hover:text-primary/80 transition-colors duration-200">wlele0108@gmail.com</span>
+                        <button class="copy-email-btn ml-1 text-gray-500 hover:text-primary transition-colors" data-email="wlele0108@gmail.com">
+                            <p> </p><i class="fa-regular fa-copy text-[0.875rem]"></i>
+                        </button>
+                    </div>
+                    <div class="font-medium text-gray-600 leading-relaxed flex items-center">
+                        <span class="copy-email cursor-pointer text-primary hover:text-primary/80 transition-colors duration-200">18518230249@163.com</span>
+                        <button class="copy-email-btn ml-1 text-gray-500 hover:text-primary transition-colors" data-email="18518230249@163.com">
+                            <p> </p><i class="fa-regular fa-copy text-[0.875rem]"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex items-start space-x-4">
+                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary flex-shrink-0">
+                    <i class="fa-solid fa-phone"></i>
+                </div>
+                <div>
+                    <h4 class="font-medium text-dark mb-1">
+                        <span class="en">Phone</span>
+                        <span class="zh hidden">电话</span>
+                    </h4>
+                    <a href="tel:+12138800633" class="text-gray-600 hover:text-primary transition-colors duration-200">+1 (213) 880-0633</a><br>
+                    <a href="tel:+8618518230249" class="text-gray-600 hover:text-primary transition-colors duration-200">+86 (185) 1823-0249</a>
+                </div>
+            </div>
+            
+            <div class="flex items-start space-x-4">
+                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary flex-shrink-0">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div>
+                    <h4 class="font-medium text-dark mb-1">
+                        <span class="en">Location</span>
+                        <span class="zh hidden">地址</span>
+                    </h4>
+                    <p class="text-gray-600">Chicago, Illinois, USA</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 右侧社交媒体 - 中等屏幕以上时占1/3宽度 -->
+    <div class="md:col-span-1 bg-white p-8 rounded-2xl shadow-sm">
+        <h3 class="text-xl font-bold text-dark mb-6">
+            <span class="en">Follow Me</span>
+            <span class="zh hidden">关注我</span>
+        </h3>
+        
+        <!-- 垂直排列的社交媒体链接 -->
+        <div class="flex flex-col gap-4">
+            <a href="https://www.linkedin.com/in/lehuan-wang-361633283/" target="_blank" class="w-full bg-[#0077B5]/10 hover:bg-[#0077B5]/20 text-[#0077B5] py-3 px-4 rounded-lg flex items-center justify-center transition-all duration-200 transform hover:-translate-y-1 hover:shadow-md">
+                <i class="fa-brands fa-linkedin mr-2"></i>
+                <span class="en">LinkedIn</span>
+                <span class="zh hidden">领英</span>
+            </a>
+            <a href="https://www.instagram.com/wlele__/" target="_blank" class="w-full bg-[#E4405F]/10 hover:bg-[#E4405F]/20 text-[#E4405F] py-3 px-4 rounded-lg flex items-center justify-center transition-all duration-200 transform hover:-translate-y-1 hover:shadow-md">
+                <i class="fa-brands fa-instagram mr-2"></i>
+                <span class="en">Instagram</span>
+                <span class="zh hidden">Instagram</span>
+            </a>
+            <!-- <a href="#" target="_blank" class="w-full bg-[#333]/10 hover:bg-[#333]/20 text-[#333] py-3 px-4 rounded-lg flex items-center justify-center transition-all duration-200 transform hover:-translate-y-1 hover:shadow-md">
+                <i class="fa-brands fa-github mr-2"></i>
+                <span class="en">GitHub</span>
+                <span class="zh hidden">GitHub</span>
+            </a> -->
+        </div>
+    </div>
+    </div>
+
+</div>
+</div>
+                
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-3 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Henry Wang</h3>
+                    <p class="text-gray-400 mb-4">
+                        <!-- <span class="en"></span>
+                        <span class="zh hidden"></span> -->
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.linkedin.com/in/lehuan-wang-361633283/" target="_blank" class="text-gray-400 hover:text-white transition-colors duration-200">
+                            <i class="fa-brands fa-linkedin"></i>
+                        </a>
+                        <a href="https://www.instagram.com/wlele__/" target="_blank" class="text-gray-400 hover:text-white transition-colors duration-200">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <!-- <a href="#" target="_blank" class="text-gray-400 hover:text-white transition-colors duration-200">
+                            <i class="fa-brands fa-github"></i>
+                        </a> -->
+                    </div>
+                    
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">
+                        <span class="en">Quick Links</span>
+                        <span class="zh hidden">快速链接</span>
+                    </h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-400 hover:text-white transition-colors duration-200">
+                            <span class="en">Home</span>
+                            <span class="zh hidden">主页</span>
+                        </a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition-colors duration-200">
+                            <span class="en">About</span>
+                            <span class="zh hidden">关于</span>
+                        </a></li>
+                        <li><a href="#experience" class="text-gray-400 hover:text-white transition-colors duration-200">
+                            <span class="en">Experience</span>
+                            <span class="zh hidden">经历</span>
+                        </a></li>
+                        <li><a href="#projects" class="text-gray-400 hover:text-white transition-colors duration-200">
+                            <span class="en">Projects</span>
+                            <span class="zh hidden">项目</span>
+                        </a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors duration-200">
+                            <span class="en">Contact</span>
+                            <span class="zh hidden">联系</span>
+                        </a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">
+                        <span class="en">Contact</span>
+                        <span class="zh hidden">联系方式</span>
+                    </h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-envelope text-gray-400"></i>
+                            <a href="mailto:example@example.com" class="text-gray-400 hover:text-white transition-colors duration-200">wlele0108@gmail.com</a>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-phone text-gray-400"></i>
+                            <a href="tel:+11234567890" class="text-gray-400 hover:text-white transition-colors duration-200">+1 (213) 880-0633</a>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fa-solid fa-location-dot text-gray-400"></i>
+                            <p class="text-gray-400">Los Angeles, California, USA</p>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Subsribe -->
+                <!-- <div>
+                    <h3 class="text-lg font-bold mb-4">
+                        <span class="en">Newsletter</span>
+                        <span class="zh hidden">订阅</span>
+                    </h3>
+                    <p class="text-gray-400 mb-4">
+                        <span class="en">Subscribe to get updates on my latest projects and activities.</span>
+                        <span class="zh hidden">订阅获取我最新项目和活动的更新。</span>
+                    </p>
+                    <form class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l-lg w-full focus:outline-none text-dark">
+                        <button type="submit" class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-r-lg transition-colors duration-200">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div> -->
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
+                <p>&copy; 2025 Henry Wang. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Language switcher
+        const langButtons = document.querySelectorAll('[id^="lang-"]');
+        
+        langButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const lang = button.id.split('-')[1];
+                
+                // Update active language button
+                document.querySelectorAll('[id^="lang-"]').forEach(btn => {
+                    if(btn.id.includes('mobile')) return;
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.classList.add('text-dark');
+                });
+                
+                document.querySelectorAll(`[id^="lang-${lang}"]:not([id*="mobile"])`).forEach(btn => {
+                    btn.classList.add('bg-primary', 'text-white');
+                    btn.classList.remove('text-dark');
+                });
+                
+                // Show content for selected language
+                document.querySelectorAll('.en, .zh').forEach(el => {
+                    el.classList.add('hidden');
+                });
+                
+                document.querySelectorAll(`.${lang}`).forEach(el => {
+                    el.classList.remove('hidden');
+                });
+                
+                // Close mobile menu if open
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-md');
+                navbar.classList.remove('bg-white/90');
+                navbar.classList.add('bg-white');
+            } else {
+                navbar.classList.remove('shadow-md');
+                navbar.classList.add('bg-white/90');
+                navbar.classList.remove('bg-white');
+            }
+        });
+        
+        // Contact form submission
+        const contactForm = document.getElementById('contact-form');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Here you would typically send the form data to a server
+            // For demo purposes, we'll just show a success message
+            alert('Thank you for your message! I will get back to you soon.');
+            contactForm.reset();
+        });
+    </script>
+</body>
+</html>
