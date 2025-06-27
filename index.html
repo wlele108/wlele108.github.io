@@ -300,27 +300,9 @@
                 <div class="grid md:grid-cols-2 gap-12 items-center">
                     <div class="relative">
                         <img src="img/selfie2.JPG" alt="Lehuan Wang at work" class="w-full h-full rounded-2xl shadow-xl">
-                        <!-- <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
-                                    <i class="fa-solid fa-graduation-cap text-xl"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-dark">GPA: 3.91</h4>
-                                    <p class="text-sm text-gray-600">
-                                        <span class="en">Dean's List</span>
-                                        <span class="zh hidden">院长名单</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div> -->
                     </div>
                     
                     <div class="space-y-6">
-                        <h3 class="text-2xl font-bold text-dark">
-                            <!-- <span class="en">Economics & Data Science Student</span>
-                            <span class="zh hidden">经济学与数据科学专业学生</span> -->
-                        </h3>
                         <p class="text-gray-600 leading-relaxed">
                                 <span class="en">
                                     <p class="en">I am an Economics and Data Science graduate from the <strong>University of Southern California</strong> (GPA: <strong>3.91/4.0</strong>), advancing to the <strong>Master of Finance</strong> program at the <strong>University of Chicago</strong> beginning Fall 2025. My career focus is firmly rooted in <strong>asset management and sales & trading</strong>, where I aim to merge rigorous quantitative analysis with strategic market insights.</p>
@@ -341,10 +323,6 @@
                                     <br><p class="zh hidden">精通<strong>Bloomberg/Aladdin/SQL/Power BI</strong>等工具，我擅长在快速变化的市场中融合技术工具与金融直觉。现寻求能充分发挥<strong>Python建模能力</strong>与研究经验的岗位，为投资交易策略创造价值。</p>
                                 </span>
                        </p>
-                        <!-- <p class="text-gray-600 leading-relaxed">
-                            <span class="en">My approach combines quantitative analysis with practical business applications to solve complex economic problems and uncover market insights.</span>
-                            <span class="zh hidden">我的方法将定量分析与实际商业应用相结合，以解决复杂的经济问题并发现市场洞察。</span>
-                        </p> -->
                         
                                             <!-- Languages & Tools -->
                     <div>
@@ -570,12 +548,6 @@
                                         <span class="zh hidden">2025年9月 - 2026年12月（预计）</span>
                                     </span>
                                 </div>
-                                <!-- <ul class="list-disc pl-5 text-gray-600 space-y-2">
-                                    <li>
-                                        <span class="en">Advanced studies in financial theory and quantitative methods</span>
-                                        <span class="zh hidden">金融理论与量化方法高级课程</span>
-                                    </li>
-                                </ul> -->
                             </div>
                             
                             <!-- USC -->
@@ -649,7 +621,7 @@
                 
                 <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Project Derivative Trading -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform group relative hover:scale-105 hover:z-10">
                         <img src="img/trade.jpg" alt="Education App" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="font-bold text-lg text-dark mb-2">
@@ -671,9 +643,28 @@
                                 </span>
                             </div>
                         </div>
+                        <!-- Overlay with detailed description -->
+                        <div class="absolute inset-0 bg-white p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-auto">
+                            <h3 class="en font-bold text-lg text-dark mb-2">Derivative-Trading Simulation Fund</h3>
+                            <h3 class="zh hidden font-bold text-lg text-dark mb-2">衍生产品交易策略基金</h3>
+                            <!-- CONTENT GOES HERE - Add your detailed project description in this paragraph -->
+                            <p class="text-gray-600 mb-4">
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li class="en">In the derivative trading simulation, managed a $10M virtual portfolio amid volatile markets and unpredictable economic/corporate events.</li>
+                                    <li class="en">Developed strategies to value and trade options while minimizing risks, integrating advanced tactics like options spreads and the binomial pricing model.</li>
+                                    <li class="en">Incorporated real-time adjustments for economic events (e.g., central bank policy shifts, GDP releases) and corporate events (e.g., earnings announcements, dividend declarations).</li>
+                                    <li class="en">Ensured derivative valuations reflected macroeconomic uncertainties and firm-specific risks, enabling data-driven trading decisions and market adaptability.</li>
+                                    <li class="zh hidden">在衍生品交易模拟中，于波动市场及不确定经济/企业事件中管理1000万美元虚拟投资组合。</li>
+                                    <li class="zh hidden">制定期权估值与交易策略以实现风险最小化，整合期权价差、二叉树定价模型等进阶方法。</li>
+                                    <li class="zh hidden">纳入对经济事件（如央行政策调整、GDP数据发布）及企业事件（如财报披露、股息宣告）的实时调整机制。</li>
+                                    <li class="zh hidden">确保衍生品估值反映宏观经济不确定性与企业特定风险，助力数据驱动的交易决策与市场适应能力。</li>
+                                </ul>
+                            </p>
+                        </div>
                     </div>
+                    
                     <!-- Project Econ Consulting -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform group relative hover:scale-105 hover:z-10">
                         <img src="img/reg.jpg" alt="Housing Model" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="font-bold text-lg text-dark mb-2">
@@ -699,9 +690,29 @@
                                 </span>
                             </div>
                         </div>
+                        
+                        <!-- Overlay with detailed description -->
+                        <div class="absolute inset-0 bg-white p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-auto">
+                            <h3 class="en font-bold text-lg text-dark mb-2">Real Estate Financial Model</h3>
+                                <h3 class="zh hidden font-bold text-lg text-dark mb-2">房地产金融模型</h3>
+                                <!-- CONTENT GOES HERE - Add your detailed project description in this paragraph -->
+                                <p class="text-gray-600 mb-4">
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li class="en">Developed a Python-based layered regression model to predict property values with 14 selected features, achieving an adjusted R² of 84%.</li>
+                                        <li class="en">Integrated macroeconomic indicators (GDP, interest rates), micro-location factors (school ratings, transit proximity), and property attributes (sqft, age).</li>
+                                        <li class="en">Optimized model performance through recursive feature elimination and cross-validation, balancing complexity and predictive accuracy.</li>
+                                        <li class="en">Provided data-driven insights for real estate investors and economic consultants analyzing market trends and investment risks.</li>
+                                        <li class="zh hidden">构建基于Python的14维特征多层递归模型预测房产价值，调整R²达84%。</li>
+                                        <li class="zh hidden">整合宏观经济指标（GDP、利率）、微观区位因素（学校评级、交通便利性）及房产属性（面积、房龄）。</li>
+                                        <li class="zh hidden">通过递归特征筛选与交叉验证优化模型性能，平衡复杂度与预测精度。</li>
+                                        <li class="zh hidden">为房地产投资者和经济顾问分析市场趋势与投资风险提供数据驱动洞察。</li>
+                                    </ul>
+                                </p>
+                        </div>
                     </div>
+                    
                     <!-- Project Cocoa Research -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform group relative hover:scale-105 hover:z-10">
                         <img src="img/ghana.jpg" alt="Economic Research Project" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="font-bold text-lg text-dark mb-2">
@@ -723,9 +734,29 @@
                                 </span>
                             </div>
                         </div>
+                        
+                        <!-- Overlay with detailed description -->
+                        <div class="absolute inset-0 bg-white p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-auto">
+                            <h3 class="en font-bold text-lg text-dark mb-2">Ghana Cocoa Pricing Strategy Research</h3>
+                            <h3 class="zh hidden font-bold text-lg text-dark mb-2">加纳可可定价政策研究</h3>
+                                    <!-- CONTENT GOES HERE - Add your detailed project description in this paragraph -->
+                                    <p class="en text-gray-600 mb-4">
+                                        <ul class="list-disc pl-5 space-y-1">
+                                            <li class="en">Conducted in-depth analysis of Ghana's cocoa pricing mechanisms under the Cocoa Marketing Board (CMB), revealing how monopsonistic practices and implicit taxation contributed to the sector's decline.</li>
+                                            <li class="en">Compared Ghana's model with Indonesia's cocoa sector reforms, highlighting the effectiveness of market liberalization and farmer-centered policies in boosting productivity and export competitiveness.</li>
+                                            <li class="en">Assessed the economic impact of post-1983 reforms, including cedi devaluation, CMB restructuring, and technology adoption, quantifying improvements in cocoa production (from 240k to 800k+ tons) and poverty reduction (51.7% to 39.5%).</li>
+                                            <li class="en">Provided policy recommendations emphasizing sustainable pricing frameworks, continued investment in agricultural technology, and inclusive growth strategies to address rising inequality while maintaining sectoral competitiveness.</li>
+                                            <li class="zh hidden">深入分析加纳可可营销委员会（CMB）定价机制，揭示垄断采购和隐性税收如何导致可可产业衰退。</li>
+                                            <li class="zh hidden">对比加纳与印尼可可部门改革模式，突显市场自由化和以农民为中心政策对提升生产力和出口竞争力的有效性。</li>
+                                            <li class="zh hidden">评估1983年后改革（塞地贬值、CMB重组、技术应用）的经济影响，量化可可产量（从24万吨增至80多万吨）和贫困率下降（51.7%至39.5%）的改善。</li>
+                                            <li class="zh hidden">提出政策建议，强调建立可持续定价框架、持续投资农业技术，以及实施包容性增长战略，以解决不平等加剧问题同时保持部门竞争力。</li>
+                                        </ul>
+                                    </p>
+                        </div>
                     </div>
+                    
                     <!-- Project E-Payment -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform group relative hover:scale-105 hover:z-10">
                         <img src="img/epayment.jpg" alt="E-Payment Research" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="font-bold text-lg text-dark mb-2">
@@ -738,8 +769,8 @@
                             </p>
                             <div class="flex items-center space-x-2">
                                 <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                                    <span class="en">Financial Research</span>
-                                    <span class="zh hidden">金融研究</span>
+                                    <span class="en">Economic Research</span>
+                                    <span class="zh hidden">经济研究</span>
                                 </span>
                                 <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
                                     <span class="en">Python</span>
@@ -747,9 +778,29 @@
                                 </span>
                             </div>
                         </div>
+                        
+                        <!-- Overlay with detailed description -->
+                        <div class="absolute inset-0 bg-white p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-auto">
+                            <h3 class="en font-bold text-lg text-dark mb-2">Electronic Payment Impact Analysis</h3>
+                            <h3 class="zh hidden font-bold text-lg text-dark mb-2">电子支付影响分析</h3>
+                            <!-- CONTENT GOES HERE - Add your detailed project description in this paragraph -->
+                            <p class="text-gray-600 mb-4">
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li class="en">Widespread adoption of electronic payment systems (e.g., Alipay, WeChat Pay) has transformed transactional behavior across global markets.</li>
+                                    <li class="en">Analyzed the impact of these systems on consumer spending patterns and macroeconomic consumption trends through behavioral economics frameworks and econometric modeling.</li>
+                                    <li class="en">Identified key mechanisms driving increased consumption: reduced transaction friction, seamless integration with consumer credit, diminished "pain of paying," and accelerated growth of e-commerce and digital services.</li>
+                                    <li class="en">Quantified outcomes including 23% higher discretionary spending, 18% increase in purchase frequency, sectoral shifts toward services, and a measurable 1.5% annual boost to per capita consumption in impacted economies.</li>
+                                    <li class="zh hidden">电子支付系统（如支付宝、微信支付）的广泛应用重塑了全球市场的交易行为。</li>
+                                    <li class="zh hidden">通过行为经济学框架和计量模型，分析该系统对消费者支出模式和宏观经济消费趋势的影响。</li>
+                                    <li class="zh hidden">揭示推动消费增长的核心机制：交易摩擦降低、消费信贷无缝衔接、支付痛感减弱，以及电商和数字服务的加速扩张。</li>
+                                    <li class="zh hidden">量化结果显示：受影响经济体的 discretionary 支出增长23%，购买频率提升18%，服务业占比上升，人均消费年增长率提高1.5个百分点。</li>
+                                </ul>
+                            </p>
+                        </div>
                     </div>  
+                    
                     <!-- Project AF -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform group relative hover:scale-105 hover:z-10">
                         <img src="img/af.jpg" alt="AF" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="font-bold text-lg text-dark mb-2">
@@ -771,14 +822,34 @@
                                 </span>
                             </div>
                         </div>
+                        
+                        <!-- Overlay with detailed description -->
+                        <div class="absolute inset-0 bg-white p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-auto">
+                            <h3 class="en font-bold text-lg text-dark mb-2">Examine and Reconstruct Autofocus Algorithm with CNN</h3>
+                            <h3 class="zh hidden font-bold text-lg text-dark mb-2">使用机器学习CNN分析自动对焦算法</h3>
+                            <!-- CONTENT GOES HERE - Add your detailed project description in this paragraph -->
+                            <p class="text-gray-600 mb-4">
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li class="en">Identified methods of contrast/wavelength-based autofocus systems, which showed 40% slower performance in low-light and 30% inconsistency in high-motion scenarios.</li>
+                                    <li class="en">Developed a CNN-based regression model to directly predict optimal focus distance from single images, trained on 5,000 labeled focal stacks across diverse lighting and motion conditions.</li>
+                                    <li class="en">Optimized inference speed by replacing iterative search algorithms with direct prediction, achieving 3x faster autofocus (200ms vs. 600ms average) and 18% higher precision than baseline methods.</li>
+                                    <li class="en">Demonstrated 92% focus accuracy across 20 test scenes  with results validated through side-by-side A/B testing.</li>
+                                    <li class="zh hidden">发现传统基于对比度/波长的自动对焦系统在低光环境下速度慢40%，在高动态场景下一致性低30%的问题。</li>
+                                    <li class="zh hidden">开发基于CNN的回归模型，直接从单张图像预测最佳对焦距离，在涵盖多种光照和动态条件的5000个标记焦点堆栈上训练。</li>
+                                    <li class="zh hidden">用直接预测替代迭代搜索算法优化推理速度，实现自动对焦速度提升3倍（平均200ms vs 600ms），精度比基线方法高18%。</li>
+                                    <li class="zh hidden">在20个测试场景实时演示中实现92%的对焦准确率，结果通过A/B测试验证。</li>
+                                </ul>
+                            </p>
+                        </div>
                     </div>
+                    
                     <!-- Project Econometrics -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform group relative hover:scale-105 hover:z-10">
                         <img src="img/stata.jpg" alt="econometrics" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="font-bold text-lg text-dark mb-2">
                                 <span class="en">Work-From-Home Effects Evaluation</span>
-                                <span class="zh hidden">居家办公效率分析</span>
+                                <span class="zh hidden">远程办公效率分析</span>
                             </h3>
                             <p class="text-gray-600 mb-4">
                                 <span class="en">Two-step econometrics analysis</span>
@@ -795,9 +866,28 @@
                                 </span>
                             </div>
                         </div>
+                        
+                        <!-- Overlay with detailed description -->
+                        <div class="absolute inset-0 bg-white p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-auto">
+                            <h3 class="en font-bold text-lg text-dark mb-2">Work-From-Home Effects Evaluation</h3>
+                            <h3 class="zh hidden font-bold text-lg text-dark mb-2">远程工作影响评估</h3>
+                            <!-- CONTENT GOES HERE - Add your detailed project description in this paragraph -->
+                            <p class="text-gray-600 mb-4">
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li class="en">Conducted a two-step econometric analysis of a Chinese travel agency's WFH pilot, leveraging productivity metrics (call volume/quality), retention rates, and satisfaction surveys.</li>
+                                    <li class="en">Applied difference-in-differences (DID) models to measure causal impacts on productivity and satisfaction, with standard regressions for retention, controlling for baseline characteristics.</li>
+                                    <li class="en">Validated randomization through covariate balance tests, cleaned 6-month employee datasets, and implemented robust error clustering to address heteroskedasticity.</li>
+                                    <li class="en">Found no significant change in productivity, a 13.6% reduction in quit rates (p&lt;0.01), and notable satisfaction improvements (job +0.6, life +5.1, career +3.2 on 10-point scales), supporting WFH as a retention and well-being enhancer.</li>
+                                    <li class="zh hidden">对中国某旅行社的远程工作试点进行两步计量分析，利用生产力指标（通话量/质量）、留存率和满意度调查数据。</li>
+                                    <li class="zh hidden">应用双重差分（DID）模型衡量对生产力和满意度的因果影响，用标准回归分析留存率，控制基线特征。</li>
+                                    <li class="zh hidden">通过协变量平衡测试验证随机化，清理6个月员工数据集，并实施稳健误差聚类处理异方差性。</li>
+                                    <li class="zh hidden">发现生产力无显著变化，离职率下降13.6%(p&lt;0.01)，满意度显著提升（工作+0.6、生活+5.1、职业发展+3.2，10分制），证明远程工作可提高留存率和福祉。</li>                                </ul>
+                            </p>
+                        </div>
                     </div>              
+                    
                     <!-- Project USC Heatmap -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform group relative hover:scale-105 hover:z-10">
                         <img src="img/figma3.jpg" alt="heatmap" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="font-bold text-lg text-dark mb-2">
@@ -805,8 +895,8 @@
                                 <span class="zh hidden">南加大交通热点地图</span>
                             </h3>
                             <p class="text-gray-600 mb-4">
-                                <span class="en">Facilitory heatmap around USC </span>
-                                <span class="zh hidden">南加大附近辅助性热点地图信息</span>
+                                <span class="en">USC Transportation Heatmap</span>
+                                <span class="zh hidden">Xposition校园导航解决方案</span>
                             </p>
                             <div class="flex items-center space-x-2">
                                 <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
@@ -823,9 +913,29 @@
                                 </span>
                             </div>
                         </div>
+                        
+                        <!-- Overlay with detailed description -->
+                        <div class="absolute inset-0 bg-white p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-auto">
+                            <h3 class="en font-bold text-lg text-dark mb-2">USC Transportation Heatmap</h3>
+                            <h3 class="zh hidden font-bold text-lg text-dark mb-2">Xposition校园导航解决方案</h3>
+                            <!-- CONTENT GOES HERE - Add your detailed project description in this paragraph -->
+                            <p class="text-gray-600 mb-4">
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li class="en">Addressed chronic traffic congestion and safety issues on USC's Exposition Boulevard during campus events, where existing map apps failed to provide event-specific navigation support.</li>
+                                <li class="en">Designed Xposition, a transportation solution focused on real-time crowd data visualization, alternate route planning, and dynamic meeting point recommendations to improve event-day commuting.</li>
+                                <li class="en">Implemented heatmap visualization of crowd density, AI-powered route optimization considering event schedules, and a gamified reward system to incentivize data contribution, iterating based on 500+ user test sessions.</li>
+                                <li class="en">Developed a functional prototype that outperformed generic map apps in user testing, providing 30% faster route suggestions and 42% higher satisfaction scores for event navigation, with plans to integrate predictive analytics.</li>
+                                <li class="zh hidden">针对南加州大学活动期间博览会大道长期拥堵和安全问题，现有地图应用无法提供活动专用导航支持的痛点。</li>
+                                <li class="zh hidden">设计Xposition交通解决方案，专注于实时人流数据可视化、备选路线规划和动态集合点推荐，提升活动日通勤效率。</li>
+                                <li class="zh hidden">实现人群密度热力图可视化、基于活动日程的AI路线优化和游戏化数据贡献奖励系统，基于500+用户测试迭代。</li>
+                                <li class="zh hidden">开发出在用户测试中优于通用地图应用的功能原型，活动导航路线建议速度提升30%，满意度评分提高42%，并计划集成预测分析功能。</li>
+                            </ul>
+                        </p>
+                        </div>
                     </div>
+                    
                     <!-- Project Sickle Cell Anaemia Diet Plan -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform group relative hover:scale-105 hover:z-10">
                         <img src="img/figma.jpg" alt="Diet Plan App Design" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="font-bold text-lg text-dark mb-2">
@@ -847,14 +957,34 @@
                                 </span>
                             </div>
                         </div>
+                        
+                        <!-- Overlay with detailed description -->
+                        <div class="absolute inset-0 bg-white p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-auto">
+                            <h3 class="en font-bold text-lg text-dark mb-2">Sickle Cell Anaemia Diet Plan App Design</h3>
+                            <h3 class="zh hidden font-bold text-lg text-dark mb-2">镰刀性贫血饮食计划应用设计</h3>
+                            <!-- CONTENT GOES HERE - Add your detailed project description in this paragraph -->
+                            <p class="text-gray-600 mb-4">
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li class="en">Identified gaps in existing nutrition apps, where sickle cell anemia patients lacked specialized dietary management tools and general users struggled with personalized tracking.</li>
+                                    <li class="en">Led the design of a dual-purpose dietary app integrating clinical nutrition guidelines for anemia with general wellness tracking, leveraging experience from leading the Flow app project.</li>
+                                    <li class="en">Conducted 5 design thinking sprints, iterating on prototypes validated by 300+ market survey responses, and developed a Figma UI with 4 modules for meal planning, nutrient tracking, and anemia-specific recommendations.</li>
+                                    <li class="en">Delivered a patient-centric prototype that addresses both clinical and lifestyle nutrition needs, mirroring the user-validation methodology from the Flow app to ensure real-world applicability.</li>
+                                    <li class="zh hidden">发现现有营养应用的不足：镰状细胞贫血患者缺乏专用饮食管理工具，普通用户难以实现个性化饮食追踪。</li>
+                                    <li class="zh hidden">借鉴Flow应用的领导经验，主导设计一款融合贫血临床营养指南与通用健康追踪的双重功能饮食应用。</li>
+                                    <li class="zh hidden">进行5轮设计思维冲刺，通过300+份市场调研验证迭代原型，开发出包含4大模块（膳食计划、营养追踪、贫血专属建议）的Figma界面。</li>
+                                    <li class="zh hidden">交付以患者为中心的原型，同时满足临床和生活方式营养需求，采用与Flow应用相同的用户验证方法确保实际适用性。</li>
+                                </ul>
+                            </p>
+                        </div>
                     </div>  
+                    
                     <!-- Project JEP -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform group relative hover:scale-105 hover:z-10">
                         <img src="img/fossil.jpg" alt="JEP" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="font-bold text-lg text-dark mb-2">
                                 <span class="en">Assistant Tutoring in Local Schools</span>
-                                <span class="zh hidden">本地学校助教</span>
+                                <span class="zh hidden">古生物学支教</span>
                             </h3>
                             <p class="text-gray-600 mb-4">
                                 <span class="en">Weekly Teaching in Fossils</span>
@@ -870,6 +1000,23 @@
                                     <span class="zh hidden">助教</span>
                                 </span>
                             </div>
+                        </div>
+                        
+                        <!-- Overlay with detailed description -->
+                        <div class="absolute inset-0 bg-white p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-auto">
+                            <h3 class="en font-bold text-lg text-dark mb-2">Assistant Tutoring in Local Schools</h3>
+                            <h3 class="zh hidden font-bold text-lg text-dark mb-2">古生物学支教</h3>
+                            <!-- CONTENT GOES HERE - Add your detailed project description in this paragraph -->
+                            <p class="text-gray-600 mb-4">
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li class="en">Developed and delivered weekly paleontology lessons featuring hands-on fossil activities and simplified scientific timelines for K-8 students.</li>
+                                    <li class="en">Implemented interactive teaching methods including fossil handling stations, AR stratigraphy tools, and dig-site simulations to address diverse learning styles.</li>
+                                    <li class="en">Boosted student engagement through "Junior Paleontologist Badges" and team challenges while supporting differentiated instruction.</li>
+                                    <li class="zh hidden">为K-8年级学生开发并每周教授古生物学课程，包含化石实践活动和简化科学时间表。</li>
+                                    <li class="zh hidden">实施互动教学方法，包括化石触摸站、AR地层工具和挖掘现场模拟，以适应不同学习风格。</li>
+                                    <li class="zh hidden">通过"初级古生物学家徽章"和团队挑战提升学生参与度，同时支持差异化教学。</li>
+                                </ul>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -889,8 +1036,8 @@
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6"> 
                     <!-- Interest Photography -->
                     <div class="bg-gray-50 rounded-xl p-6 text-center hover:bg-primary/5 transition-colors duration-300 relative group">
-                        <!-- Gallery Badge Link - Only visible when photography card is hovered -->
-                        <a href="photo.html" target="_blank" class="absolute top-4 right-4 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <!-- Gallery Badge Link - Now always visible -->
+                        <a href="gallery.html" target="_blank" class="absolute top-4 right-4 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white opacity-100 transition-opacity duration-300">
                             <i class="fas fa-external-link-alt text-sm"></i>
                         </a>
                         <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary mx-auto mb-4">
@@ -1063,11 +1210,6 @@
                 <span class="en">Instagram</span>
                 <span class="zh hidden">Instagram</span>
             </a>
-            <!-- <a href="#" target="_blank" class="w-full bg-[#333]/10 hover:bg-[#333]/20 text-[#333] py-3 px-4 rounded-lg flex items-center justify-center transition-all duration-200 transform hover:-translate-y-1 hover:shadow-md">
-                <i class="fa-brands fa-github mr-2"></i>
-                <span class="en">GitHub</span>
-                <span class="zh hidden">GitHub</span>
-            </a> -->
         </div>
     </div>
     </div>
@@ -1096,9 +1238,6 @@
                         <a href="https://www.instagram.com/wlele__/" target="_blank" class="text-gray-400 hover:text-white transition-colors duration-200">
                             <i class="fa-brands fa-instagram"></i>
                         </a>
-                        <!-- <a href="#" target="_blank" class="text-gray-400 hover:text-white transition-colors duration-200">
-                            <i class="fa-brands fa-github"></i>
-                        </a> -->
                     </div>
                     
                 </div>
@@ -1152,23 +1291,6 @@
                         </li>
                     </ul>
                 </div>
-                <!-- Subsribe -->
-                <!-- <div>
-                    <h3 class="text-lg font-bold mb-4">
-                        <span class="en">Newsletter</span>
-                        <span class="zh hidden">订阅</span>
-                    </h3>
-                    <p class="text-gray-400 mb-4">
-                        <span class="en">Subscribe to get updates on my latest projects and activities.</span>
-                        <span class="zh hidden">订阅获取我最新项目和活动的更新。</span>
-                    </p>
-                    <form class="flex">
-                        <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l-lg w-full focus:outline-none text-dark">
-                        <button type="submit" class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-r-lg transition-colors duration-200">
-                            <i class="fa-solid fa-paper-plane"></i>
-                        </button>
-                    </form>
-                </div> -->
             </div>
             
             <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
