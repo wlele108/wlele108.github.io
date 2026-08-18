@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <script>
@@ -96,6 +97,180 @@
             }
         }
         
+    </style>
+
+    <!-- Phase 2.2 monochrome editorial system -->
+    <style>
+        :root {
+            --paper: #f4f4f1;
+            --paper-deep: #e9e9e5;
+            --paper-light: #fafaf8;
+            --ink: #11110f;
+            --muted-ink: #41413d;
+            --rule: #c9c9c3;
+            --accent: #11110f;
+            --accent-soft: #e2e2de;
+            --serif: "Newsreader", "Noto Serif SC", Georgia, serif;
+            --sans: "DM Sans", "Noto Sans SC", Arial, sans-serif;
+            --ease-editorial: cubic-bezier(.22, .61, .36, 1);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background:
+                radial-gradient(circle at 14% 8%, rgba(255,255,255,.72), transparent 30rem),
+                radial-gradient(circle at 88% 44%, rgba(0,0,0,.035), transparent 34rem),
+                var(--paper) !important;
+            color: var(--ink) !important;
+            font-family: var(--sans) !important;
+            font-weight: 400;
+            letter-spacing: -.012em;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: .016;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.24'/%3E%3C/svg%3E");
+        }
+
+        ::selection { background: var(--accent-soft); color: var(--ink); }
+        .text-primary, .text-secondary { color: var(--accent) !important; }
+        [class*="bg-primary"], [class*="bg-secondary"] { background-color: var(--accent-soft) !important; }
+        [class*="border-primary"], [class*="border-secondary"] { border-color: var(--accent) !important; }
+        .container { max-width: 1180px !important; }
+
+        #navbar {
+            background: var(--paper) !important;
+            border-bottom: 1px solid color-mix(in srgb, var(--rule) 78%, transparent);
+            box-shadow: none !important;
+            backdrop-filter: none;
+        }
+        #navbar .h-16 { height: 4.75rem !important; }
+        #navbar a, #navbar button { transition: color 320ms var(--ease-editorial), border-color 320ms var(--ease-editorial), background 320ms var(--ease-editorial) !important; }
+        #navbar nav > a { position: relative; color: var(--muted-ink) !important; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 500 !important; }
+        #navbar nav > a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -.45rem; height: 1px; background: var(--accent); transition: right 360ms var(--ease-editorial); pointer-events: none; }
+        #navbar nav > a:hover { color: var(--ink) !important; }
+        #navbar nav > a:hover::after { right: 0; }
+        #navbar > .container > div > a[href="#home"] > span { color: var(--ink) !important; font-family: var(--serif); font-size: 1.45rem !important; font-weight: 400 !important; letter-spacing: -.03em; text-transform: none; }
+        #navbar [id^="lang-"] { border: 1px solid var(--rule); border-radius: 0 !important; background: transparent !important; color: var(--muted-ink) !important; font-size: .68rem; letter-spacing: .08em; }
+        #navbar [id^="lang-"].bg-primary { border-color: var(--accent) !important; color: var(--accent) !important; }
+        #mobile-menu { background: var(--paper) !important; border-bottom: 1px solid var(--rule); box-shadow: none !important; }
+
+        main > section { position: relative; background: transparent !important; padding-top: 6.75rem !important; padding-bottom: 6.75rem !important; border-bottom: 1px solid var(--rule); box-shadow: inset 0 1px rgba(255,255,255,.6); }
+        main > section:nth-of-type(even) { background: color-mix(in srgb, var(--paper-deep) 55%, var(--paper)) !important; }
+
+        #home { padding-top: 9.5rem !important; min-height: 90vh; display: flex; align-items: center; }
+        #home .lg\:w-1\/2:first-child { padding-right: clamp(0rem, 4vw, 4.5rem); }
+        #home h1 { font-family: var(--serif); font-weight: 300 !important; letter-spacing: -.045em; line-height: .96 !important; }
+        #home h1 strong { font-weight: 400; font-style: italic; }
+        #home h1 .text-primary { color: var(--accent) !important; margin-bottom: .85rem; font-family: var(--sans); font-size: clamp(.75rem, 1vw, .9rem); font-weight: 500; letter-spacing: .18em; text-transform: uppercase; }
+        #home p, #home .text-gray-600 { color: var(--muted-ink) !important; }
+        #home .home-intro { max-width: 38rem; border-left: 1px solid var(--ink); padding-left: 1rem; color: var(--muted-ink); font-size: .98rem; line-height: 1.65; }
+        #home a[target="_blank"][class*="border"] { border: 0 !important; border-bottom: 1px solid var(--accent) !important; border-radius: 0 !important; padding: .55rem 0 !important; background: transparent !important; color: var(--accent) !important; }
+        #home .w-64 { width: min(25rem, 78vw) !important; height: min(31rem, 98vw) !important; }
+        #home .w-64 > div:first-child { display: none; }
+        #home .w-64 img { border-radius: 0 !important; box-shadow: none !important; filter: none !important; transform: none !important; transition: none !important; }
+        #home .mt-6.md\:mt-12 { border-top: 1px solid var(--rule); padding-top: 1.5rem; }
+        #home .mt-6.md\:mt-12 img { border-radius: 0 !important; box-shadow: none !important; filter: none !important; transform: none !important; }
+
+        section > .container > .text-center { text-align: left !important; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 2rem; margin-bottom: 3.75rem !important; }
+        section > .container > .text-center h2 { font-family: var(--serif); font-size: clamp(3rem, 5.4vw, 5.25rem) !important; font-weight: 300 !important; line-height: .92; letter-spacing: -.048em; margin: 0 !important; }
+        section > .container > .text-center > div { width: 5rem !important; height: 1px !important; margin: 0 0 .7rem !important; border-radius: 0 !important; background: var(--accent) !important; }
+
+        #about > .container > .grid { grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr); gap: clamp(3rem, 7vw, 7rem) !important; align-items: start !important; }
+        #about img { position: relative; border-radius: 0 !important; box-shadow: none !important; filter: none !important; outline: 0 !important; transform: none !important; transition: none !important; }
+        #about .about-bio { color: var(--muted-ink) !important; font-family: var(--serif); font-size: 1.05rem; line-height: 1.62 !important; }
+        #about .about-bio p + p { margin-top: 1.1rem; }
+        #about strong { color: var(--ink); font-weight: 500; }
+        #about h3, #experience h3, #contact h3 { font-family: var(--serif); font-weight: 400 !important; letter-spacing: -.02em; }
+        #about h3 > div, #experience h3 > div { width: 1.8rem !important; height: 1.8rem !important; border-radius: 0 !important; background: transparent !important; border: 1px solid var(--rule); color: var(--accent) !important; }
+        #about .skills-index { margin-top: 1.5rem; }
+        #about .grid.grid-cols-2 { gap: 0 !important; border-top: 1px solid var(--ink); }
+        #about .grid.grid-cols-2 > div { background: transparent !important; border-bottom: 1px solid var(--rule); border-radius: 0 !important; padding: .85rem .25rem !important; box-shadow: none !important; }
+        #about .grid.grid-cols-2 > div:nth-child(odd) { border-right: 1px solid var(--rule); padding-right: 1.2rem !important; }
+        #about .grid.grid-cols-2 > div:nth-child(even) { padding-left: 1.2rem !important; }
+
+        #experience .grid.md\:grid-cols-2 { gap: clamp(3rem, 7vw, 7rem) !important; }
+        #experience .space-y-8 { border-top: 1px solid var(--ink); }
+        #experience .space-y-8 > div { background: transparent !important; border: 0 !important; border-bottom: 1px solid var(--rule) !important; border-radius: 0 !important; box-shadow: none !important; padding: 1.5rem .1rem !important; transition: border-color 320ms var(--ease-editorial) !important; }
+        #experience .space-y-8 > div:hover { border-color: var(--ink) !important; }
+        #experience h4 { font-family: var(--serif); font-size: 1.3rem !important; line-height: 1.18; font-weight: 500 !important; }
+        #experience h4 + p { color: var(--accent) !important; font-size: .74rem; letter-spacing: .07em; text-transform: uppercase; margin-top: .35rem; }
+        #experience [class*="bg-gray-100"] { background: transparent !important; border-radius: 0 !important; border-bottom: 1px solid var(--rule); padding: .15rem 0 !important; white-space: nowrap; font-family: var(--serif); font-style: italic; }
+        #experience ul { color: #343430 !important; font-size: .91rem; line-height: 1.52; }
+        #experience li::marker { color: var(--accent); font-size: .62em; }
+
+        #projects .grid.sm\:grid-cols-2 { gap: 2rem 1.5rem !important; perspective: 1200px; }
+        #projects .grid.sm\:grid-cols-2 > .group { --project-rx: 0deg; --project-ry: 0deg; --project-lift: 0px; --project-scale: 1; border-radius: 0 !important; border: 1px solid var(--rule); background: var(--paper-light) !important; overflow: hidden; transform: perspective(900px) translateY(var(--project-lift)) rotateX(var(--project-rx)) rotateY(var(--project-ry)) scale(var(--project-scale)) !important; transform-style: preserve-3d; box-shadow: 0 2px 0 rgba(0,0,0,.045); transition: transform 380ms var(--ease-editorial), box-shadow 380ms var(--ease-editorial), border-color 380ms var(--ease-editorial) !important; }
+        #projects .grid.sm\:grid-cols-2 > .group:hover, #projects .grid.sm\:grid-cols-2 > .group:focus-within { --project-lift: -4px; --project-scale: 1.012; border-color: #8a8a84; box-shadow: 0 12px 24px rgba(0,0,0,.1), 0 3px 0 rgba(0,0,0,.08); outline: none; }
+        #projects img { filter: none !important; transition: transform 420ms var(--ease-editorial) !important; }
+        #projects .group:hover img, #projects .group:focus-within img { transform: scale(1.016); }
+        #projects .p-6 { padding: 1.2rem 1.25rem !important; }
+        #projects h3 { font-family: var(--serif); font-weight: 500 !important; font-size: 1.35rem !important; }
+        #projects .absolute.inset-0 { background: rgba(250,250,248,.985) !important; color: var(--ink) !important; padding: 1.45rem !important; pointer-events: none; transition: opacity 340ms var(--ease-editorial) !important; }
+        #projects .group:hover .absolute.inset-0, #projects .group:focus-within .absolute.inset-0 { opacity: 1; pointer-events: auto; }
+        #projects .absolute.inset-0 li, #projects .absolute.inset-0 p { color: #282825 !important; line-height: 1.45; }
+        #projects [class*="rounded-full"], #projects [class*="rounded-md"] { border-radius: 0 !important; background: transparent !important; border-bottom: 1px solid var(--rule); }
+
+        #interests .grid { border-top: 1px solid var(--ink); display: grid !important; grid-template-columns: 2fr repeat(4, 1fr) !important; gap: 0 !important; }
+        #interests .grid > div { background: transparent !important; border-radius: 0 !important; border-bottom: 1px solid var(--rule); padding: 1.5rem .75rem !important; transition: background 340ms var(--ease-editorial) !important; }
+        #interests .grid > div:first-child { min-height: 12rem; padding: 2rem 1.25rem !important; text-align: left !important; border-right: 1px solid var(--ink); }
+        #interests .grid > div:first-child > a { inset: 0 !important; width: auto !important; height: auto !important; border-radius: 0 !important; background: transparent !important; color: var(--ink) !important; }
+        #interests .grid > div:first-child > a i { position: absolute; top: 1.25rem; right: 1.25rem; }
+        #interests .grid > div:not(:first-child) { display: block; text-align: left !important; padding: 1.35rem .85rem !important; }
+        #interests .grid > div:not(:first-child) .w-16 { display: none; }
+        #interests .grid > div:not(:first-child) h3 { margin-bottom: .35rem !important; }
+        #interests .grid > div:hover { background: var(--accent-soft) !important; }
+        #interests .w-16 { background: transparent !important; border: 1px solid var(--rule); border-radius: 50% !important; color: var(--accent) !important; }
+        #interests h3 { font-family: var(--serif); font-size: 1.2rem; font-weight: 400 !important; }
+
+        #contact .grid.grid-cols-1.md\:grid-cols-3 { border-top: 1px solid var(--ink); }
+        #contact .md\:col-span-2, #contact .md\:col-span-1 { background: transparent !important; border-radius: 0 !important; box-shadow: none !important; padding-left: .2rem !important; padding-right: .2rem !important; }
+        #contact .w-12 { width: 2rem !important; height: 2rem !important; background: transparent !important; border: 1px solid var(--rule); color: var(--accent) !important; }
+        #contact a { color: var(--muted-ink) !important; }
+        #contact a:hover { color: var(--accent) !important; }
+        #contact .flex.flex-col a { justify-content: flex-start !important; border-radius: 0 !important; background: transparent !important; border-bottom: 1px solid var(--rule); color: var(--ink) !important; transform: none !important; box-shadow: none !important; }
+        #contact .flex.flex-col a:hover { padding-left: 1.2rem !important; border-color: var(--accent); }
+
+        footer { background: var(--ink) !important; color: var(--paper) !important; border-top: 1px solid var(--ink); }
+        footer h3 { font-family: var(--serif); font-weight: 400 !important; }
+        footer a, footer p, footer i { color: #bdb5a9 !important; }
+        footer a:hover { color: var(--paper) !important; }
+        .text-green-500, .text-red-500 { color: var(--ink) !important; }
+        :focus-visible { outline: 1px solid var(--ink) !important; outline-offset: 4px; }
+        a, button, img, [class*="transition"] { transition-duration: 360ms !important; transition-timing-function: var(--ease-editorial) !important; }
+
+        @media (max-width: 767px) {
+            main > section { padding-top: 5.25rem !important; padding-bottom: 5.25rem !important; }
+            #home { padding-top: 7.5rem !important; }
+            section > .container > .text-center { grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 3.5rem !important; }
+            #about > .container > .grid { grid-template-columns: 1fr; }
+            #about img { max-height: 32rem; object-fit: cover; }
+            #experience .flex.justify-between.items-start { gap: 1rem; flex-direction: column; }
+            #projects .grid.sm\:grid-cols-2 { gap: 3rem; }
+            #interests .grid { grid-template-columns: repeat(2, 1fr) !important; }
+            #interests .grid > div { text-align: left !important; display: grid; grid-template-columns: auto 1fr; column-gap: 1rem; align-items: center; }
+            #interests .grid > div:first-child { grid-column: 1 / -1; border-right: 0; }
+            #interests .grid > div:not(:first-child) { display: block; }
+            #interests .grid > div > p { grid-column: 2; }
+            #interests .w-16 { grid-row: 1 / span 2; margin: 0 !important; }
+        }
+
+        @media (pointer: coarse) {
+            #projects .grid.sm\:grid-cols-2 > .group:hover, #projects .grid.sm\:grid-cols-2 > .group:focus-within { transform: none !important; }
+            #projects .group:focus-within .absolute.inset-0 { opacity: 1; pointer-events: auto; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+            #projects .grid.sm\:grid-cols-2 > .group, #projects .grid.sm\:grid-cols-2 > .group:hover, #projects .grid.sm\:grid-cols-2 > .group:focus-within, #projects .group:hover img, #projects .group:focus-within img { transform: none !important; }
+        }
     </style>
 
 </head>
@@ -201,10 +376,16 @@
                             <div class="zh hidden text-dark">芝加哥大学布斯商学院 <strong>金融学</strong> 硕士</div>
                         </h1>
                         <!-- basic information 2 -->
-                        <p class="text-[clamp(1rem,2vw,1.25rem)] text-gray-600 leading-relaxed">
+                        <div class="text-[clamp(1rem,2vw,1.25rem)] text-gray-600 leading-relaxed">
+                            <p>
                             <span class="en"><strong>Economics</strong> and <strong>Data Science</strong> double major at USC</span>
                             <span class="zh hidden">南加州大学<strong> 经济学 </strong>和<strong> 数据科学 </strong>本科</span>
-                            <p class="flex justify-content text-[clamp(1rem,2vw,1.25rem)] text-gray-600 leading-relaxed">
+                            </p>
+                            <div class="home-intro mt-5">
+                                <p class="en">I combine an Economics and Data Science foundation from USC with graduate finance training at Chicago Booth. In Bank of America Sales &amp; Trading, I work across municipal and mortgage products with a quantitative, fixed-income lens. Away from markets, I spend time on photography, basketball, tennis, skiing, and cooking.</p>
+                                <p class="zh hidden">我将南加州大学经济学与数据科学的训练，与芝加哥大学布斯商学院的金融硕士学习相结合。在美国银行销售与交易业务中，我以量化和固定收益视角研究市政债券及抵押贷款产品。市场之外，我喜欢摄影、篮球、网球、滑雪和烹饪。</p>
+                            </div>
+                            <div class="mt-5 space-y-1 text-[clamp(1rem,2vw,1.25rem)] text-gray-600 leading-relaxed">
                                 <div class="text-[clamp(1rem,2vw,1.25rem)] text-gray-600 leading-relaxed">
                                     <span class="copy-email cursor-pointer hover:text-primary transition-colors">wlele0108@gmail.com</span>
                                     <button class="copy-email-btn ml-2 text-gray-500 hover:text-primary transition-colors" data-email="wlele0108@gmail.com">
@@ -215,8 +396,8 @@
                                     <button class="copy-email-btn ml-2 text-gray-500 hover:text-primary transition-colors" data-email="18518230249@163.com">
                                     <i class="fa-regular fa-copy"></i></button>
                                 </div>
-                            </p>
-                        </p>
+                            </div>
+                        </div>
                         <!-- Download CV -->
                         <div class="flex flex-wrap gap-4 pt-4">
                             <a href="pdf/Resume.pdf" target="_blank" class="en px-6 py-3 bg-white text-primary border border-primary rounded-md font-medium hover:bg-primary/5 transition-all duration-200">
@@ -298,40 +479,13 @@
                 </div>
                 <!-- Personal Image  -->
                 <div class="grid md:grid-cols-2 gap-12 items-center">
-                    <div class="relative">
-                        <img src="img/selfie2.JPG" alt="Lehuan Wang at work" class="w-full h-full rounded-2xl shadow-xl">
-                    </div>
-                    
-                    <div class="space-y-6">
-                        <p class="text-gray-600 leading-relaxed">
-                                <span class="en">
-                                    <p class="en">I am an Economics and Data Science graduate from the <strong>University of Southern California</strong> (GPA: <strong>3.91/4.0</strong>), advancing to the <strong>Master of Finance</strong> program at the <strong>University of Chicago</strong> beginning Fall 2025. My career focus is firmly rooted in <strong>asset management and sales & trading</strong>, where I aim to merge rigorous quantitative analysis with strategic market insights.</p>
-                                    
-                                    <p class="en">My internship at <strong>Invesco Fixed Income (Hong Kong)</strong> solidified my expertise in leveraging <strong>Python</strong> for sophisticated financial applications. I engineered an <strong>NLP model</strong> using Python's Natural Language Toolkit to score Federal Reserve speech hawkishness, developed <strong>Decision Tree models</strong> for credit opinion analysis, and automated geopolitical opportunity frameworks (e.g., US-China tensions impacting Mexico/India markets). Additionally, I utilized <strong>B Quant</strong> in Python for financial report parsing and pricing analytics, directly supporting investment pitches for <strong>six open-end funds</strong>.</p>
-                                    
-                                    <p class="en">Beyond industry experience, my academic research underscores my analytical rigor. At USC, I conducted data-driven studies on <strong>Ghana's cocoa pricing policy</strong> distortions under socialism, cross-referencing Indonesia's success, and authored a published analysis on <strong>China FOREX and US commercial real estate</strong> workouts at CITIC Bank. These projects honed my ability to transform complex datasets into actionable insights.</p>
-                                    
-                                    <p class="en">Proficient in <strong>Bloomberg, Aladdin, SQL, and Power BI</strong>, I thrive in environments demanding technical precision and market intuition. I am now seeking roles where I can apply my <strong>Python-driven modeling</strong>, research-backed analysis, and passion for markets to advance investment or trading strategies.</p>
+                    <div class="about-side">
+                        <div class="relative">
+                            <img src="img/selfie2.JPG" alt="Lehuan Wang at work" class="w-full h-full rounded-2xl shadow-xl">
+                        </div>
 
-                                    <p class="en">Currently preparing for <strong>CFA Level 1</strong></p>
-
-                                </span>
-                                <span class="zh hidden">
-                                    <p class="zh hidden">我是王乐桓，<strong class="zh hidden">南加州大学</strong>经济学与数据科学学士（GPA <strong class="zh hidden">3.91/4.0</strong>），将于<strong>2025年秋季</strong>进入<strong>芝加哥大学</strong>攻读金融硕士。我的职业目标聚焦于<strong>资产管理及销售交易</strong>领域，致力于将量化分析与市场策略深度结合。</p>
-                                    
-                                    <br><p class="zh hidden">在<strong>景顺(Invesco)固定收益部（香港）</strong>的实习中，我深度运用<strong>Python</strong>技术解决金融实务问题：通过自然语言工具库(NLTK)构建<strong>美联储政策鹰派指数模型</strong>，利用<strong>决策树算法</strong>开发信用分析框架，并基于<strong>B Quant平台</strong>实现财务报告解析与定价自动化。这些技术直接支撑了<strong>6支开放式基金</strong>的投资方案设计，同时构建了中美地缘风险下墨西哥/印度市场的机会评估体系。</p>
-                                    
-                                    <br><p class="zh hidden">学术研究方面，我主导了多项数据驱动型课题：在南加大完成<strong>加纳可可定价政策</strong>的经济扭曲研究（对比印尼成功案例），在中信银行国际发表<strong>中国外汇政策与美国商业地产</strong>重组分析。这些经历锤炼了我将复杂数据转化为投资洞见的能力。</p>
-                                    
-                                    <br><p class="zh hidden">精通<strong>Bloomberg/Aladdin/SQL/Power BI</strong>等工具，我擅长在快速变化的市场中融合技术工具与金融直觉。现寻求能充分发挥<strong>Python建模能力</strong>与研究经验的岗位，为投资交易策略创造价值。</p>
-
-                                    <br><p class="zh hidden">目前在准备 <strong>CFA Level 1</strong></p>
-
-                                </span>
-                       </p>
-                        
-                    <!-- Languages & Tools -->
-                    <div>
+                        <!-- Languages & Tools -->
+                        <div class="skills-index">
                         <h3 class="text-xl font-bold text-dark mb-6 flex items-center">
                             <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center text-primary mr-3">
                                 <i class="fa-solid fa-wrench"></i>
@@ -398,6 +552,22 @@
                         </div>
                     </div>
                     </div>
+
+                    <div class="about-bio">
+                        <p class="en">I am an Economics and Data Science graduate from the <strong>University of Southern California</strong> (GPA: <strong>3.91/4.0</strong>), advancing to the <strong>Master of Finance</strong> program at the <strong>University of Chicago</strong> beginning Fall 2025. My career focus is firmly rooted in <strong>asset management and sales &amp; trading</strong>, where I aim to merge rigorous quantitative analysis with strategic market insights.</p>
+                        <p class="en">My internship at <strong>Invesco Fixed Income (Hong Kong)</strong> solidified my expertise in leveraging <strong>Python</strong> for sophisticated financial applications. I engineered an <strong>NLP model</strong> using Python's Natural Language Toolkit to score Federal Reserve speech hawkishness, developed <strong>Decision Tree models</strong> for credit opinion analysis, and automated geopolitical opportunity frameworks (e.g., US-China tensions impacting Mexico/India markets). Additionally, I utilized <strong>B Quant</strong> in Python for financial report parsing and pricing analytics, directly supporting investment pitches for <strong>six open-end funds</strong>.</p>
+                        <p class="en">At <strong>Bank of America</strong>, I am extending that quantitative foundation into <strong>Sales &amp; Trading</strong> across municipal and mortgage products—building liquidity measures, studying TBA dollar-roll signals, and evaluating structured-credit relative value. The work brings together market microstructure, model discipline, and the judgment required to turn technical evidence into a tradable view.</p>
+                        <p class="en">Beyond industry experience, my academic research underscores my analytical rigor. At USC, I conducted data-driven studies on <strong>Ghana's cocoa pricing policy</strong> distortions under socialism, cross-referencing Indonesia's success, and authored a published analysis on <strong>China FOREX and US commercial real estate</strong> workouts at CITIC Bank. These projects honed my ability to transform complex datasets into actionable insights.</p>
+                        <p class="en">Proficient in <strong>Bloomberg, Aladdin, SQL, and Power BI</strong>, I thrive in environments demanding technical precision and market intuition. I am now seeking roles where I can apply my <strong>Python-driven modeling</strong>, research-backed analysis, and passion for markets to advance investment or trading strategies.</p>
+                        <p class="en">Currently preparing for <strong>CFA Level 1</strong></p>
+
+                        <p class="zh hidden">我是王乐桓，<strong class="zh hidden">南加州大学</strong>经济学与数据科学学士（GPA <strong class="zh hidden">3.91/4.0</strong>），将于<strong>2025年秋季</strong>进入<strong>芝加哥大学</strong>攻读金融硕士。我的职业目标聚焦于<strong>资产管理及销售交易</strong>领域，致力于将量化分析与市场策略深度结合。</p>
+                        <p class="zh hidden">在<strong>景顺(Invesco)固定收益部（香港）</strong>的实习中，我深度运用<strong>Python</strong>技术解决金融实务问题：通过自然语言工具库(NLTK)构建<strong>美联储政策鹰派指数模型</strong>，利用<strong>决策树算法</strong>开发信用分析框架，并基于<strong>B Quant平台</strong>实现财务报告解析与定价自动化。这些技术直接支撑了<strong>6支开放式基金</strong>的投资方案设计，同时构建了中美地缘风险下墨西哥/印度市场的机会评估体系。</p>
+                        <p class="zh hidden">在<strong>美国银行</strong>，我将这一量化基础延伸至市政债券与抵押贷款产品的<strong>销售与交易</strong>业务，围绕流动性度量、TBA美元滚动交易信号及结构化信贷相对价值开展研究。这段经历让我把市场微观结构、严谨建模与交易判断结合起来，将技术证据转化为可执行的市场观点。</p>
+                        <p class="zh hidden">学术研究方面，我主导了多项数据驱动型课题：在南加大完成<strong>加纳可可定价政策</strong>的经济扭曲研究（对比印尼成功案例），在中信银行国际发表<strong>中国外汇政策与美国商业地产</strong>重组分析。这些经历锤炼了我将复杂数据转化为投资洞见的能力。</p>
+                        <p class="zh hidden">精通<strong>Bloomberg/Aladdin/SQL/Power BI</strong>等工具，我擅长在快速变化的市场中融合技术工具与金融直觉。现寻求能充分发挥<strong>Python建模能力</strong>与研究经验的岗位，为投资交易策略创造价值。</p>
+                        <p class="zh hidden">目前在准备 <strong>CFA Level 1</strong></p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -425,6 +595,53 @@
                         </h3>
                         
                         <div class="space-y-8">
+                            <!-- Bank of America -->
+                            <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border-l-4 border-primary">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div>
+                                        <h4 class="font-bold text-dark text-lg">
+                                            <span class="en">Sales &amp; Trading Summer Associate, Municipal &amp; Mortgage Products</span>
+                                            <span class="zh hidden">销售与交易暑期助理，市政债券与抵押贷款产品</span>
+                                        </h4>
+                                        <p class="en text-primary font-medium">Bank of America, New York, New York</p>
+                                        <p class="zh hidden text-primary font-medium">美国银行，纽约州纽约市</p>
+                                    </div>
+                                    <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                                        <span class="en">Jun 2026 – Aug 2026</span>
+                                        <span class="zh hidden">2026年6月 – 2026年8月</span>
+                                    </span>
+                                </div>
+
+                                <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                                    <li>
+                                        <span class="en">
+                                            Built a municipal-bond liquidity scoring algorithm integrating pricing, bond characteristics, trading dynamics, and event effects across 5 machine-learning and survival models into a unified market liquidity measure
+                                        </span>
+                                        <span class="zh hidden">
+                                            构建市政债券流动性评分算法，整合定价、债券特征、交易动态与事件效应，并将5种机器学习及生存分析模型汇总为统一的市场流动性指标
+                                        </span>
+                                    </li>
+
+                                    <li>
+                                        <span class="en">
+                                            Developed 3 TBA dollar-roll trading signals measuring cross-coupon liquidity exposure, relative-value dislocations, and mean-reversion timing, using yield and cheapest-to-deliver divergences to identify technical trading opportunities
+                                        </span>
+                                        <span class="zh hidden">
+                                            开发3个TBA dollar roll（美元滚动交易）信号，衡量跨票息流动性敞口、相对价值错位与均值回归时机，并利用收益率及最便宜可交割券的偏离识别技术性交易机会
+                                        </span>
+                                    </li>
+
+                                    <li>
+                                        <span class="en">
+                                            Analyzed SBA 504 first-lien credit risk and relative value, benchmarking historical second-lien defaults and stressed mortgage severities, reconstructing capital-structure loss exposure, and comparing spreads with similar-risk CMBS
+                                        </span>
+                                        <span class="zh hidden">
+                                            分析SBA 504第一顺位贷款的信用风险与相对价值，以历史第二顺位贷款违约情况及压力情景下的抵押贷款损失严重程度为基准，重构资本结构损失敞口，并与风险相近的CMBS利差进行比较
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+
                             <!-- China Foreign Exchange Trade System -->
                             <!-- CFETS -->
                             <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border-l-4 border-primary">
@@ -610,8 +827,8 @@
                                         <span class="zh hidden">GPA: 3.7/4.0</span>
                                     </li>
                                     <li>
-                                        <span class="en">Relevant coursework: Derivative pricing, Advanced Investment, Accounting, Corporate Finance, Real Estate Investment</span>
-                                        <span class="zh hidden">相关课程：衍生品定价，进阶投资，会计，公司金融，房地产投资</span>
+                                        <span class="en">Relevant coursework: Derivative pricing, Advanced Investment, Accounting, Corporate Finance, Quantitative Portfolio Management</span>
+                                        <span class="zh hidden">相关课程：衍生品定价，进阶投资，会计，公司金融，量化资产管理</span>
                                     </li>
                                 </ul>
                             </div>
@@ -1444,14 +1661,45 @@
         // Contact form submission
         const contactForm = document.getElementById('contact-form');
         
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            // Here you would typically send the form data to a server
-            // For demo purposes, we'll just show a success message
-            alert('Thank you for your message! I will get back to you soon.');
-            contactForm.reset();
+        if (contactForm) {
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Here you would typically send the form data to a server
+                // For demo purposes, we'll just show a success message
+                alert('Thank you for your message! I will get back to you soon.');
+                contactForm.reset();
+            });
+        }
+
+        // Phase 2.2: tactile depth is reserved for project modules
+        const projectSurfaces = document.querySelectorAll('#projects .group');
+        const canTiltProjects = window.matchMedia('(pointer: fine)').matches &&
+            !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        projectSurfaces.forEach(surface => {
+            surface.tabIndex = 0;
+            surface.setAttribute('role', 'group');
+            const title = surface.querySelector('h3 .en')?.textContent?.trim();
+            if (title) surface.setAttribute('aria-label', `Project details: ${title}`);
         });
+
+        if (canTiltProjects) {
+            projectSurfaces.forEach(surface => {
+                surface.addEventListener('pointermove', (event) => {
+                    const bounds = surface.getBoundingClientRect();
+                    const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+                    const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+                    surface.style.setProperty('--project-rx', `${(-y * 2).toFixed(2)}deg`);
+                    surface.style.setProperty('--project-ry', `${(x * 2).toFixed(2)}deg`);
+                });
+
+                surface.addEventListener('pointerleave', () => {
+                    surface.style.setProperty('--project-rx', '0deg');
+                    surface.style.setProperty('--project-ry', '0deg');
+                });
+            });
+        }
     </script>
 </body>
 </html>
