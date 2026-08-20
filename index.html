@@ -271,6 +271,486 @@
             *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
             #projects .grid.sm\:grid-cols-2 > .group, #projects .grid.sm\:grid-cols-2 > .group:hover, #projects .grid.sm\:grid-cols-2 > .group:focus-within, #projects .group:hover img, #projects .group:focus-within img { transform: none !important; }
         }
+
+        /* Phase 3: cinematic, photography-led editorial layer */
+        :root {
+            --hero-image: url("img/hero-ocean.jpg");
+            --photography-placeholder-image: url("img/hero-ocean.jpg");
+            --cyan: #9fc4ca;
+            --charcoal: #171918;
+            --soft-black: #0d0f0f;
+            --off-white: #f3f2ed;
+            --cyan-label-size-en: .74rem;
+            --cyan-label-size-zh: .84rem;
+            --cyan-label-line-height: 1.25;
+            --photography-slideshow-interval: 1000ms;
+        }
+
+        body { background: var(--off-white) !important; }
+        body::before { opacity: .01; }
+
+        #navbar {
+            background: rgba(13,15,15,.92) !important;
+            border-bottom-color: rgba(255,255,255,.14);
+            color: white !important;
+        }
+        #navbar a, #navbar button, #navbar nav > a,
+        #navbar > .container > div > a[href="#home"] > span { color: rgba(255,255,255,.86) !important; }
+        #navbar nav > a:hover, #navbar a:hover, #navbar button:hover { color: white !important; }
+        #navbar nav > a::after { background: var(--cyan); }
+        #navbar [id^="lang-"] { border-color: rgba(255,255,255,.3); color: white !important; }
+        #navbar [id^="lang-"].bg-primary { border-color: var(--cyan) !important; color: var(--cyan) !important; }
+        #mobile-menu { background: rgba(13,15,15,.98) !important; border-bottom-color: rgba(255,255,255,.14); }
+        #mobile-menu a { background: transparent !important; border-bottom: 1px solid rgba(255,255,255,.1); border-radius: 0 !important; color: rgba(255,255,255,.86) !important; }
+
+        #home {
+            min-height: 100svh;
+            padding: 0 !important;
+            display: block;
+            position: relative;
+            isolation: isolate;
+            background: var(--soft-black) var(--hero-image) center 30% / cover no-repeat fixed !important;
+            color: white !important;
+            border: 0;
+        }
+        #home::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background: linear-gradient(90deg, rgba(8,10,10,.82) 0%, rgba(8,10,10,.55) 45%, rgba(8,10,10,.24) 72%, rgba(8,10,10,.45) 100%);
+        }
+        #home::after {
+            content: "";
+            position: absolute;
+            inset: auto 0 0;
+            height: 42%;
+            z-index: -1;
+            pointer-events: none;
+            background: linear-gradient(to top, rgba(8,10,10,.86), transparent);
+        }
+        #home .hero-shell {
+            min-height: 100svh;
+            display: grid;
+            align-content: end;
+            padding-top: 9rem;
+            padding-bottom: clamp(3rem, 7vw, 6.5rem);
+        }
+        #home .hero-copy { max-width: 54rem; }
+        #home .hero-kicker { color: var(--cyan) !important; font-size: var(--cyan-label-size-en); line-height: var(--cyan-label-line-height); letter-spacing: .24em; text-transform: uppercase; font-weight: 500; }
+        #home h1 { color: white !important; font-size: 40px !important; line-height: 1 !important; letter-spacing: -.025em; margin-top: 1.2rem; white-space: nowrap; }
+        #home .hero-identity { max-width: 37rem; margin-top: 2.15rem; color: rgba(255,255,255,.82) !important; font-size: clamp(1.05rem, 1.8vw, 1.45rem); line-height: 1.55; font-weight: 300; }
+        #home .hero-actions { display: flex; flex-wrap: wrap; gap: 1.25rem 2rem; align-items: center; margin-top: 2.25rem; }
+        #home .hero-actions > a { color: white !important; border: 0 !important; border-bottom: 1px solid rgba(255,255,255,.5) !important; padding: .45rem 0 !important; border-radius: 0 !important; background: transparent !important; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; }
+        #home .hero-actions > a:hover { color: var(--cyan) !important; border-color: var(--cyan) !important; }
+        #home .hero-social { display: flex; gap: 1rem; margin-left: .5rem; }
+        #home .hero-social a { color: rgba(255,255,255,.75); font-size: 1.15rem; }
+        #home .hero-social a:hover { color: var(--cyan); }
+        #home .hero-index {
+            margin-top: clamp(3.5rem, 8vw, 7rem);
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0,1fr));
+            border-top: 1px solid rgba(255,255,255,.3);
+        }
+        #home .hero-index a { min-height: 9.35rem; padding: 1.45rem 1.2rem 1.25rem 0; color: white; border-right: 1px solid rgba(255,255,255,.18); display: flex; flex-direction: column; justify-content: space-between; }
+        #home .hero-index a:not(:first-child) { padding-left: 1.2rem; }
+        #home .hero-index a:last-child { border-right: 0; }
+        #home .hero-index-label { color: var(--cyan); font-size: var(--cyan-label-size-en); line-height: var(--cyan-label-line-height); letter-spacing: .2em; text-transform: uppercase; }
+        #home .hero-index-title { margin: .45rem 0 .7rem; font-family: var(--serif); font-size: clamp(1.35rem,2vw,2rem); font-weight: 300; line-height: 1.05; }
+        #home .hero-index-arrow { opacity: .55; transition: transform 300ms var(--ease-editorial), opacity 300ms var(--ease-editorial); }
+        #home .hero-index a:hover .hero-index-arrow { opacity: 1; transform: translateX(5px); }
+
+        main > section:not(#home) { background: var(--off-white) !important; }
+        main > section:nth-of-type(even):not(#home) { background: #e8e9e6 !important; }
+        section > .container > .text-center h2 { color: var(--charcoal) !important; }
+        section > .container > .text-center > div { background: var(--cyan) !important; width: 3rem !important; }
+        #projects .grid.sm\:grid-cols-2 { gap: 2rem !important; }
+        #projects .grid.sm\:grid-cols-2 > .group {
+            border: 1px solid var(--rule);
+            background: var(--paper-light) !important;
+            color: var(--ink);
+            box-shadow: 0 2px 0 rgba(0,0,0,.045);
+        }
+        #projects img { height: 12rem !important; opacity: 1; filter: none !important; }
+        #projects .p-6 {
+            position: static;
+            color: var(--ink);
+            background: transparent;
+            padding: 1.2rem 1.25rem !important;
+        }
+        #projects .p-6 h3 { color: var(--ink) !important; }
+        #projects .p-6 p { color: var(--muted-ink) !important; font-size: inherit; }
+        #projects .p-6 [class*="rounded-full"] { color: #4c7379 !important; border-color: var(--rule); }
+        #projects .absolute.inset-0 { background: rgba(241,242,238,.985) !important; }
+        #projects .grid.sm\:grid-cols-2 > .group:hover { border-color: #8a8a84 !important; box-shadow: 0 12px 24px rgba(0,0,0,.1), 0 3px 0 rgba(0,0,0,.08); }
+        #interests .grid > div:first-child { min-height: 12rem; background: transparent !important; color: var(--ink); }
+        #interests .grid > div:first-child h3 { color: var(--ink) !important; }
+        #interests .grid > div:first-child p { color: var(--muted-ink) !important; }
+        #interests .grid > div:first-child > a { color: var(--ink) !important; }
+        #interests .grid > div:first-child .w-16 { border-color: var(--rule); color: #4c7379 !important; }
+        #contact .grid.grid-cols-1.md\:grid-cols-3, #experience .space-y-8, #about .grid.grid-cols-2, #interests .grid { border-top-color: var(--charcoal); }
+        .text-primary, .text-secondary { color: #4c7379 !important; }
+
+        @media (max-width: 767px) {
+            #home { background-attachment: scroll !important; background-position: 58% center !important; }
+            #home::before { background: rgba(8,10,10,.62); }
+            #home .hero-shell { min-height: 100svh; padding-top: 7.5rem; padding-bottom: 2rem; }
+            #home h1 { font-size: 40px !important; }
+            #home .hero-index { grid-template-columns: repeat(2,minmax(0,1fr)); }
+            #home .hero-index a { min-height: 6.75rem; border-bottom: 1px solid rgba(255,255,255,.18); }
+            #home .hero-index a:nth-child(2) { border-right: 0; }
+            #projects .grid.sm\:grid-cols-2 { display: grid !important; grid-template-columns: 1fr; }
+            #projects img { height: 12rem !important; }
+        }
+
+        @media (min-width: 640px) {
+            #projects .grid.sm\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+
+        @media (min-width: 1024px) {
+            #projects .grid.sm\:grid-cols-2 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        }
+
+        /* Current revision: dark editorial sections and image-frame research cards */
+        body { background: var(--soft-black) !important; color: var(--off-white) !important; }
+        body::before { opacity: .008; }
+        main { display: flex; flex-direction: column; }
+        #home { order: 1; }
+        #interests { order: 2; }
+        #experience { order: 3; }
+        #projects { order: 4; }
+        #contact { order: 5; }
+
+        #home .hero-main {
+            display: grid;
+            grid-template-columns: minmax(0, .9fr) minmax(22rem, .72fr);
+            gap: clamp(3rem, 8vw, 8rem);
+            align-items: end;
+        }
+        #home .hero-copy { max-width: 38rem; }
+        #home .hero-about {
+            max-width: 31rem;
+            padding-left: clamp(1.25rem, 3vw, 2.5rem);
+            border-left: 1px solid rgba(255,255,255,.34);
+            color: rgba(255,255,255,.82);
+            font-family: var(--serif);
+            font-size: clamp(1rem, 1.25vw, 1.16rem);
+            line-height: 1.62;
+        }
+        #home .hero-about-label {
+            margin-bottom: 1rem;
+            color: var(--cyan) !important;
+            font-family: var(--sans);
+            font-size: var(--cyan-label-size-en);
+            line-height: var(--cyan-label-line-height);
+            font-weight: 500;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+        }
+        #home .hero-about > p:not(.hero-about-label) { color: rgba(255,255,255,.84) !important; }
+        #home .hero-kicker .zh:not(.hidden),
+        #home .hero-about-label .zh:not(.hidden),
+        #home .hero-index-label .zh:not(.hidden),
+        .interest-label .zh:not(.hidden) { font-size: var(--cyan-label-size-zh); letter-spacing: .14em; }
+        #home .hero-index { margin-top: clamp(2.5rem, 5vw, 4.5rem); }
+
+        main > section:not(#home) {
+            background: #101211 !important;
+            color: var(--off-white) !important;
+            border-bottom-color: rgba(255,255,255,.13);
+            box-shadow: none;
+        }
+        main > section:nth-of-type(even):not(#home) { background: #151817 !important; }
+        section > .container > .text-center h2,
+        #experience h3, #experience h4, #interests h3, #contact h3, #contact h4 {
+            color: var(--off-white) !important;
+        }
+        section > .container > .text-center > div { background: var(--cyan) !important; }
+        #experience .grid.md\:grid-cols-2 { grid-template-columns: minmax(0,1.2fr) minmax(18rem,.8fr); }
+        #experience .space-y-8 { border-top-color: rgba(255,255,255,.55); }
+        #experience .space-y-8 > div { border-bottom-color: rgba(255,255,255,.16) !important; }
+        #experience .space-y-8 > div:hover { border-bottom-color: var(--cyan) !important; }
+        #experience h3 > div { border-color: rgba(255,255,255,.25); color: var(--cyan) !important; }
+        #experience h4 + p { color: var(--cyan) !important; }
+        #experience [class*="bg-gray-100"] { color: rgba(255,255,255,.65) !important; border-bottom-color: rgba(255,255,255,.22); }
+        #experience ul, #experience .text-gray-600, #experience .text-gray-500 { color: rgba(255,255,255,.68) !important; }
+        #experience li::marker { color: var(--cyan); }
+
+        #projects .grid.sm\:grid-cols-2 { gap: 1.5rem !important; perspective: none; }
+        #projects .grid.sm\:grid-cols-2 > .group {
+            position: relative;
+            height: 22rem;
+            border: 1px solid rgba(255,255,255,.2);
+            background: #080a09 !important;
+            box-shadow: none !important;
+            transform: none !important;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        #projects .grid.sm\:grid-cols-2 > .group:hover,
+        #projects .grid.sm\:grid-cols-2 > .group:focus-visible,
+        #projects .grid.sm\:grid-cols-2 > .group:focus-within {
+            border-color: rgba(159,196,202,.75) !important;
+            box-shadow: none !important;
+            transform: none !important;
+        }
+        #projects img {
+            position: relative;
+            display: block;
+            width: 100%;
+            height: 13rem !important;
+            object-fit: contain !important;
+            object-position: center !important;
+            background: #080a09;
+            transform: none !important;
+            transition: opacity 320ms var(--ease-editorial) !important;
+        }
+        #projects .p-6 {
+            position: relative !important;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            height: 9rem;
+            padding: 1rem 1.2rem !important;
+            color: white;
+            background: #101312;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #projects .p-6 h3 { color: white !important; font-size: 1.2rem !important; line-height: 1.1; }
+        #projects .p-6 p { color: rgba(255,255,255,.72) !important; font-size: .78rem; line-height: 1.35; margin-bottom: .45rem !important; }
+        #projects .p-6 .flex { margin-top: .3rem; }
+        #projects .p-6 [class*="rounded-full"] { color: var(--cyan) !important; border-color: rgba(159,196,202,.45); }
+        #projects .absolute.inset-0,
+        #projects .group:hover .absolute.inset-0,
+        #projects .group:focus-within .absolute.inset-0 {
+            z-index: 3;
+            background: rgba(12,15,14,.985) !important;
+            color: var(--off-white) !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+            transform: translateY(7px);
+            transition: opacity 300ms var(--ease-editorial), transform 300ms var(--ease-editorial) !important;
+        }
+        /* Explicit positioning: project cards are rendered after Tailwind scans the page,
+           so the detail layer must not rely on runtime-generated absolute/inset utilities. */
+        #projects .grid.sm\:grid-cols-2 > .group > .project-detail {
+            position: absolute !important;
+            inset: 0 !important;
+            width: 100%;
+            height: 100%;
+            max-height: 100%;
+            box-sizing: border-box;
+            overflow-x: hidden !important;
+            overflow-y: auto !important;
+            overscroll-behavior: contain;
+            scrollbar-gutter: stable;
+        }
+        #projects .group:hover .absolute.inset-0,
+        #projects .group:focus-visible .absolute.inset-0,
+        #projects .group:focus-within .absolute.inset-0,
+        #projects .group.is-detail-preview .project-detail {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            transform: translateY(0);
+        }
+        #projects .group.is-detail-open .absolute.inset-0 {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            transform: translateY(0);
+        }
+        #projects .absolute.inset-0 h3 { color: var(--off-white) !important; }
+        #projects .absolute.inset-0 li, #projects .absolute.inset-0 p { color: rgba(255,255,255,.74) !important; }
+
+        #interests .grid { border-top-color: rgba(255,255,255,.55); }
+        #interests .grid > div { border-bottom-color: rgba(255,255,255,.16); color: var(--off-white); }
+        #interests .grid > div:hover { background: rgba(255,255,255,.045) !important; }
+        #interests .grid > div:first-child {
+            min-height: 19rem;
+            background: linear-gradient(rgba(7,9,9,.2),rgba(7,9,9,.68)), var(--photography-placeholder-image) center / contain no-repeat, #090b0a !important;
+            border-right-color: rgba(255,255,255,.28);
+        }
+        #interests .grid > div:first-child h3,
+        #interests .grid > div:first-child p { color: white !important; }
+        #interests .grid > div:first-child > a { color: white !important; }
+        #interests .grid > div:not(:first-child) h3 { color: var(--off-white) !important; }
+        #interests .grid > div:not(:first-child) p { color: rgba(255,255,255,.6) !important; }
+
+        #interests .interest-grid {
+            display: grid;
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            border-top: 1px solid rgba(255,255,255,.55);
+        }
+        #interests .interest-item {
+            position: relative;
+            min-width: 0;
+            overflow: hidden;
+            border-right: 1px solid rgba(255,255,255,.16);
+            border-bottom: 1px solid rgba(255,255,255,.16);
+            background: #0b0e0d;
+            color: var(--off-white);
+        }
+        #interests .interest-photography { grid-column: 1 / -1; min-height: clamp(24rem, 48vw, 38rem); }
+        #interests .interest-primary-link { position: absolute; inset: 0; display: block; color: white; }
+        #interests .photography-media { position: absolute; inset: 0; background: #080a09; }
+        #interests .photography-frame {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            opacity: 0;
+            transform: scale(1);
+            transition: opacity 520ms var(--ease-editorial), transform 850ms var(--ease-editorial) !important;
+        }
+        #interests .photography-frame.is-active { opacity: 1; }
+        #interests .interest-photography:hover .photography-frame.is-active { transform: scale(1.008); }
+        #interests .photography-control {
+            position: absolute;
+            z-index: 5;
+            top: 50%;
+            display: grid;
+            width: 2.6rem;
+            height: 2.6rem;
+            place-items: center;
+            border: 1px solid rgba(255,255,255,.34);
+            background: rgba(5,8,8,.32);
+            color: rgba(255,255,255,.9);
+            font-family: var(--sans);
+            font-size: 1.65rem;
+            line-height: 1;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-50%);
+            transition: opacity 220ms ease-out, background-color 220ms ease-out, border-color 220ms ease-out !important;
+        }
+        #interests .photography-control--previous { left: 1rem; }
+        #interests .photography-control--next { right: 1rem; }
+        #interests .interest-photography:hover .photography-control {
+            opacity: .72;
+            pointer-events: auto;
+        }
+        #interests .interest-photography .photography-control:hover {
+            opacity: .96;
+            border-color: rgba(255,255,255,.68);
+            background: rgba(5,8,8,.56);
+        }
+        #interests .interest-caption {
+            position: absolute;
+            z-index: 2;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 5rem 1.5rem 1.35rem;
+            background: linear-gradient(to top, rgba(6,8,8,.92), transparent);
+            pointer-events: none;
+        }
+        #interests .interest-label {
+            display: block;
+            margin-bottom: .65rem;
+            color: var(--cyan);
+            font-family: var(--sans);
+            font-size: var(--cyan-label-size-en);
+            line-height: var(--cyan-label-line-height);
+            font-weight: 500;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+        }
+        #interests .interest-item h3 { margin: 0 0 .35rem !important; color: var(--off-white) !important; font-size: clamp(1.7rem, 3vw, 2.8rem); }
+        #interests .interest-item p { color: rgba(255,255,255,.68) !important; font-size: .86rem; }
+        #interests .interest-arrow { position: absolute; z-index: 3; top: 1.25rem; right: 1.25rem; color: var(--cyan); font-size: 1.1rem; }
+        #interests .interest-secondary { grid-column: span 6; min-height: 21rem; }
+        #interests .interest-skiing { display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem; }
+        #interests .interest-skiing::before { content: ""; position: absolute; left: 0; top: 0; width: 3rem; height: 1px; background: var(--cyan); pointer-events: none; transition: width 320ms var(--ease-editorial); }
+        #interests .interest-skiing:hover::before { width: 6rem; }
+        #interests .interest-tennis .interest-media { position: absolute; inset: 0; background: #080a09; }
+        #interests .interest-tennis .interest-media img,
+        #interests .interest-tennis .interest-media video { width: 100%; height: 100%; object-fit: contain; object-position: center; }
+        #interests .interest-supporting { grid-column: span 6; min-height: 12rem; padding: 1.4rem; transition: transform 320ms var(--ease-editorial), background 320ms var(--ease-editorial) !important; }
+        #interests .interest-supporting:hover { background: #121615; transform: translateY(-2px); }
+        #interests .interest-supporting h3 { font-size: clamp(1.45rem, 2vw, 2rem); }
+
+        #contact .grid.grid-cols-1.md\:grid-cols-3 { border-top-color: rgba(255,255,255,.55); }
+        #contact .md\:col-span-2, #contact .md\:col-span-1 { background: transparent !important; }
+        #contact .w-12 { display: none; }
+        #contact .flex.items-start { border-bottom: 1px solid rgba(255,255,255,.14); padding-bottom: 1.25rem; }
+        #contact a, #contact p, #contact .text-gray-600 { color: rgba(255,255,255,.68) !important; }
+        #contact a:hover { color: var(--cyan) !important; }
+        #contact .flex.flex-col a { color: var(--off-white) !important; border-bottom-color: rgba(255,255,255,.16); }
+
+        @media (max-width: 767px) {
+            #home .hero-main { grid-template-columns: 1fr; gap: 2rem; }
+            #home .hero-about { max-width: 100%; padding-left: 1rem; font-size: .94rem; line-height: 1.5; }
+            #home .hero-index { margin-top: 2.5rem; }
+            #experience .grid.md\:grid-cols-2 { grid-template-columns: 1fr; }
+            #projects .grid.sm\:grid-cols-2 > .group { height: auto; min-height: 22rem; }
+            #projects img { height: 13rem !important; }
+            #interests .grid > div:first-child { min-height: 16rem; }
+            #interests .interest-grid { grid-template-columns: 1fr; }
+            #interests .interest-photography,
+            #interests .interest-secondary,
+            #interests .interest-supporting { grid-column: 1; }
+            #interests .interest-photography { min-height: 26rem; }
+            #interests .interest-secondary { min-height: 18rem; }
+            #interests .interest-supporting { min-height: 10rem; }
+            #interests .photography-frame { transition: none !important; transform: none !important; }
+        }
+
+        @media (hover: none), (pointer: coarse) {
+            #interests .photography-control { display: none; }
+            #projects .grid.sm\:grid-cols-2 > .group { height: auto; }
+            #projects .absolute.inset-0,
+            #projects .group:hover .absolute.inset-0,
+            #projects .group:focus-within .absolute.inset-0 {
+                position: relative !important;
+                inset: auto !important;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                transform: none;
+                border-top: 1px solid rgba(255,255,255,.14);
+            }
+            #projects .grid.sm\:grid-cols-2 > .group > .project-detail {
+                position: relative !important;
+                inset: auto !important;
+                width: 100%;
+                height: auto;
+                max-height: none;
+                overflow: visible !important;
+            }
+        }
+
+        @media (max-width: 767px) {
+            #projects .absolute.inset-0,
+            #projects .group:hover .absolute.inset-0,
+            #projects .group:focus-within .absolute.inset-0 {
+                position: relative !important;
+                inset: auto !important;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                transform: none;
+                border-top: 1px solid rgba(255,255,255,.14);
+            }
+            #projects .grid.sm\:grid-cols-2 > .group > .project-detail {
+                position: relative !important;
+                inset: auto !important;
+                width: 100%;
+                height: auto;
+                max-height: none;
+                overflow: visible !important;
+            }
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            #projects .group.is-detail-suppressed:hover .project-detail,
+            #projects .group.is-detail-suppressed:focus-visible .project-detail,
+            #projects .group.is-detail-suppressed:focus-within .project-detail {
+                opacity: 0 !important;
+                transform: translateY(7px);
+            }
+        }
     </style>
 
 </head>
@@ -289,21 +769,17 @@
                         <span class="en">Home</span>
                         <span class="zh hidden">主页</span>
                     </a>
-                    <a href="#about" class="text-dark hover:text-primary transition-colors duration-200 font-medium">
-                        <span class="en">About</span>
-                        <span class="zh hidden">关于</span>
+                    <a href="#interests" class="text-dark hover:text-primary transition-colors duration-200 font-medium">
+                        <span class="en">Interests</span>
+                        <span class="zh hidden">兴趣</span>
                     </a>
                     <a href="#experience" class="text-dark hover:text-primary transition-colors duration-200 font-medium">
                         <span class="en">Experience</span>
                         <span class="zh hidden">经历</span>
                     </a>
                     <a href="#projects" class="text-dark hover:text-primary transition-colors duration-200 font-medium">
-                        <span class="en">Projects</span>
-                        <span class="zh hidden">项目</span>
-                    </a>
-                    <a href="#interests" class="text-dark hover:text-primary transition-colors duration-200 font-medium">
-                        <span class="en">Interests</span>
-                        <span class="zh hidden">兴趣</span>
+                        <span class="en">Research</span>
+                        <span class="zh hidden">研究</span>
                     </a>
                     <a href="#contact" class="text-dark hover:text-primary transition-colors duration-200 font-medium">
                         <span class="en">Contact</span>
@@ -331,21 +807,17 @@
                     <span class="en">Home</span>
                     <span class="zh hidden">主页</span>
                 </a>
-                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-dark hover:bg-primary/10 hover:text-primary transition-colors duration-200">
-                    <span class="en">About</span>
-                    <span class="zh hidden">关于</span>
+                <a href="#interests" class="block px-3 py-2 rounded-md text-base font-medium text-dark hover:bg-primary/10 hover:text-primary transition-colors duration-200">
+                    <span class="en">Interests</span>
+                    <span class="zh hidden">兴趣</span>
                 </a>
                 <a href="#experience" class="block px-3 py-2 rounded-md text-base font-medium text-dark hover:bg-primary/10 hover:text-primary transition-colors duration-200">
                     <span class="en">Experience</span>
                     <span class="zh hidden">经历</span>
                 </a>
                 <a href="#projects" class="block px-3 py-2 rounded-md text-base font-medium text-dark hover:bg-primary/10 hover:text-primary transition-colors duration-200">
-                    <span class="en">Projects</span>
-                    <span class="zh hidden">项目</span>
-                </a>
-                <a href="#interests" class="block px-3 py-2 rounded-md text-base font-medium text-dark hover:bg-primary/10 hover:text-primary transition-colors duration-200">
-                    <span class="en">Interests</span>
-                    <span class="zh hidden">兴趣</span>
+                    <span class="en">Research</span>
+                    <span class="zh hidden">研究</span>
                 </a>
                 <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-dark hover:bg-primary/10 hover:text-primary transition-colors duration-200">
                     <span class="en">Contact</span>
@@ -364,110 +836,60 @@
     <main>
         <!-- Home Section -->
         <section id="home" class="pt-24 pb-16 md:pt-32 md:pb-24 bg-gradient-to-br from-primary/5 to-white">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-col lg:flex-row items-center gap-12">
-                    <!-- Left side of the home screen -->
-                    <div class="lg:w-1/2 space-y-6">
-                        <!-- basic information 1 -->
-                        <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold leading-tight text-dark">
-                            <span class="en text-primary">Henry Wang</span>
-                            <div class="en text-dark">Master in <strong>Finance</strong> at UChicago Booth</div>
-                            <span class="zh hidden text-primary">王乐桓</span>
-                            <div class="zh hidden text-dark">芝加哥大学布斯商学院 <strong>金融学</strong> 硕士</div>
-                        </h1>
-                        <!-- basic information 2 -->
-                        <div class="text-[clamp(1rem,2vw,1.25rem)] text-gray-600 leading-relaxed">
-                            <p>
-                            <span class="en"><strong>Economics</strong> and <strong>Data Science</strong> double major at USC</span>
-                            <span class="zh hidden">南加州大学<strong> 经济学 </strong>和<strong> 数据科学 </strong>本科</span>
-                            </p>
-                            <div class="home-intro mt-5">
-                                <p class="en">I combine an Economics and Data Science foundation from USC with graduate finance training at Chicago Booth. In Bank of America Sales &amp; Trading, I work across municipal and mortgage products with a quantitative, fixed-income lens. Away from markets, I spend time on photography, basketball, tennis, skiing, and cooking.</p>
-                                <p class="zh hidden">我将南加州大学经济学与数据科学的训练，与芝加哥大学布斯商学院的金融硕士学习相结合。在美国银行销售与交易业务中，我以量化和固定收益视角研究市政债券及抵押贷款产品。市场之外，我喜欢摄影、篮球、网球、滑雪和烹饪。</p>
-                            </div>
-                            <div class="mt-5 space-y-1 text-[clamp(1rem,2vw,1.25rem)] text-gray-600 leading-relaxed">
-                                <div class="text-[clamp(1rem,2vw,1.25rem)] text-gray-600 leading-relaxed">
-                                    <span class="copy-email cursor-pointer hover:text-primary transition-colors">wlele0108@gmail.com</span>
-                                    <button class="copy-email-btn ml-2 text-gray-500 hover:text-primary transition-colors" data-email="wlele0108@gmail.com">
-                                    <i class="fa-regular fa-copy"></i></button>
-                                </div>
-                                <div class="text-[clamp(1rem,2vw,1.25rem)] text-gray-600 leading-relaxed">
-                                    <span class="copy-email cursor-pointer hover:text-primary transition-colors">18518230249@163.com</span>
-                                    <button class="copy-email-btn ml-2 text-gray-500 hover:text-primary transition-colors" data-email="18518230249@163.com">
-                                    <i class="fa-regular fa-copy"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Download CV -->
-                        <div class="flex flex-wrap gap-4 pt-4">
-                            <a href="pdf/Resume.pdf" target="_blank" class="en px-6 py-3 bg-white text-primary border border-primary rounded-md font-medium hover:bg-primary/5 transition-all duration-200">
-                                <span class="en">Download CV</span>                            </a>
-                            <a href="pdf/王乐桓中文简历.pdf" target="_blank" class="zh hidden px-6 py-3 bg-white text-primary border border-primary rounded-md font-medium hover:bg-primary/5 transition-all duration-200">
-                                <span class="zh hidden">下载简历</span>
-                            </a>
-                        </div>
-                        <!-- Icons of Ins LinkedIn and Email -->
-                        <div class="flex items-center space-x-4 pt-4">
-                            <a href="https://www.linkedin.com/in/henry-wang-361633283/" target="_blank" class="text-gray-500 hover:text-primary transition-colors duration-200">
-                                <i class="fa-brands fa-linkedin text-4xl"></i>
-                            </a>
-                            <a href="https://www.instagram.com/wlele__/" target="_blank" class="text-gray-500 hover:text-primary transition-colors duration-200">
-                                <i class="fa-brands fa-instagram text-4xl"></i>
-                            </a>
+            <div class="hero-shell container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="hero-main">
+                <div class="hero-copy">
+                    <h1>
+                        <span class="en">Henry Wang</span>
+                        <span class="zh hidden">王乐桓</span>
+                    </h1>
+                    <p class="hero-identity en">I like traveling, photography, tennis, and basketball.</p>
+                    <p class="hero-identity zh hidden">我喜欢旅行、摄影、网球和篮球。</p>
 
-                        </div>
-                </div>
-
-                <!-- Selfies and school icons -->
-                <div class="lg:w-1/2 relative">
-                    <div class="w-64 h-64 md:w-80 md:h-80 mx-auto relative">
-                        <div class="absolute inset-0 bg-primary/20 rounded-full blur-3xl"></div>
-                        <img src="img/selfie1.JPG" alt="Lehuan Wang Portrait" 
-                            class="w-full h-full object-cover rounded-2xl shadow-2xl relative z-10">
-                    </div>
-                    
-                    <div class="mt-6 md:mt-12 z-20 w-full max-w-[24rem] md:max-w-[28rem] ml-auto">
-                        <!-- Booth section -->
-                        <div class="flex justify-between text-left max-w-[90%] mb-7">
-                            <div class="text-left flex-grow pr-1 min-w-0">
-                                <a href="https://www.chicagobooth.edu/" target="_blank">
-                                    <h3 class="en text-xl font-bold text-primary">Chicago Booth</h3>
-                                    <h3 class="zh hidden text-xl font-bold text-primary">布斯商学院</h3>
-                                </a>
-                                <p class="en text-gray-600 mt-1">@ University of Chicago</p>
-                                <p class="zh hidden text-gray-600 mt-1">@ 芝加哥大学</p>
-                            </div>
-                            <div class="flex-shrink-0">
-                                <div class="relative w-20 h-20 rounded-lg overflow-hidden shadow-md border-2 border-white">
-                                    <img src="img/chicago.jpg" alt="Booth" class="absolute inset-0 w-full h-full object-cover">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- USC section -->
-                        <div class="flex justify-between text-left max-w-[90%]">
-                            <div class="flex-1 min-w-0 text-left mr-auto pr-1">
-                                <a href="https://dornsife.usc.edu/" target="_blank">
-                                    <h3 class="en text-xl font-bold text-primary truncate">USC Dornsife</h3>
-                                    <h3 class="zh hidden text-xl font-bold text-primary truncate">南加大文理学院</h3>
-                                </a>
-                                <p class="en text-gray-600 mt-1 truncate">@ University of Southern California</p>
-                                <p class="zh hidden text-gray-600 mt-1 truncate">@ 南加州大学</p>
-                            </div>
-                            <div class="relative w-20 h-20 flex-shrink-0 ml-4 rounded-lg overflow-hidden shadow-md border-2 border-white">
-                                <img src="img/trojan.jpg" alt="Trojan" class="absolute inset-0 w-full h-full object-cover">
-                            </div>
+                    <div class="hero-actions">
+                        <a href="pdf/Resume.pdf" target="_blank" class="en"><span class="en">View CV</span></a>
+                        <a href="pdf/王乐桓中文简历.pdf" target="_blank" class="zh hidden"><span class="zh hidden">查看简历</span></a>
+                        <div class="hero-social" aria-label="Social links">
+                            <a href="https://www.linkedin.com/in/henry-wang-361633283/" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                            <a href="https://www.instagram.com/wlele__/" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
                         </div>
                     </div>
                 </div>
 
-            </div>  
-            </div>
+                <aside class="hero-about" aria-label="Short introduction">
+                    <p class="hero-about-label"><span class="en">A short introduction</span><span class="zh hidden">简短介绍</span></p>
+                    <p class="en">I study at Chicago Booth and will be returning to BofA for S&amp;T.<br><br>I travel often, usually alone, and spend a lot of time taking photos, playing tennis, and playing basketball.<br><br>That’s mostly it.</p>
+                    <p class="zh hidden">我在芝加哥大学 Booth 学习，之后会回到 BofA 做 S&amp;T。<br><br>我经常旅行，很多时候是一个人，也会拍照、打网球和篮球。<br><br>差不多就是这样。</p>
+                </aside>
+                </div>
+
+                <nav class="hero-index" aria-label="Selected portfolio paths">
+                    <a href="#interests">
+                        <span class="hero-index-label">01 · <span class="en">Interests</span><span class="zh hidden">兴趣</span></span>
+                        <span class="hero-index-title"><span class="en">Photography &amp; life beyond work</span><span class="zh hidden">摄影与工作之外</span></span>
+                        <span class="hero-index-arrow">→</span>
+                    </a>
+                    <a href="#experience">
+                        <span class="hero-index-label">02 · <span class="en">Experience</span><span class="zh hidden">经历</span></span>
+                        <span class="hero-index-title"><span class="en">Experience &amp; Education</span><span class="zh hidden">经历与教育</span></span>
+                        <span class="hero-index-arrow">→</span>
+                    </a>
+                    <a href="#projects">
+                        <span class="hero-index-label">03 · <span class="en">Research</span><span class="zh hidden">研究</span></span>
+                        <span class="hero-index-title"><span class="en">Quantitative &amp; academic work</span><span class="zh hidden">量化与学术研究</span></span>
+                        <span class="hero-index-arrow">→</span>
+                    </a>
+                    <a href="#contact">
+                        <span class="hero-index-label">04 · <span class="en">Contact</span><span class="zh hidden">联系</span></span>
+                        <span class="hero-index-title"><span class="en">Connect with me</span><span class="zh hidden">与我联系</span></span>
+                        <span class="hero-index-arrow">→</span>
+                    </a>
+                </nav>
             </div>
         </section>
 
         <!-- About Section -->
-        <section id="about" class="py-16 md:py-24 bg-white">
+        <template id="about-content-archive">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- About me header -->
                 <div class="text-center mb-16">
@@ -570,7 +992,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </template>
 
         <!-- Experience & Education Section -->
         <section id="experience" class="py-16 md:py-24 bg-gray-50">
@@ -896,413 +1318,14 @@
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-dark mb-4">
-                        <span class="en">Projects & Research</span>
+                        <span class="en">Projects &amp; Research</span>
                         <span class="zh hidden">项目与研究</span>
                     </h2>
                     <div class="w-20 h-1 bg-primary mx-auto rounded-full"></div>
                 </div>
-                
-                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Project Derivative Trading -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform group relative hover:scale-105 hover:z-10">
-                        <img src="img/trade.jpg" alt="Education App" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="font-bold text-lg text-dark mb-2">
-                                <span class="en">Derivative-Trading Simulation Fund</span>
-                                <span class="zh hidden">衍生产品交易策略基金</span>
-                            </h3>
-                            <p class="text-gray-600 mb-4">
-                                <span class="en">Construct a $10M fund and apply derivative trading strategies for fund</span>
-                                <span class="zh hidden">利用衍生产品交易策略模拟1000万美金基金表现</span>
-                            </p>
-                            <div class="flex items-center space-x-2">
-                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                                    <span class="en">Asset Management</span>
-                                    <span class="zh hidden">资产管理</span>
-                                </span>
-                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                                    <span class="en">Derivative Trading</span>
-                                    <span class="zh hidden">衍生产品交易</span>
-                                </span>
-                            </div>
-                        </div>
-                        <!-- Overlay with detailed description -->
-                        <div class="absolute inset-0 bg-white p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-auto">
-                            <h3 class="en font-bold text-lg text-dark mb-2">Derivative-Trading Simulation Fund</h3>
-                            <h3 class="zh hidden font-bold text-lg text-dark mb-2">衍生产品交易策略基金</h3>
-                            <!-- CONTENT GOES HERE - Add your detailed project description in this paragraph -->
-                            <p class="text-gray-600 mb-4">
-                                <ul class="list-disc pl-5 space-y-1">
-                                    <li class="en">In the derivative trading simulation, managed a $10M virtual portfolio amid volatile markets and unpredictable economic/corporate events.</li>
-                                    <li class="en">Developed strategies to value and trade options while minimizing risks, integrating advanced tactics like options spreads and the binomial pricing model.</li>
-                                    <li class="en">Incorporated real-time adjustments for economic events (e.g., central bank policy shifts, GDP releases) and corporate events (e.g., earnings announcements, dividend declarations).</li>
-                                    <li class="en">Ensured derivative valuations reflected macroeconomic uncertainties and firm-specific risks, enabling data-driven trading decisions and market adaptability.</li>
-                                    <li class="zh hidden">在衍生品交易模拟中，于波动市场及不确定经济/企业事件中管理1000万美元虚拟投资组合。</li>
-                                    <li class="zh hidden">制定期权估值与交易策略以实现风险最小化，整合期权价差、二叉树定价模型等进阶方法。</li>
-                                    <li class="zh hidden">纳入对经济事件（如央行政策调整、GDP数据发布）及企业事件（如财报披露、股息宣告）的实时调整机制。</li>
-                                    <li class="zh hidden">确保衍生品估值反映宏观经济不确定性与企业特定风险，助力数据驱动的交易决策与市场适应能力。</li>
-                                </ul>
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <!-- Project Econ Consulting -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform group relative hover:scale-105 hover:z-10">
-                        <img src="img/reg.jpg" alt="Housing Model" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="font-bold text-lg text-dark mb-2">
-                                <span class="en">Real Estate Financial Model</span>
-                                <span class="zh hidden">房地产金融模型</span>
-                            </h3>
-                            <p class="text-gray-600 mb-4">
-                                <span class="en">Layered Regression for Property's Caluation</span>
-                                <span class="zh hidden">房价影响因素的多层递归模型</span>
-                            </p>
-                            <div class="flex items-center space-x-2">
-                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                                    <span class="en">Modeling</span>
-                                    <span class="zh hidden">建模</span>
-                                </span>
-                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                                    <span class="en">Economic Consulting</span>
-                                    <span class="zh hidden">经济咨询</span>
-                                </span>
-                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                                    <span class="en">Python</span>
-                                    <span class="zh hidden">Python</span>
-                                </span>
-                            </div>
-                        </div>
-                        
-                        <!-- Overlay with detailed description -->
-                        <div class="absolute inset-0 bg-white p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-auto">
-                            <h3 class="en font-bold text-lg text-dark mb-2">Real Estate Financial Model</h3>
-                                <h3 class="zh hidden font-bold text-lg text-dark mb-2">房地产金融模型</h3>
-                                <!-- CONTENT GOES HERE - Add your detailed project description in this paragraph -->
-                                <p class="text-gray-600 mb-4">
-                                    <ul class="list-disc pl-5 space-y-1">
-                                        <li class="en">Developed a Python-based layered regression model to predict property values with 14 selected features, achieving an adjusted R² of 84%.</li>
-                                        <li class="en">Integrated macroeconomic indicators (GDP, interest rates), micro-location factors (school ratings, transit proximity), and property attributes (sqft, age).</li>
-                                        <li class="en">Optimized model performance through recursive feature elimination and cross-validation, balancing complexity and predictive accuracy.</li>
-                                        <li class="en">Provided data-driven insights for real estate investors and economic consultants analyzing market trends and investment risks.</li>
-                                        <li class="zh hidden">构建基于Python的14维特征多层递归模型预测房产价值，调整R²达84%。</li>
-                                        <li class="zh hidden">整合宏观经济指标（GDP、利率）、微观区位因素（学校评级、交通便利性）及房产属性（面积、房龄）。</li>
-                                        <li class="zh hidden">通过递归特征筛选与交叉验证优化模型性能，平衡复杂度与预测精度。</li>
-                                        <li class="zh hidden">为房地产投资者和经济顾问分析市场趋势与投资风险提供数据驱动洞察。</li>
-                                    </ul>
-                                </p>
-                        </div>
-                    </div>
-                    
-                    <!-- Project Cocoa Research -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform group relative hover:scale-105 hover:z-10">
-                        <img src="img/ghana.jpg" alt="Economic Research Project" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="font-bold text-lg text-dark mb-2">
-                                <span class="en">Ghana Economic Research</span>
-                                <span class="zh hidden">加纳经济研究</span>
-                            </h3>
-                            <p class="text-gray-600 mb-4">
-                                <span class="en">Analysis of economic distortions under disturbing pricing policies</span>
-                                <span class="zh hidden">加纳可可定价政策研究</span>
-                            </p>
-                            <div class="flex items-center space-x-2">
-                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                                    <span class="en">Economic Research</span>
-                                    <span class="zh hidden">经济研究</span>
-                                </span>
-                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                                    <span class="en">Python</span>
-                                    <span class="zh hidden">Python</span>
-                                </span>
-                            </div>
-                        </div>
-                        
-                        <!-- Overlay with detailed description -->
-                        <div class="absolute inset-0 bg-white p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-auto">
-                            <h3 class="en font-bold text-lg text-dark mb-2">Ghana Cocoa Pricing Strategy Research</h3>
-                            <h3 class="zh hidden font-bold text-lg text-dark mb-2">加纳可可定价政策研究</h3>
-                                    <!-- CONTENT GOES HERE - Add your detailed project description in this paragraph -->
-                                    <p class="en text-gray-600 mb-4">
-                                        <ul class="list-disc pl-5 space-y-1">
-                                            <li class="en">Conducted in-depth analysis of Ghana's cocoa pricing mechanisms under the Cocoa Marketing Board (CMB), revealing how monopsonistic practices and implicit taxation contributed to the sector's decline.</li>
-                                            <li class="en">Compared Ghana's model with Indonesia's cocoa sector reforms, highlighting the effectiveness of market liberalization and farmer-centered policies in boosting productivity and export competitiveness.</li>
-                                            <li class="en">Assessed the economic impact of post-1983 reforms, including cedi devaluation, CMB restructuring, and technology adoption, quantifying improvements in cocoa production (from 240k to 800k+ tons) and poverty reduction (51.7% to 39.5%).</li>
-                                            <li class="en">Provided policy recommendations emphasizing sustainable pricing frameworks, continued investment in agricultural technology, and inclusive growth strategies to address rising inequality while maintaining sectoral competitiveness.</li>
-                                            <li class="zh hidden">深入分析加纳可可营销委员会（CMB）定价机制，揭示垄断采购和隐性税收如何导致可可产业衰退。</li>
-                                            <li class="zh hidden">对比加纳与印尼可可部门改革模式，突显市场自由化和以农民为中心政策对提升生产力和出口竞争力的有效性。</li>
-                                            <li class="zh hidden">评估1983年后改革（塞地贬值、CMB重组、技术应用）的经济影响，量化可可产量（从24万吨增至80多万吨）和贫困率下降（51.7%至39.5%）的改善。</li>
-                                            <li class="zh hidden">提出政策建议，强调建立可持续定价框架、持续投资农业技术，以及实施包容性增长战略，以解决不平等加剧问题同时保持部门竞争力。</li>
-                                        </ul>
-                                    </p>
-                        </div>
-                    </div>
-                    
-                    <!-- Project E-Payment -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform group relative hover:scale-105 hover:z-10">
-                        <img src="img/epayment.jpg" alt="E-Payment Research" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="font-bold text-lg text-dark mb-2">
-                                <span class="en">E-Payment Economic Impact</span>
-                                <span class="zh hidden">电子支付的经济影响</span>
-                            </h3>
-                            <p class="text-gray-600 mb-4">
-                                <span class="en">5000-word research with People's Bank of China</span>
-                                <span class="zh hidden">与中国人民银行合作的5000字研究报告</span>
-                            </p>
-                            <div class="flex items-center space-x-2">
-                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                                    <span class="en">Economic Research</span>
-                                    <span class="zh hidden">经济研究</span>
-                                </span>
-                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                                    <span class="en">Python</span>
-                                    <span class="zh hidden">Python</span>
-                                </span>
-                            </div>
-                        </div>
-                        
-                        <!-- Overlay with detailed description -->
-                        <div class="absolute inset-0 bg-white p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-auto">
-                            <h3 class="en font-bold text-lg text-dark mb-2">Electronic Payment Impact Analysis</h3>
-                            <h3 class="zh hidden font-bold text-lg text-dark mb-2">电子支付影响分析</h3>
-                            <!-- CONTENT GOES HERE - Add your detailed project description in this paragraph -->
-                            <p class="text-gray-600 mb-4">
-                                <ul class="list-disc pl-5 space-y-1">
-                                    <li class="en">Widespread adoption of electronic payment systems (e.g., Alipay, WeChat Pay) has transformed transactional behavior across global markets.</li>
-                                    <li class="en">Analyzed the impact of these systems on consumer spending patterns and macroeconomic consumption trends through behavioral economics frameworks and econometric modeling.</li>
-                                    <li class="en">Identified key mechanisms driving increased consumption: reduced transaction friction, seamless integration with consumer credit, diminished "pain of paying," and accelerated growth of e-commerce and digital services.</li>
-                                    <li class="en">Quantified outcomes including 23% higher discretionary spending, 18% increase in purchase frequency, sectoral shifts toward services, and a measurable 1.5% annual boost to per capita consumption in impacted economies.</li>
-                                    <li class="zh hidden">电子支付系统（如支付宝、微信支付）的广泛应用重塑了全球市场的交易行为。</li>
-                                    <li class="zh hidden">通过行为经济学框架和计量模型，分析该系统对消费者支出模式和宏观经济消费趋势的影响。</li>
-                                    <li class="zh hidden">揭示推动消费增长的核心机制：交易摩擦降低、消费信贷无缝衔接、支付痛感减弱，以及电商和数字服务的加速扩张。</li>
-                                    <li class="zh hidden">量化结果显示：受影响经济体的 discretionary 支出增长23%，购买频率提升18%，服务业占比上升，人均消费年增长率提高1.5个百分点。</li>
-                                </ul>
-                            </p>
-                        </div>
-                    </div>  
-                    
-                    <!-- Project AF -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform group relative hover:scale-105 hover:z-10">
-                        <img src="img/af.jpg" alt="AF" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="font-bold text-lg text-dark mb-2">
-                                <span class="en">Camera Autofucos Algorithms Analysis</span>
-                                <span class="zh hidden">相机自动对焦算法分析</span>
-                            </h3>
-                            <p class="text-gray-600 mb-4">
-                                <span class="en">Examine and Reconstruct Autofocus Algorithm with CNN</span>
-                                <span class="zh hidden">使用机器学习CNN分析自动对焦算法</span>
-                            </p>
-                            <div class="flex items-center space-x-2">
-                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                                    <span class="en">CNN</span>
-                                    <span class="zh hidden">CNN</span>
-                                </span>
-                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                                    <span class="en">Machine Learning</span>
-                                    <span class="zh hidden">Machine Learning</span>
-                                </span>
-                            </div>
-                        </div>
-                        
-                        <!-- Overlay with detailed description -->
-                        <div class="absolute inset-0 bg-white p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-auto">
-                            <h3 class="en font-bold text-lg text-dark mb-2">Examine and Reconstruct Autofocus Algorithm with CNN</h3>
-                            <h3 class="zh hidden font-bold text-lg text-dark mb-2">使用机器学习CNN分析自动对焦算法</h3>
-                            <!-- CONTENT GOES HERE - Add your detailed project description in this paragraph -->
-                            <p class="text-gray-600 mb-4">
-                                <ul class="list-disc pl-5 space-y-1">
-                                    <li class="en">Identified methods of contrast/wavelength-based autofocus systems, which showed 40% slower performance in low-light and 30% inconsistency in high-motion scenarios.</li>
-                                    <li class="en">Developed a CNN-based regression model to directly predict optimal focus distance from single images, trained on 5,000 labeled focal stacks across diverse lighting and motion conditions.</li>
-                                    <li class="en">Optimized inference speed by replacing iterative search algorithms with direct prediction, achieving 3x faster autofocus (200ms vs. 600ms average) and 18% higher precision than baseline methods.</li>
-                                    <li class="en">Demonstrated 92% focus accuracy across 20 test scenes  with results validated through side-by-side A/B testing.</li>
-                                    <li class="zh hidden">发现传统基于对比度/波长的自动对焦系统在低光环境下速度慢40%，在高动态场景下一致性低30%的问题。</li>
-                                    <li class="zh hidden">开发基于CNN的回归模型，直接从单张图像预测最佳对焦距离，在涵盖多种光照和动态条件的5000个标记焦点堆栈上训练。</li>
-                                    <li class="zh hidden">用直接预测替代迭代搜索算法优化推理速度，实现自动对焦速度提升3倍（平均200ms vs 600ms），精度比基线方法高18%。</li>
-                                    <li class="zh hidden">在20个测试场景实时演示中实现92%的对焦准确率，结果通过A/B测试验证。</li>
-                                </ul>
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <!-- Project Econometrics -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform group relative hover:scale-105 hover:z-10">
-                        <img src="img/stata.jpg" alt="econometrics" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="font-bold text-lg text-dark mb-2">
-                                <span class="en">Work-From-Home Effects Evaluation</span>
-                                <span class="zh hidden">远程办公效率分析</span>
-                            </h3>
-                            <p class="text-gray-600 mb-4">
-                                <span class="en">Two-step econometrics analysis</span>
-                                <span class="zh hidden">两步法计量经济学分析</span>
-                            </p>
-                            <div class="flex items-center space-x-2">
-                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                                    <span class="en">Econometrics</span>
-                                    <span class="zh hidden">计量经济学</span>
-                                </span>
-                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                                    <span class="en">Stata</span>
-                                    <span class="zh hidden">Stata</span>
-                                </span>
-                            </div>
-                        </div>
-                        
-                        <!-- Overlay with detailed description -->
-                        <div class="absolute inset-0 bg-white p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-auto">
-                            <h3 class="en font-bold text-lg text-dark mb-2">Work-From-Home Effects Evaluation</h3>
-                            <h3 class="zh hidden font-bold text-lg text-dark mb-2">远程工作影响评估</h3>
-                            <!-- CONTENT GOES HERE - Add your detailed project description in this paragraph -->
-                            <p class="text-gray-600 mb-4">
-                                <ul class="list-disc pl-5 space-y-1">
-                                    <li class="en">Conducted a two-step econometric analysis of a Chinese travel agency's WFH pilot, leveraging productivity metrics (call volume/quality), retention rates, and satisfaction surveys.</li>
-                                    <li class="en">Applied difference-in-differences (DID) models to measure causal impacts on productivity and satisfaction, with standard regressions for retention, controlling for baseline characteristics.</li>
-                                    <li class="en">Validated randomization through covariate balance tests, cleaned 6-month employee datasets, and implemented robust error clustering to address heteroskedasticity.</li>
-                                    <li class="en">Found no significant change in productivity, a 13.6% reduction in quit rates (p&lt;0.01), and notable satisfaction improvements (job +0.6, life +5.1, career +3.2 on 10-point scales), supporting WFH as a retention and well-being enhancer.</li>
-                                    <li class="zh hidden">对中国某旅行社的远程工作试点进行两步计量分析，利用生产力指标（通话量/质量）、留存率和满意度调查数据。</li>
-                                    <li class="zh hidden">应用双重差分（DID）模型衡量对生产力和满意度的因果影响，用标准回归分析留存率，控制基线特征。</li>
-                                    <li class="zh hidden">通过协变量平衡测试验证随机化，清理6个月员工数据集，并实施稳健误差聚类处理异方差性。</li>
-                                    <li class="zh hidden">发现生产力无显著变化，离职率下降13.6%(p&lt;0.01)，满意度显著提升（工作+0.6、生活+5.1、职业发展+3.2，10分制），证明远程工作可提高留存率和福祉。</li>                                </ul>
-                            </p>
-                        </div>
-                    </div>              
-                    
-                    <!-- Project USC Heatmap -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform group relative hover:scale-105 hover:z-10">
-                        <img src="img/figma3.jpg" alt="heatmap" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="font-bold text-lg text-dark mb-2">
-                                <span class="en">USC Transportation Heatmap</span>
-                                <span class="zh hidden">南加大交通热点地图</span>
-                            </h3>
-                            <p class="text-gray-600 mb-4">
-                                <span class="en">USC Transportation Heatmap</span>
-                                <span class="zh hidden">Xposition校园导航解决方案</span>
-                            </p>
-                            <div class="flex items-center space-x-2">
-                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                                    <span class="en">Business Plan</span>
-                                    <span class="zh hidden">商业计划</span>
-                                </span>
-                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                                    <span class="en">Web Development</span>
-                                    <span class="zh hidden">Web开发</span>
-                                </span>
-                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                                    <span class="en">UX/UI</span>
-                                    <span class="zh hidden">UX/UI</span>
-                                </span>
-                            </div>
-                        </div>
-                        
-                        <!-- Overlay with detailed description -->
-                        <div class="absolute inset-0 bg-white p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-auto">
-                            <h3 class="en font-bold text-lg text-dark mb-2">USC Transportation Heatmap</h3>
-                            <h3 class="zh hidden font-bold text-lg text-dark mb-2">Xposition校园导航解决方案</h3>
-                            <!-- CONTENT GOES HERE - Add your detailed project description in this paragraph -->
-                            <p class="text-gray-600 mb-4">
-                            <ul class="list-disc pl-5 space-y-1">
-                                <li class="en">Addressed chronic traffic congestion and safety issues on USC's Exposition Boulevard during campus events, where existing map apps failed to provide event-specific navigation support.</li>
-                                <li class="en">Designed Xposition, a transportation solution focused on real-time crowd data visualization, alternate route planning, and dynamic meeting point recommendations to improve event-day commuting.</li>
-                                <li class="en">Implemented heatmap visualization of crowd density, AI-powered route optimization considering event schedules, and a gamified reward system to incentivize data contribution, iterating based on 500+ user test sessions.</li>
-                                <li class="en">Developed a functional prototype that outperformed generic map apps in user testing, providing 30% faster route suggestions and 42% higher satisfaction scores for event navigation, with plans to integrate predictive analytics.</li>
-                                <li class="zh hidden">针对南加州大学活动期间博览会大道长期拥堵和安全问题，现有地图应用无法提供活动专用导航支持的痛点。</li>
-                                <li class="zh hidden">设计Xposition交通解决方案，专注于实时人流数据可视化、备选路线规划和动态集合点推荐，提升活动日通勤效率。</li>
-                                <li class="zh hidden">实现人群密度热力图可视化、基于活动日程的AI路线优化和游戏化数据贡献奖励系统，基于500+用户测试迭代。</li>
-                                <li class="zh hidden">开发出在用户测试中优于通用地图应用的功能原型，活动导航路线建议速度提升30%，满意度评分提高42%，并计划集成预测分析功能。</li>
-                            </ul>
-                        </p>
-                        </div>
-                    </div>
-                    
-                    <!-- Project Sickle Cell Anaemia Diet Plan -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform group relative hover:scale-105 hover:z-10">
-                        <img src="img/figma.jpg" alt="Diet Plan App Design" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="font-bold text-lg text-dark mb-2">
-                                <span class="en">Sickle Cell Anaemia Diet Plan App Design</span>
-                                <span class="zh hidden">镰刀性贫血饮食计划应用设计</span>
-                            </h3>
-                            <p class="text-gray-600 mb-4">
-                                <span class="en">Figma UI design with 300+ user responses</span>
-                                <span class="zh hidden">基于300+用户反馈的Figma UI设计</span>
-                            </p>
-                            <div class="flex items-center space-x-2">
-                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                                    <span class="en">UI/UX Design</span>
-                                    <span class="zh hidden">UI/UX设计</span>
-                                </span>
-                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                                    <span class="en">Figma</span>
-                                    <span class="zh hidden">Figma</span>
-                                </span>
-                            </div>
-                        </div>
-                        
-                        <!-- Overlay with detailed description -->
-                        <div class="absolute inset-0 bg-white p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-auto">
-                            <h3 class="en font-bold text-lg text-dark mb-2">Sickle Cell Anaemia Diet Plan App Design</h3>
-                            <h3 class="zh hidden font-bold text-lg text-dark mb-2">镰刀性贫血饮食计划应用设计</h3>
-                            <!-- CONTENT GOES HERE - Add your detailed project description in this paragraph -->
-                            <p class="text-gray-600 mb-4">
-                                <ul class="list-disc pl-5 space-y-1">
-                                    <li class="en">Identified gaps in existing nutrition apps, where sickle cell anemia patients lacked specialized dietary management tools and general users struggled with personalized tracking.</li>
-                                    <li class="en">Led the design of a dual-purpose dietary app integrating clinical nutrition guidelines for anemia with general wellness tracking, leveraging experience from leading the Flow app project.</li>
-                                    <li class="en">Conducted 5 design thinking sprints, iterating on prototypes validated by 300+ market survey responses, and developed a Figma UI with 4 modules for meal planning, nutrient tracking, and anemia-specific recommendations.</li>
-                                    <li class="en">Delivered a patient-centric prototype that addresses both clinical and lifestyle nutrition needs, mirroring the user-validation methodology from the Flow app to ensure real-world applicability.</li>
-                                    <li class="zh hidden">发现现有营养应用的不足：镰状细胞贫血患者缺乏专用饮食管理工具，普通用户难以实现个性化饮食追踪。</li>
-                                    <li class="zh hidden">借鉴Flow应用的领导经验，主导设计一款融合贫血临床营养指南与通用健康追踪的双重功能饮食应用。</li>
-                                    <li class="zh hidden">进行5轮设计思维冲刺，通过300+份市场调研验证迭代原型，开发出包含4大模块（膳食计划、营养追踪、贫血专属建议）的Figma界面。</li>
-                                    <li class="zh hidden">交付以患者为中心的原型，同时满足临床和生活方式营养需求，采用与Flow应用相同的用户验证方法确保实际适用性。</li>
-                                </ul>
-                            </p>
-                        </div>
-                    </div>  
-                    
-                    <!-- Project JEP -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform group relative hover:scale-105 hover:z-10">
-                        <img src="img/fossil.jpg" alt="JEP" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="font-bold text-lg text-dark mb-2">
-                                <span class="en">Assistant Tutoring in Local Schools</span>
-                                <span class="zh hidden">古生物学支教</span>
-                            </h3>
-                            <p class="text-gray-600 mb-4">
-                                <span class="en">Weekly Teaching in Fossils</span>
-                                <span class="zh hidden">化石研究</span>
-                            </p>
-                            <div class="flex items-center space-x-2">
-                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                                    <span class="en">Volunteer</span>
-                                    <span class="zh hidden">志愿活动</span>
-                                </span>
-                                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                                    <span class="en">Assistant Tutoring</span>
-                                    <span class="zh hidden">助教</span>
-                                </span>
-                            </div>
-                        </div>
-                        
-                        <!-- Overlay with detailed description -->
-                        <div class="absolute inset-0 bg-white p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-auto">
-                            <h3 class="en font-bold text-lg text-dark mb-2">Assistant Tutoring in Local Schools</h3>
-                            <h3 class="zh hidden font-bold text-lg text-dark mb-2">古生物学支教</h3>
-                            <!-- CONTENT GOES HERE - Add your detailed project description in this paragraph -->
-                            <p class="text-gray-600 mb-4">
-                                <ul class="list-disc pl-5 space-y-1">
-                                    <li class="en">Developed and delivered weekly paleontology lessons featuring hands-on fossil activities and simplified scientific timelines for K-8 students.</li>
-                                    <li class="en">Implemented interactive teaching methods including fossil handling stations, AR stratigraphy tools, and dig-site simulations to address diverse learning styles.</li>
-                                    <li class="en">Boosted student engagement through "Junior Paleontologist Badges" and team challenges while supporting differentiated instruction.</li>
-                                    <li class="zh hidden">为K-8年级学生开发并每周教授古生物学课程，包含化石实践活动和简化科学时间表。</li>
-                                    <li class="zh hidden">实施互动教学方法，包括化石触摸站、AR地层工具和挖掘现场模拟，以适应不同学习风格。</li>
-                                    <li class="zh hidden">通过"初级古生物学家徽章"和团队挑战提升学生参与度，同时支持差异化教学。</li>
-                                </ul>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+
+                <!-- Project cards are rendered from PROJECT_DATA below. -->
+                <div id="projects-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
             </div>
         </section>
 
@@ -1316,85 +1339,75 @@
                     </h2>
                     <div class="w-20 h-1 bg-primary mx-auto rounded-full"></div>
                 </div>
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6"> 
-                    <!-- Interest Photography -->
-                    <div class="bg-gray-50 rounded-xl p-6 text-center hover:bg-primary/5 transition-colors duration-300 relative group">
-                        <!-- Gallery Badge Link - Now always visible -->
-                        <a href="gallery.html" target="_blank" class="absolute top-4 right-4 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white opacity-100 transition-opacity duration-300">
-                            <i class="fas fa-external-link-alt text-sm"></i>
+                <div class="interest-grid">
+                    <!-- Primary interest: Photography hover contact sheet -->
+                    <article class="interest-item interest-photography" data-photography-slideshow>
+                        <a href="gallery.html" target="_blank" class="interest-primary-link" aria-label="Open photography gallery">
+                            <div class="photography-media" aria-hidden="true">
+                                <!-- Current contents of img/interests/photography/; keep every image in this list. -->
+                                <img class="photography-frame is-active" src="img/interests/photography/DSC_0063.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/DSC_0087.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/DSC_0105.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/DSC_0637.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/DSC_1532.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/DSC_1734.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/DSC_2078.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/DSC_2125.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/DSC_2516.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/DSC_3025.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/DSC_3834.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/DSC_3837.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/DSC_3853.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/DSC_3908.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/DSC_4161.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/IMG_1325.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/IMG_1359.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/Z30_0368.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/d3d4a6efc3df486c49779e9cfdf887f2.jpeg" alt="" decoding="async">
+                            </div>
+                            <div class="interest-caption">
+                                <span class="interest-label">01 · <span class="en">Primary</span><span class="zh hidden">主要兴趣</span></span>
+                                <h3><span class="en">Photography</span><span class="zh hidden">摄影</span></h3>
+                                <p><span class="en">Nikon Z7II — Landscape + Street Photography</span><span class="zh hidden">尼康 Z7II — 风景与街拍</span></p>
+                            </div>
+                            <span class="interest-arrow">↗</span>
                         </a>
-                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary mx-auto mb-4">
-                            <i class="fa-solid fa-camera text-2xl"></i>
+                        <button type="button" class="photography-control photography-control--previous" data-photography-direction="-1" aria-label="Previous photograph">‹</button>
+                        <button type="button" class="photography-control photography-control--next" data-photography-direction="1" aria-label="Next photograph">›</button>
+                    </article>
+
+                    <!-- Secondary interest: Skiing remains editorial until personal media is provided -->
+                    <article class="interest-item interest-secondary interest-skiing">
+                        <span class="interest-label">02 · <span class="en">Movement</span><span class="zh hidden">运动</span></span>
+                        <h3><span class="en">Skiing</span><span class="zh hidden">滑雪</span></h3>
+                        <p><span class="en">Beginner Level</span><span class="zh hidden">又菜又爱滑</span></p>
+                    </article>
+
+                    <!-- Secondary interest: Tennis poster; future video can replace this media block -->
+                    <article class="interest-item interest-secondary interest-tennis" data-video-interest="tennis">
+                        <div class="interest-media">
+                            <img src="img/interests/tennis/tennis-court-poster.jpg" alt="Henry Wang playing tennis" loading="lazy">
                         </div>
-                        <h3 class="font-medium text-dark mb-2">
-                            <span class="en">Photography</span>
-                            <span class="zh hidden">摄影</span>
-                        </h3>
-                        <p class="text-sm text-gray-600">
-                            <span class="en">Nikon Z7II - Landscape + Street Photography</span>
-                            <span class="zh hidden">尼康Z7II - 风景+街拍</span>
-                        </p>
-                    </div>
-                    
-                    <!-- Interest Basketball -->
-                    <div class="bg-gray-50 rounded-xl p-6 text-center">
-                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary mx-auto mb-4">
-                            <i class="fa-solid fa-basketball text-2xl"></i>
+                        <div class="interest-caption">
+                            <span class="interest-label">03 · <span class="en">Tennis</span><span class="zh hidden">网球</span></span>
+                            <h3><span class="en">Tennis</span><span class="zh hidden">网球</span></h3>
+                            <p><span class="en">Novak's Fan</span><span class="zh hidden">小徳球迷</span></p>
                         </div>
-                        <h3 class="font-medium text-dark mb-2">
-                            <span class="en">Basketball</span>
-                            <span class="zh hidden">篮球</span>
-                        </h3>
-                        <p class="text-sm text-gray-600">
-                            <span class="en">Spurs Fan! Let's GO WEMBY</span>
-                            <span class="zh hidden">马刺球迷</span>
-                        </p>
-                    </div>
-                    
-                    <!-- Interest Skiing -->
-                    <div class="bg-gray-50 rounded-xl p-6 text-center">
-                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary mx-auto mb-4">
-                            <i class="fa-solid fa-skiing text-2xl"></i>
-                        </div>
-                        <h3 class="font-medium text-dark mb-2">
-                            <span class="en">Skiing</span>
-                            <span class="zh hidden">滑雪</span>
-                        </h3>
-                        <p class="text-sm text-gray-600">
-                            <span class="en">Beginner Level</span>
-                            <span class="zh hidden">又菜又爱滑</span>
-                        </p>
-                    </div>
-                    
-                    <!-- Interest Cooking -->
-                    <div class="bg-gray-50 rounded-xl p-6 text-center">
-                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary mx-auto mb-4">
-                            <i class="fa-solid fa-utensils text-2xl"></i>
-                        </div>
-                        <h3 class="font-medium text-dark mb-2">
-                            <span class="en">Cooking</span>
-                            <span class="zh hidden">烹饪</span>
-                        </h3>
-                        <p class="text-sm text-gray-600">
-                            <span class="en">Charity cook for community events</span>
-                            <span class="zh hidden">社区慈善烹饪活动参与者</span>
-                        </p>
-                    </div>
-                    
-                    <!-- Interest Tennis -->
-                    <div class="bg-gray-50 rounded-xl p-6 text-center">
-                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary mx-auto mb-4">
-                            <i class="material-icons" style="text-shadow: 0 0 0.5px currentColor; font-size: 30px;">sports_tennis</i>
-                        </div>
-                        <h3 class="font-medium text-dark mb-2">
-                            <span class="en">Tennis</span>
-                            <span class="zh hidden">网球</span>
-                        </h3>
-                        <p class="text-sm text-gray-600">
-                            <span class="en">Novak's Fan</span>
-                            <span class="zh hidden">小徳球迷</span>
-                        </p>
-                    </div>
+                    </article>
+
+                    <!-- Supporting interest: Basketball -->
+                    <article class="interest-item interest-supporting">
+                        <span class="interest-label">04 · <span class="en">Basketball</span><span class="zh hidden">篮球</span></span>
+                        <h3><span class="en">Basketball</span><span class="zh hidden">篮球</span></h3>
+                        <p><span class="en">Spurs Fan! Let's GO WEMBY</span><span class="zh hidden">马刺球迷</span></p>
+                    </article>
+
+                    <!-- Supporting interest: Cooking -->
+                    <article class="interest-item interest-supporting">
+                        <span class="interest-label">05 · <span class="en">Cooking</span><span class="zh hidden">烹饪</span></span>
+                        <h3><span class="en">Cooking</span><span class="zh hidden">烹饪</span></h3>
+                        <p><span class="en">Charity cook for community events</span><span class="zh hidden">社区慈善烹饪活动参与者</span></p>
+                    </article>
                 </div>
             </div>
         </section>
@@ -1535,17 +1548,17 @@
                             <span class="en">Home</span>
                             <span class="zh hidden">主页</span>
                         </a></li>
-                        <li><a href="#about" class="text-gray-400 hover:text-white transition-colors duration-200">
-                            <span class="en">About</span>
-                            <span class="zh hidden">关于</span>
+                        <li><a href="#interests" class="text-gray-400 hover:text-white transition-colors duration-200">
+                            <span class="en">Interests</span>
+                            <span class="zh hidden">兴趣</span>
                         </a></li>
                         <li><a href="#experience" class="text-gray-400 hover:text-white transition-colors duration-200">
                             <span class="en">Experience</span>
                             <span class="zh hidden">经历</span>
                         </a></li>
                         <li><a href="#projects" class="text-gray-400 hover:text-white transition-colors duration-200">
-                            <span class="en">Projects</span>
-                            <span class="zh hidden">项目</span>
+                            <span class="en">Research</span>
+                            <span class="zh hidden">研究</span>
                         </a></li>
                         <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors duration-200">
                             <span class="en">Contact</span>
@@ -1672,31 +1685,478 @@
             });
         }
 
-        // Phase 2.2: tactile depth is reserved for project modules
-        const projectSurfaces = document.querySelectorAll('#projects .group');
-        const canTiltProjects = window.matchMedia('(pointer: fine)').matches &&
-            !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const PROJECT_DATA = [
+            {
+                id: 'derivative-trading-simulation-fund',
+                image: 'img/trade.jpg',
+                title: {
+                    en: 'Derivative-Trading Simulation Fund',
+                    zh: '衍生产品交易策略基金'
+                },
+                shortDescription: {
+                    en: 'Construct a $10M fund and apply derivative trading strategies for fund',
+                    zh: '利用衍生产品交易策略模拟1000万美金基金表现'
+                },
+                tags: {
+                    en: ['Asset Management', 'Derivative Trading'],
+                    zh: ['资产管理', '衍生产品交易']
+                },
+                detailTitle: {
+                    en: 'Derivative-Trading Simulation Fund',
+                    zh: '衍生产品交易策略基金'
+                },
+                details: {
+                    en: [
+                        'In the derivative trading simulation, managed a $10M virtual portfolio amid volatile markets and unpredictable economic/corporate events.',
+                        'Developed strategies to value and trade options while minimizing risks, integrating advanced tactics like options spreads and the binomial pricing model.',
+                        'Incorporated real-time adjustments for economic events (e.g., central bank policy shifts, GDP releases) and corporate events (e.g., earnings announcements, dividend declarations).',
+                        'Ensured derivative valuations reflected macroeconomic uncertainties and firm-specific risks, enabling data-driven trading decisions and market adaptability.'
+                    ],
+                    zh: [
+                        '在衍生品交易模拟中，于波动市场及不确定经济/企业事件中管理1000万美元虚拟投资组合。',
+                        '制定期权估值与交易策略以实现风险最小化，整合期权价差、二叉树定价模型等进阶方法。',
+                        '纳入对经济事件（如央行政策调整、GDP数据发布）及企业事件（如财报披露、股息宣告）的实时调整机制。',
+                        '确保衍生品估值反映宏观经济不确定性与企业特定风险，助力数据驱动的交易决策与市场适应能力。'
+                    ]
+                }
+            },
+            {
+                id: 'real-estate-financial-model',
+                image: 'img/reg.jpg',
+                title: {
+                    en: 'Real Estate Financial Model',
+                    zh: '房地产金融模型'
+                },
+                shortDescription: {
+                    en: "Layered Regression for Property's Caluation",
+                    zh: '房价影响因素的多层递归模型'
+                },
+                tags: {
+                    en: ['Modeling', 'Economic Consulting', 'Python'],
+                    zh: ['建模', '经济咨询', 'Python']
+                },
+                detailTitle: {
+                    en: 'Real Estate Financial Model',
+                    zh: '房地产金融模型'
+                },
+                details: {
+                    en: [
+                        'Developed a Python-based layered regression model to predict property values with 14 selected features, achieving an adjusted R² of 84%.',
+                        'Integrated macroeconomic indicators (GDP, interest rates), micro-location factors (school ratings, transit proximity), and property attributes (sqft, age).',
+                        'Optimized model performance through recursive feature elimination and cross-validation, balancing complexity and predictive accuracy.',
+                        'Provided data-driven insights for real estate investors and economic consultants analyzing market trends and investment risks.'
+                    ],
+                    zh: [
+                        '构建基于Python的14维特征多层递归模型预测房产价值，调整R²达84%。',
+                        '整合宏观经济指标（GDP、利率）、微观区位因素（学校评级、交通便利性）及房产属性（面积、房龄）。',
+                        '通过递归特征筛选与交叉验证优化模型性能，平衡复杂度与预测精度。',
+                        '为房地产投资者和经济顾问分析市场趋势与投资风险提供数据驱动洞察。'
+                    ]
+                }
+            },
+            {
+                id: 'ghana-economic-research',
+                image: 'img/ghana.jpg',
+                title: {
+                    en: 'Ghana Economic Research',
+                    zh: '加纳经济研究'
+                },
+                shortDescription: {
+                    en: 'Analysis of economic distortions under disturbing pricing policies',
+                    zh: '加纳可可定价政策研究'
+                },
+                tags: {
+                    en: ['Economic Research', 'Python'],
+                    zh: ['经济研究', 'Python']
+                },
+                detailTitle: {
+                    en: 'Ghana Cocoa Pricing Strategy Research',
+                    zh: '加纳可可定价政策研究'
+                },
+                details: {
+                    en: [
+                        "Conducted in-depth analysis of Ghana's cocoa pricing mechanisms under the Cocoa Marketing Board (CMB), revealing how monopsonistic practices and implicit taxation contributed to the sector's decline.",
+                        "Compared Ghana's model with Indonesia's cocoa sector reforms, highlighting the effectiveness of market liberalization and farmer-centered policies in boosting productivity and export competitiveness.",
+                        'Assessed the economic impact of post-1983 reforms, including cedi devaluation, CMB restructuring, and technology adoption, quantifying improvements in cocoa production (from 240k to 800k+ tons) and poverty reduction (51.7% to 39.5%).',
+                        'Provided policy recommendations emphasizing sustainable pricing frameworks, continued investment in agricultural technology, and inclusive growth strategies to address rising inequality while maintaining sectoral competitiveness.'
+                    ],
+                    zh: [
+                        '深入分析加纳可可营销委员会（CMB）定价机制，揭示垄断采购和隐性税收如何导致可可产业衰退。',
+                        '对比加纳与印尼可可部门改革模式，突显市场自由化和以农民为中心政策对提升生产力和出口竞争力的有效性。',
+                        '评估1983年后改革（塞地贬值、CMB重组、技术应用）的经济影响，量化可可产量（从24万吨增至80多万吨）和贫困率下降（51.7%至39.5%）的改善。',
+                        '提出政策建议，强调建立可持续定价框架、持续投资农业技术，以及实施包容性增长战略，以解决不平等加剧问题同时保持部门竞争力。'
+                    ]
+                }
+            },
+            {
+                id: 'e-payment-economic-impact',
+                image: 'img/epayment.jpg',
+                title: {
+                    en: 'E-Payment Economic Impact',
+                    zh: '电子支付的经济影响'
+                },
+                shortDescription: {
+                    en: "5000-word research with People's Bank of China",
+                    zh: '与中国人民银行合作的5000字研究报告'
+                },
+                tags: {
+                    en: ['Economic Research', 'Python'],
+                    zh: ['经济研究', 'Python']
+                },
+                detailTitle: {
+                    en: 'Electronic Payment Impact Analysis',
+                    zh: '电子支付影响分析'
+                },
+                details: {
+                    en: [
+                        'Widespread adoption of electronic payment systems (e.g., Alipay, WeChat Pay) has transformed transactional behavior across global markets.',
+                        'Analyzed the impact of these systems on consumer spending patterns and macroeconomic consumption trends through behavioral economics frameworks and econometric modeling.',
+                        'Identified key mechanisms driving increased consumption: reduced transaction friction, seamless integration with consumer credit, diminished “pain of paying,” and accelerated growth of e-commerce and digital services.',
+                        'Quantified outcomes including 23% higher discretionary spending, 18% increase in purchase frequency, sectoral shifts toward services, and a measurable 1.5% annual boost to per capita consumption in impacted economies.'
+                    ],
+                    zh: [
+                        '电子支付系统（如支付宝、微信支付）的广泛应用重塑了全球市场的交易行为。',
+                        '通过行为经济学框架和计量模型，分析该系统对消费者支出模式和宏观经济消费趋势的影响。',
+                        '揭示推动消费增长的核心机制：交易摩擦降低、消费信贷无缝衔接、支付痛感减弱，以及电商和数字服务的加速扩张。',
+                        '量化结果显示：受影响经济体的 discretionary 支出增长23%，购买频率提升18%，服务业占比上升，人均消费年增长率提高1.5个百分点。'
+                    ]
+                }
+            },
+            {
+                id: 'camera-autofucos-algorithms-analysis',
+                image: 'img/af.jpg',
+                title: {
+                    en: 'Camera Autofucos Algorithms Analysis',
+                    zh: '相机自动对焦算法分析'
+                },
+                shortDescription: {
+                    en: 'Examine and Reconstruct Autofocus Algorithm with CNN',
+                    zh: '使用机器学习CNN分析自动对焦算法'
+                },
+                tags: {
+                    en: ['CNN', 'Machine Learning'],
+                    zh: ['CNN', 'Machine Learning']
+                },
+                detailTitle: {
+                    en: 'Examine and Reconstruct Autofocus Algorithm with CNN',
+                    zh: '使用机器学习CNN分析自动对焦算法'
+                },
+                details: {
+                    en: [
+                        'Identified methods of contrast/wavelength-based autofocus systems, which showed 40% slower performance in low-light and 30% inconsistency in high-motion scenarios.',
+                        'Developed a CNN-based regression model to directly predict optimal focus distance from single images, trained on 5,000 labeled focal stacks across diverse lighting and motion conditions.',
+                        'Optimized inference speed by replacing iterative search algorithms with direct prediction, achieving 3x faster autofocus (200ms vs. 600ms average) and 18% higher precision than baseline methods.',
+                        'Demonstrated 92% focus accuracy across 20 test scenes with results validated through side-by-side A/B testing.'
+                    ],
+                    zh: [
+                        '发现传统基于对比度/波长的自动对焦系统在低光环境下速度慢40%，在高动态场景下一致性低30%的问题。',
+                        '开发基于CNN的回归模型，直接从单张图像预测最佳对焦距离，在涵盖多种光照和动态条件的5000个标记焦点堆栈上训练。',
+                        '用直接预测替代迭代搜索算法优化推理速度，实现自动对焦速度提升3倍（平均200ms vs 600ms），精度比基线方法高18%。',
+                        '在20个测试场景实时演示中实现92%的对焦准确率，结果通过A/B测试验证。'
+                    ]
+                }
+            },
+            {
+                id: 'work-from-home-effects-evaluation',
+                image: 'img/stata.jpg',
+                title: {
+                    en: 'Work-From-Home Effects Evaluation',
+                    zh: '远程办公效率分析'
+                },
+                shortDescription: {
+                    en: 'Two-step econometrics analysis',
+                    zh: '两步法计量经济学分析'
+                },
+                tags: {
+                    en: ['Econometrics', 'Stata'],
+                    zh: ['计量经济学', 'Stata']
+                },
+                detailTitle: {
+                    en: 'Work-From-Home Effects Evaluation',
+                    zh: '远程办公效率分析'
+                },
+                details: {
+                    en: [
+                        "Conducted a two-step econometric analysis of a Chinese travel agency's WFH pilot, leveraging productivity metrics (call volume/quality), retention rates, and satisfaction surveys.",
+                        'Applied difference-in-differences (DID) models to measure causal impacts on productivity and satisfaction, with standard regressions for retention, controlling for baseline characteristics.',
+                        'Validated randomization through covariate balance tests, cleaned 6-month employee datasets, and implemented robust error clustering to address heteroskedasticity.',
+                        'Found no significant change in productivity, a 13.6% reduction in quit rates (p<0.01), and notable satisfaction improvements (job +0.6, life +5.1, career +3.2 on 10-point scales), supporting WFH as a retention and well-being enhancer.'
+                    ],
+                    zh: [
+                        '对中国某旅行社的远程工作试点进行两步计量分析，利用生产力指标（通话量/质量）、留存率和满意度调查数据。',
+                        '应用双重差分（DID）模型衡量对生产力和满意度的因果影响，用标准回归分析留存率，控制基线特征。',
+                        '通过协变量平衡测试验证随机化，清理6个月员工数据集，并实施稳健误差聚类处理异方差性。',
+                        '发现生产力无显著变化，离职率下降13.6%(p<0.01)，满意度显著提升（工作+0.6、生活+5.1、职业发展+3.2，10分制），证明远程工作可提高留存率和福祉。'
+                    ]
+                }
+            },
+            {
+                id: 'usc-transportation-heatmap',
+                image: 'img/figma3.jpg',
+                title: {
+                    en: 'USC Transportation Heatmap',
+                    zh: '南加大交通热点地图'
+                },
+                shortDescription: {
+                    en: 'USC Transportation Heatmap',
+                    zh: 'Xposition校园导航解决方案'
+                },
+                tags: {
+                    en: ['Business Plan', 'Web Development', 'UX/UI'],
+                    zh: ['商业计划', 'Web开发', 'UX/UI']
+                },
+                detailTitle: {
+                    en: 'USC Transportation Heatmap',
+                    zh: '南加大交通热点地图'
+                },
+                details: {
+                    en: [
+                        "Addressed chronic traffic congestion and safety issues on USC's Exposition Boulevard during campus events, where existing map apps failed to provide event-specific navigation support.",
+                        'Designed Xposition, a transportation solution focused on real-time crowd data visualization, alternate route planning, and dynamic meeting point recommendations to improve event-day commuting.',
+                        'Implemented heatmap visualization of crowd density, AI-powered route optimization considering event schedules, and a gamified reward system to incentivize data contribution, iterating based on 500+ user test sessions.',
+                        'Developed a functional prototype that outperformed generic map apps in user testing, providing 30% faster route suggestions and 42% higher satisfaction scores for event navigation, with plans to integrate predictive analytics.'
+                    ],
+                    zh: [
+                        '针对南加州大学活动期间博览会大道长期拥堵和安全问题，现有地图应用无法提供活动专用导航支持的痛点。',
+                        '设计Xposition交通解决方案，专注于实时人流数据可视化、备选路线规划和动态集合点推荐，提升活动日通勤效率。',
+                        '实现人群密度热力图可视化、基于活动日程的AI路线优化和游戏化数据贡献奖励系统，基于500+用户测试迭代。',
+                        '开发出在用户测试中优于通用地图应用的功能原型，活动导航路线建议速度提升30%，满意度评分提高42%，并计划集成预测分析功能。'
+                    ]
+                }
+            },
+            {
+                id: 'sickle-cell-anaemia-diet-plan-app-design',
+                image: 'img/figma.jpg',
+                title: {
+                    en: 'Sickle Cell Anaemia Diet Plan App Design',
+                    zh: '镰刀性贫血饮食计划应用设计'
+                },
+                shortDescription: {
+                    en: 'Figma UI design with 300+ user responses',
+                    zh: '基于300+用户反馈的Figma UI设计'
+                },
+                tags: {
+                    en: ['UI/UX Design', 'Figma'],
+                    zh: ['UI/UX设计', 'Figma']
+                },
+                detailTitle: {
+                    en: 'Sickle Cell Anaemia Diet Plan App Design',
+                    zh: '镰刀性贫血饮食计划应用设计'
+                },
+                details: {
+                    en: [
+                        'Identified gaps in existing nutrition apps, where sickle cell anemia patients lacked specialized dietary management tools and general users struggled with personalized tracking.',
+                        'Led the design of a dual-purpose dietary app integrating clinical nutrition guidelines for anemia with general wellness tracking, leveraging experience from leading the Flow app project.',
+                        'Conducted 5 design thinking sprints, iterating on prototypes validated by 300+ market survey responses, and developed a Figma UI with 4 modules for meal planning, nutrient tracking, and anemia-specific recommendations.',
+                        'Delivered a patient-centric prototype that addresses both clinical and lifestyle nutrition needs, mirroring the user-validation methodology from the Flow app to ensure real-world applicability.'
+                    ],
+                    zh: [
+                        '发现现有营养应用的不足：镰状细胞贫血患者缺乏专用饮食管理工具，普通用户难以实现个性化饮食追踪。',
+                        '借鉴Flow应用的领导经验，主导设计一款融合贫血临床营养指南与通用健康追踪的双重功能饮食应用。',
+                        '进行5轮设计思维冲刺，通过300+份市场调研验证迭代原型，开发出包含4大模块（膳食计划、营养追踪、贫血专属建议）的Figma界面。',
+                        '交付以患者为中心的原型，同时满足临床和生活方式营养需求，采用与Flow应用相同的用户验证方法确保实际适用性。'
+                    ]
+                }
+            },
+            {
+                id: 'assistant-tutoring-local-schools',
+                image: 'img/fossil.jpg',
+                title: {
+                    en: 'Assistant Tutoring in Local Schools',
+                    zh: '古生物学支教'
+                },
+                shortDescription: {
+                    en: 'Weekly Teaching in Fossils',
+                    zh: '化石研究'
+                },
+                tags: {
+                    en: ['Volunteer', 'Assistant Tutoring'],
+                    zh: ['志愿活动', '助教']
+                },
+                detailTitle: {
+                    en: 'Assistant Tutoring in Local Schools',
+                    zh: '古生物学支教'
+                },
+                details: {
+                    en: [
+                        'Developed and delivered weekly paleontology lessons featuring hands-on fossil activities and simplified scientific timelines for K-8 students.',
+                        'Implemented interactive teaching methods including fossil handling stations, AR stratigraphy tools, and dig-site simulations to address diverse learning styles.',
+                        'Boosted student engagement through “Junior Paleontologist Badges” and team challenges while supporting differentiated instruction.'
+                    ],
+                    zh: [
+                        '为K-8年级学生开发并每周教授古生物学课程，包含化石实践活动和简化科学时间表。',
+                        '实施互动教学方法，包括化石触摸站、AR地层工具和挖掘现场模拟，以适应不同学习风格。',
+                        '通过“初级古生物学家徽章”和团队挑战提升学生参与度，同时支持差异化教学。'
+                    ]
+                }
+            }
+        ];
 
-        projectSurfaces.forEach(surface => {
-            surface.tabIndex = 0;
-            surface.setAttribute('role', 'group');
-            const title = surface.querySelector('h3 .en')?.textContent?.trim();
-            if (title) surface.setAttribute('aria-label', `Project details: ${title}`);
+        const escapeProjectHTML = value => String(value)
+            .replaceAll('&', '&amp;')
+            .replaceAll('<', '&lt;')
+            .replaceAll('>', '&gt;')
+            .replaceAll('"', '&quot;')
+            .replaceAll("'", '&#039;');
+
+        const renderProjectCard = project => {
+            const tags = project.tags.en.map((tag, index) => `
+                <span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+                    <span class="en">${escapeProjectHTML(tag)}</span>
+                    <span class="zh hidden">${escapeProjectHTML(project.tags.zh[index])}</span>
+                </span>
+            `).join('');
+            const englishDetails = project.details.en.map(detail => `<li>${escapeProjectHTML(detail)}</li>`).join('');
+            const chineseDetails = project.details.zh.map(detail => `<li>${escapeProjectHTML(detail)}</li>`).join('');
+
+            return `
+                <article class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform group relative hover:scale-105 hover:z-10 project-card" data-project-id="${escapeProjectHTML(project.id)}" tabindex="0" role="group" aria-label="Project details: ${escapeProjectHTML(project.title.en)}">
+                    <img src="${escapeProjectHTML(project.image)}" alt="" class="w-full h-48 object-contain" loading="lazy" decoding="async">
+                    <div class="p-6 project-outline">
+                        <h3 class="font-bold text-lg text-dark mb-2">
+                            <span class="en">${escapeProjectHTML(project.title.en)}</span>
+                            <span class="zh hidden">${escapeProjectHTML(project.title.zh)}</span>
+                        </h3>
+                        <p class="text-gray-600 mb-4">
+                            <span class="en">${escapeProjectHTML(project.shortDescription.en)}</span>
+                            <span class="zh hidden">${escapeProjectHTML(project.shortDescription.zh)}</span>
+                        </p>
+                        <div class="flex items-center flex-wrap gap-2">${tags}</div>
+                    </div>
+                    <div class="absolute inset-0 bg-white p-6 opacity-0 overflow-auto project-detail" aria-hidden="true">
+                        <h3 class="en font-bold text-lg text-dark mb-3">${escapeProjectHTML(project.detailTitle.en)}</h3>
+                        <h3 class="zh hidden font-bold text-lg text-dark mb-3">${escapeProjectHTML(project.detailTitle.zh)}</h3>
+                        <ul class="en list-disc pl-5 space-y-2">${englishDetails}</ul>
+                        <ul class="zh hidden list-disc pl-5 space-y-2">${chineseDetails}</ul>
+                    </div>
+                </article>
+            `;
+        };
+
+        const projectsGrid = document.getElementById('projects-grid');
+        if (projectsGrid) {
+            projectsGrid.innerHTML = PROJECT_DATA.map(renderProjectCard).join('');
+        }
+
+        const SITE_INTERACTION_CONFIG = {
+            PHOTOGRAPHY_SLIDE_INTERVAL: parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--photography-slideshow-interval')) || 1000,
+            INTEREST_VIDEO_PLAYBACK_RATE: 1.35,
+            ENABLE_PROJECT_PIN: true
+        };
+
+        // Photography: hover-driven contact sheet. Touch and reduced-motion users keep a static frame.
+        const photographySlideshow = document.querySelector('[data-photography-slideshow]');
+        const photographyFrames = photographySlideshow ? Array.from(photographySlideshow.querySelectorAll('.photography-frame')) : [];
+        const photographyControls = photographySlideshow ? Array.from(photographySlideshow.querySelectorAll('[data-photography-direction]')) : [];
+        const canCyclePhotography = window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
+            !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let photographyFrameIndex = 0;
+        let photographyTimer = null;
+
+        const showPhotographyFrame = index => {
+            const nextFrame = photographyFrames[index];
+            if (!nextFrame || !nextFrame.complete || nextFrame.naturalWidth === 0) return false;
+            photographyFrames.forEach((frame, frameIndex) => frame.classList.toggle('is-active', frameIndex === index));
+            return true;
+        };
+
+        const stepPhotographyFrame = direction => {
+            for (let offset = 1; offset <= photographyFrames.length; offset += 1) {
+                const candidateIndex = (photographyFrameIndex + (direction * offset) + photographyFrames.length) % photographyFrames.length;
+                if (showPhotographyFrame(candidateIndex)) {
+                    photographyFrameIndex = candidateIndex;
+                    return;
+                }
+            }
+        };
+
+        const stopPhotographyCycle = () => {
+            window.clearInterval(photographyTimer);
+            photographyTimer = null;
+        };
+
+        const startPhotographyCycle = () => {
+            stopPhotographyCycle();
+            photographyTimer = window.setInterval(() => stepPhotographyFrame(1), SITE_INTERACTION_CONFIG.PHOTOGRAPHY_SLIDE_INTERVAL);
+        };
+
+        photographyControls.forEach(control => {
+            control.addEventListener('click', event => {
+                event.preventDefault();
+                event.stopPropagation();
+                stepPhotographyFrame(Number(control.dataset.photographyDirection));
+                if (canCyclePhotography) startPhotographyCycle();
+            });
         });
 
-        if (canTiltProjects) {
-            projectSurfaces.forEach(surface => {
-                surface.addEventListener('pointermove', (event) => {
-                    const bounds = surface.getBoundingClientRect();
-                    const x = (event.clientX - bounds.left) / bounds.width - 0.5;
-                    const y = (event.clientY - bounds.top) / bounds.height - 0.5;
-                    surface.style.setProperty('--project-rx', `${(-y * 2).toFixed(2)}deg`);
-                    surface.style.setProperty('--project-ry', `${(x * 2).toFixed(2)}deg`);
-                });
+        if (photographySlideshow && photographyFrames.length > 1 && canCyclePhotography) {
+            photographySlideshow.addEventListener('mouseenter', () => {
+                if (photographyTimer) return;
+                startPhotographyCycle();
+            });
+            photographySlideshow.addEventListener('mouseleave', stopPhotographyCycle);
+        }
 
-                surface.addEventListener('pointerleave', () => {
-                    surface.style.setProperty('--project-rx', '0deg');
-                    surface.style.setProperty('--project-ry', '0deg');
+        // Video-ready Interests: activates automatically when a real <video> is added later.
+        document.querySelectorAll('[data-video-interest] video').forEach(video => {
+            video.muted = true;
+            video.loop = true;
+            video.playsInline = true;
+            video.playbackRate = SITE_INTERACTION_CONFIG.INTEREST_VIDEO_PLAYBACK_RATE;
+            const card = video.closest('[data-video-interest]');
+            card.addEventListener('mouseenter', () => video.play().catch(() => {}));
+            card.addEventListener('mouseleave', () => video.pause());
+        });
+
+        // Research cards: default summaries stay visible; hover/focus reveals full details.
+        const projectSurfaces = document.querySelectorAll('#projects .group');
+        const projectDetailsAreStatic = window.matchMedia('(hover: none), (pointer: coarse), (max-width: 767px)').matches;
+
+        const setProjectDetailAccessibility = (surface, isVisible) => {
+            surface.querySelector('.project-detail')?.setAttribute('aria-hidden', String(!isVisible));
+        };
+
+        projectSurfaces.forEach(surface => {
+            setProjectDetailAccessibility(surface, projectDetailsAreStatic);
+            surface.addEventListener('pointerenter', () => {
+                if (!surface.classList.contains('is-detail-suppressed')) {
+                    surface.classList.add('is-detail-preview');
+                    setProjectDetailAccessibility(surface, true);
+                }
+            });
+            surface.addEventListener('pointerleave', () => {
+                surface.classList.remove('is-detail-preview', 'is-detail-suppressed');
+                setProjectDetailAccessibility(surface, surface.classList.contains('is-detail-open') || projectDetailsAreStatic);
+            });
+            surface.addEventListener('focusin', () => {
+                if (!surface.classList.contains('is-detail-suppressed')) {
+                    surface.classList.add('is-detail-preview');
+                    setProjectDetailAccessibility(surface, true);
+                }
+            });
+            surface.addEventListener('focusout', () => {
+                if (!surface.classList.contains('is-detail-open')) surface.classList.remove('is-detail-preview');
+                setProjectDetailAccessibility(surface, surface.classList.contains('is-detail-open') || projectDetailsAreStatic);
+            });
+        });
+
+        // EXPERIMENTAL — PROJECT PIN. Set ENABLE_PROJECT_PIN to false above to disable.
+        if (SITE_INTERACTION_CONFIG.ENABLE_PROJECT_PIN) {
+            projectSurfaces.forEach(surface => {
+                surface.addEventListener('click', () => {
+                    const shouldPin = !surface.classList.contains('is-detail-open');
+                    projectSurfaces.forEach(project => {
+                        project.classList.remove('is-detail-open', 'is-detail-preview', 'is-detail-suppressed');
+                        setProjectDetailAccessibility(project, projectDetailsAreStatic);
+                    });
+                    if (shouldPin) {
+                        surface.classList.add('is-detail-open', 'is-detail-preview');
+                        setProjectDetailAccessibility(surface, true);
+                    } else {
+                        surface.classList.add('is-detail-suppressed');
+                        setProjectDetailAccessibility(surface, projectDetailsAreStatic);
+                        surface.blur();
+                    }
                 });
             });
         }
