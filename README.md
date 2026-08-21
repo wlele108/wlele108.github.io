@@ -53,7 +53,7 @@ The main site does not use the Python files, notebooks, or `qixi-card/` to gener
 |---|---|---|
 | Global style variables | `:root` and `Phase 3: cinematic` | Colors, typography, hero image, cyan label sizes, slideshow timing. |
 | Navigation | `id="navbar"` | Desktop menu, mobile menu, language buttons. |
-| Home | `id="home"` | Hero name, Hero Identity, Short Introduction, CV and social links, editorial section links. |
+| Home | `id="home"` | Hero name, Hero Identity, the embedded About Me introduction, CV and social links, editorial section links. |
 | Archived About content | `id="about-content-archive"` | Inactive `<template>` retained for reference; it does not render as a page section. |
 | Experience & Education | `id="experience"` | Bank of America first, other professional experience, and education. |
 | Projects & Research | `id="projects"` | Empty `#projects-grid` mount point. Cards are rendered from `PROJECT_DATA`. |
@@ -74,7 +74,7 @@ Important variables:
 | `--cyan` | Restrained cyan accent used for labels and rules. |
 | `--cyan-label-size-en` | English cyan-label size. |
 | `--cyan-label-size-zh` | Chinese cyan-label size; intentionally optically larger. |
-| `--photography-slideshow-interval` | Photography hover slideshow interval in milliseconds. |
+| `SITE_INTERACTION_CONFIG.PHOTOGRAPHY_SLIDE_INTERVAL` | Single JavaScript source of truth for the Photography hover slideshow interval; currently `1000`. |
 | `#home::before` / `#home::after` rgba alpha | Hero overlay strength and text contrast. |
 
 Research images must remain `object-fit: contain`, centered on a neutral charcoal frame. Do not switch them to `cover`; the full source image is more important than filling every pixel.
@@ -118,7 +118,7 @@ The comment `EXPERIMENTAL — PROJECT PIN` must remain next to this behavior unt
 | `img/figma3.jpg` | USC Transportation Heatmap thumbnail. |
 | `img/figma.jpg` | Sickle Cell Anaemia app thumbnail. |
 | `img/fossil.jpg` | Assistant Tutoring project thumbnail. |
-| `img/interests/photography/` | Local source images available to the homepage Photography hover slideshow. Because a static page cannot enumerate the folder, only filenames explicitly listed in `index.html` are shown. |
+| `img/interests/photography/` | Categorized homepage Photography slideshow assets under `nature-landscape/`, `city-architecture/`, and `night-atmosphere/`. The explicit HTML order controls playback order. |
 | `img/interests/tennis/tennis-court-poster.jpg` | Current static Tennis poster and future video fallback image. |
 | Other root-level images | Existing education, portrait, legacy, or supporting assets. Confirm references with a text search before deleting or renaming any file. |
 
@@ -141,12 +141,28 @@ In `index.html`, search inside `#home` for these selectors:
 
 - Hero Identity English: `<p class="hero-identity en">`
 - Hero Identity Chinese: `<p class="hero-identity zh hidden">`
-- Short Introduction English: the `<p class="en">` inside `.hero-about`
-- Short Introduction Chinese: the `<p class="zh hidden">` inside `.hero-about`
+- About Me visible label: `.hero-about-label` (`About Me` / `关于我`)
+- About Me paragraph English: the `<p class="en">` inside `.hero-about`
+- About Me paragraph Chinese: the `<p class="zh hidden">` inside `.hero-about`
 
 Edit English and Chinese together. Keep the existing element hierarchy so the language switch and layout continue to work. The casual tone is intentional; do not automatically turn the introduction into résumé or cover-letter language.
 
+The visible `About Me` label and the paragraph beneath it are separate fields. A label-only request must not rewrite the paragraph. This remains an embedded Home component; do not recreate a standalone About section.
+
+### Homepage module labels
+
+The four `.hero-index` modules use the same primary names as the persistent menu: `Interests`, `Experience`, `Research`, and `Contact`. The matching bilingual primary names live in `.hero-index-title`; the smaller explanatory phrases live separately in `.hero-index-description`. Keep the primary titles synchronized with the menu whenever navigation labels change.
+
 To update the hero background, add the photograph under `img/`, then change `--hero-image`. Adjust only the overlay alpha values if the new photograph needs more or less contrast.
+
+### Experience & Education maintenance
+
+- Desktop: `#experience .grid.md\:grid-cols-2` uses two equal `1fr` columns, approximately 50% Experience and 50% Education.
+- Desktop divider: `#experience .grid.md\:grid-cols-2::after` draws the subtle centered vertical dashed rule. It is inside a `min-width: 768px` media query, so it does not appear on mobile.
+- Mobile: the existing narrow-layout rule changes the grid to one column, stacking Experience above Education without a vertical divider.
+- Booth location fields: `Chicago` / `芝加哥`.
+- USC location fields: `Los Angeles` / `洛杉矶`.
+- Location fields use `.education-location`; update the English and Chinese values together and do not globally replace city names.
 
 ## 6. Adding or Editing a Project
 
@@ -201,18 +217,57 @@ When this interaction is edited, inspect one long-detail card as well as all nin
 
 ### Photography
 
-- Upload slideshow images to `img/interests/photography/`.
-- Every compatible image currently in this folder should have one `.photography-frame` `<img>` inside `[data-photography-slideshow]` in `#interests`; no filename or category is displayed on the page.
-- The current homepage list contains all 19 non-system JPEG images present in the folder.
-- The first frame should also carry `.is-active`.
-- Keep the HTML list synchronized when files are added or removed. A page opened with `file://` cannot securely enumerate a local folder by itself, so the filenames must remain explicitly referenced in `index.html`.
-- If the slideshow appears to contain fewer images than expected, compare the explicit `src` list with the folder first. The slideshow deliberately skips missing, unfinished, or failed images (`complete === false` or `naturalWidth === 0`) instead of displaying a broken frame.
-- Change speed through `--photography-slideshow-interval`; the current value is `1000ms` (one second per image).
-- The previous/next buttons use `[data-photography-direction]`. They appear only while the Photography item is hovered and use restrained transparency. Clicking a button changes the active frame without opening `gallery.html` and restarts the one-second hover cycle from that frame.
-- Keep the controls as siblings of `.interest-primary-link`, not nested inside the gallery link. This preserves valid interactive HTML and prevents a manual image step from opening a new page.
-- Images use `object-fit: contain` and should not be compressed, stretched, or destructively cropped without explicit approval.
-- The whole Photography item links to the active `gallery.html`. The slideshow and gallery are separate image lists.
-- `gallery.html` is only the current placeholder destination. Henry plans to rebuild that page and replace all of its present content later; future homepage work should preserve the link without treating the current gallery structure as a design constraint.
+- Add new slideshow photographs to the most appropriate category folder, not directly to the Photography root.
+- Every compatible image should have one `.photography-frame` `<img>` inside `[data-photography-slideshow]` in `#interests`. A static `file://` page cannot enumerate folders, so filenames and playback order remain explicit in the HTML.
+- The first HTML frame is the resting image and must carry `.is-active`. The current default is `img/interests/photography/night-atmosphere/starry-sky-01.jpeg`.
+- Slideshow timing has one source of truth: `SITE_INTERACTION_CONFIG.PHOTOGRAPHY_SLIDE_INTERVAL` in the embedded JavaScript. Its value is `1000`, so the resting frame and every later frame each receive one full second after hover begins.
+- Hover starts one interval; mouse leave clears it and preserves the currently displayed frame. Manual previous/next selection restarts the same interval so the newly selected frame also gets a full second.
+- To reorder the slideshow later, move the complete `.photography-frame` elements within `[data-photography-slideshow]`; do not duplicate paths in JavaScript.
+- If fewer images appear than expected, compare the explicit `src` list with the category folders. The slideshow skips missing, unfinished, or failed images (`complete === false` or `naturalWidth === 0`) instead of displaying a broken frame.
+- Previous/next buttons use `[data-photography-direction]`. They appear only while the Photography item is hovered and remain siblings of `.interest-primary-link`, preventing a manual step from opening `gallery.html`.
+- Images use `object-fit: contain` and must not be compressed, stretched, cropped, or dimensionally altered without explicit approval.
+- The whole Photography item links to `gallery.html`. The homepage slideshow and future gallery remain separate image lists; `gallery.html` is still a temporary destination scheduled for a later rebuild.
+
+### Photography folder structure
+
+```text
+img/interests/photography/
+├── nature-landscape/
+├── city-architecture/
+└── night-atmosphere/
+```
+
+- `nature-landscape/`: coastlines, weather, mountains, open roads, the lighthouse, and other outdoor subjects led by the natural environment.
+- `city-architecture/`: urban streets, interiors, transit, and built-environment studies.
+- `night-atmosphere/`: the star field, night city scenes, dusk silhouettes, sunsets, reflections, and mood-led low-light work.
+
+### Nature & Landscape
+
+- `balloon-moon-01.jpeg`
+- `coastal-lighthouse-01.jpeg`
+- `ocean-sunset-birds-01.jpeg`
+- `coastal-cliff-01.jpeg`
+- `snowy-mountain-road-01.jpeg`
+- `mountain-lake-dusk-01.jpeg`
+- `rainbow-bridge-01.jpeg`
+
+### City & Architecture
+
+- `station-clock-01.jpeg`
+- `city-street-01.jpeg`
+- `grand-staircase-01.jpeg`
+- `hillside-train-01.jpeg`
+
+### Night & Atmosphere
+
+- `starry-sky-01.jpeg` — default/resting slideshow image
+- `harbor-skyline-night-01.jpeg`
+- `bridge-sunset-01.jpeg`
+- `bridge-sunset-02.jpeg`
+- `city-sunset-01.jpeg`
+- `reflected-sunset-01.jpeg`
+- `waterfront-dusk-01.jpeg`
+- `beach-photographer-dusk-01.jpeg`
 
 ### Skiing
 
@@ -237,6 +292,32 @@ When this interaction is edited, inspect one long-detail card as well as all nin
 - Cooking currently uses the compact editorial supporting-card treatment and has no image.
 - To add one later, create `img/interests/cooking/`, add a contained media layer inside the existing Cooking article, and preserve its bilingual title and description.
 
+## Photography Asset Migration Manifest
+
+This manifest is the source of truth for mirroring the local migration in `wlele108/wlele108.github.io`. Every row is a lossless filesystem move/rename; no image pixels, dimensions, or quality were changed.
+
+| Old path | New path | New filename | Category | Used where |
+|---|---|---|---|---|
+| `img/interests/photography/DSC_0637.jpeg` | `img/interests/photography/night-atmosphere/starry-sky-01.jpeg` | `starry-sky-01.jpeg` | Night & Atmosphere | Homepage Photography slideshow — first/default |
+| `img/interests/photography/DSC_0063.jpeg` | `img/interests/photography/night-atmosphere/harbor-skyline-night-01.jpeg` | `harbor-skyline-night-01.jpeg` | Night & Atmosphere | Homepage Photography slideshow |
+| `img/interests/photography/DSC_3834.jpeg` | `img/interests/photography/night-atmosphere/bridge-sunset-01.jpeg` | `bridge-sunset-01.jpeg` | Night & Atmosphere | Homepage Photography slideshow |
+| `img/interests/photography/DSC_3837.jpeg` | `img/interests/photography/night-atmosphere/bridge-sunset-02.jpeg` | `bridge-sunset-02.jpeg` | Night & Atmosphere | Homepage Photography slideshow |
+| `img/interests/photography/DSC_3853.jpeg` | `img/interests/photography/night-atmosphere/city-sunset-01.jpeg` | `city-sunset-01.jpeg` | Night & Atmosphere | Homepage Photography slideshow |
+| `img/interests/photography/DSC_3908.jpeg` | `img/interests/photography/night-atmosphere/reflected-sunset-01.jpeg` | `reflected-sunset-01.jpeg` | Night & Atmosphere | Homepage Photography slideshow |
+| `img/interests/photography/IMG_1325.jpeg` | `img/interests/photography/night-atmosphere/waterfront-dusk-01.jpeg` | `waterfront-dusk-01.jpeg` | Night & Atmosphere | Homepage Photography slideshow |
+| `img/interests/photography/d3d4a6efc3df486c49779e9cfdf887f2.jpeg` | `img/interests/photography/night-atmosphere/beach-photographer-dusk-01.jpeg` | `beach-photographer-dusk-01.jpeg` | Night & Atmosphere | Homepage Photography slideshow |
+| `img/interests/photography/DSC_1734.jpeg` | `img/interests/photography/nature-landscape/balloon-moon-01.jpeg` | `balloon-moon-01.jpeg` | Nature & Landscape | Homepage Photography slideshow |
+| `img/interests/photography/DSC_2078.jpeg` | `img/interests/photography/nature-landscape/coastal-lighthouse-01.jpeg` | `coastal-lighthouse-01.jpeg` | Nature & Landscape | Homepage Photography slideshow |
+| `img/interests/photography/DSC_2125.jpeg` | `img/interests/photography/nature-landscape/ocean-sunset-birds-01.jpeg` | `ocean-sunset-birds-01.jpeg` | Nature & Landscape | Homepage Photography slideshow |
+| `img/interests/photography/DSC_2516.jpeg` | `img/interests/photography/nature-landscape/coastal-cliff-01.jpeg` | `coastal-cliff-01.jpeg` | Nature & Landscape | Homepage Photography slideshow |
+| `img/interests/photography/DSC_3025.jpeg` | `img/interests/photography/nature-landscape/snowy-mountain-road-01.jpeg` | `snowy-mountain-road-01.jpeg` | Nature & Landscape | Homepage Photography slideshow |
+| `img/interests/photography/DSC_4161.jpeg` | `img/interests/photography/nature-landscape/mountain-lake-dusk-01.jpeg` | `mountain-lake-dusk-01.jpeg` | Nature & Landscape | Homepage Photography slideshow |
+| `img/interests/photography/IMG_1359.jpeg` | `img/interests/photography/nature-landscape/rainbow-bridge-01.jpeg` | `rainbow-bridge-01.jpeg` | Nature & Landscape | Homepage Photography slideshow |
+| `img/interests/photography/DSC_0087.jpeg` | `img/interests/photography/city-architecture/station-clock-01.jpeg` | `station-clock-01.jpeg` | City & Architecture | Homepage Photography slideshow |
+| `img/interests/photography/DSC_0105.jpeg` | `img/interests/photography/city-architecture/city-street-01.jpeg` | `city-street-01.jpeg` | City & Architecture | Homepage Photography slideshow |
+| `img/interests/photography/DSC_1532.jpeg` | `img/interests/photography/city-architecture/grand-staircase-01.jpeg` | `grand-staircase-01.jpeg` | City & Architecture | Homepage Photography slideshow |
+| `img/interests/photography/Z30_0368.jpeg` | `img/interests/photography/city-architecture/hillside-train-01.jpeg` | `hillside-train-01.jpeg` | City & Architecture | Homepage Photography slideshow |
+
 ## 8. Editing Links and Contact Information
 
 - CV links: search for `pdf/Resume.pdf` and `pdf/王乐桓中文简历.pdf`.
@@ -254,7 +335,11 @@ Before considering a website edit complete:
 - [ ] Home renders at desktop and mobile widths.
 - [ ] Mobile menu opens and its anchors work.
 - [ ] EN/中文 switch changes all paired content without mixing languages.
+- [ ] Home shows `About Me` / `关于我`, while the introduction paragraph remains unchanged.
+- [ ] Home module primary titles match the persistent menu in both languages.
 - [ ] Bank of America remains the first professional Experience entry.
+- [ ] Booth shows Chicago / 芝加哥 and USC shows Los Angeles / 洛杉矶.
+- [ ] Experience and Education are equal-width on desktop with one subtle centered dashed divider; mobile stacks without the vertical divider.
 - [ ] Both CV links, LinkedIn, Instagram, Photography, and contact links open the intended target.
 - [ ] Email copy still works.
 - [ ] No horizontal overflow appears at mobile width.
@@ -263,6 +348,7 @@ Before considering a website edit complete:
 - [ ] Reduced-motion and coarse-pointer users can still access Research detail content.
 - [ ] Desktop Research details cover the original card in the same frame and long bullet lists scroll inside that frame.
 - [ ] Photography hover reveals both translucent controls; previous/next changes only the image, and automatic hover playback advances every one second.
+- [ ] All 19 Photography files resolve from the three category folders, and `starry-sky-01.jpeg` is first/default.
 
 For each of the nine Research cards:
 
@@ -284,7 +370,7 @@ For each of the nine Research cards:
 ### Copy
 
 - [ ] Revisit Hero Identity if desired
-- [ ] Revisit A Short Introduction if desired
+- [ ] Revisit the About Me paragraph if desired
 
 ### Media
 
@@ -310,72 +396,99 @@ For each of the nine Research cards:
 - [ ] Video preview speed
 - [ ] Hero overlay strength
 
-## 11. GitHub Upload and GitHub Pages
+## Updating the Live GitHub Website
 
-The current `demo/` folder is not yet a Git repository. Its active website is already suitable for static hosting because `index.html` is at the project root and there is no build step.
+The live repository is `wlele108/wlele108.github.io`. Local editing and review happen first. Synchronize to GitHub only after the local version has been verified; do not use GitHub as the first place to test path migrations.
 
-### Before the first upload
+### A. Before uploading
 
-1. Decide whether the GitHub repository will be public or private. A public GitHub Pages site necessarily makes the published HTML, referenced images, and downloadable CVs public.
-2. Review the folder before staging. `qixi-card/`, roulette scripts/notebooks, legacy HTML experiments, old résumé documents, and macOS `.DS_Store` files do not run the main website. Do not publish private or unrelated material merely because it shares this folder.
-3. Add a `.gitignore` before the first commit. At minimum it should contain:
+From the local checkout of `wlele108.github.io`, verify the intended versions of:
 
-   ```gitignore
-   .DS_Store
-   **/.DS_Store
-   __pycache__/
-   *.pyc
-   ```
+- `index.html`;
+- `README.md`;
+- every changed, renamed, or moved image;
+- PDFs, only when a PDF was intentionally changed;
+- all local paths, with no broken image or document reference.
 
-4. Check large assets before every first upload. The current folder is approximately 108 MB; its largest individual image is approximately 10 MB, so there is currently no file above GitHub's 25 MiB browser-upload limit. GitHub warns for files larger than 50 MiB and blocks files larger than 100 MiB. Do not replace or compress source photography without Henry's approval.
-5. On GitHub, create a new empty repository. Do not pre-populate it with a README, license, or `.gitignore`, because this folder already contains the local starting point.
+### B. Photography folder changes require special care
 
-### First command-line upload
+A Photography rename or folder migration requires GitHub to receive both:
 
-Run these commands in Terminal, replacing the two uppercase placeholders with the actual GitHub account and repository names:
+1. every new file at its new category path;
+2. deletion of every obsolete old path.
 
-```bash
-cd "/Users/henry/Desktop/Daily Use/Resume/2025/personal website/demo"
-git init -b main
-git status
-git add .
-git status
-git commit -m "Initial Henry Wang portfolio"
-git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
-git push -u origin main
-```
+Uploading only the new folders leaves duplicate assets in the repository. Use the `Photography Asset Migration Manifest` above as the source of truth for the exact old-to-new mapping.
 
-Read the second `git status` before committing. It is the final check that no private or unrelated file is included. If GitHub asks for authentication, use the browser/device flow provided by Git Credential Manager or a personal access token; do not put a password or token in this repository.
+### C. Recommended Git workflow
 
-### Publish with GitHub Pages
-
-After the push completes:
-
-1. Open the repository on GitHub.
-2. Go to **Settings → Pages**.
-3. Under **Build and deployment**, choose **Deploy from a branch**.
-4. Select branch **main**, folder **/(root)**, then save.
-5. Wait for the Pages deployment to finish. The expected address is `https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/` and the future gallery address is `https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/gallery.html`.
-
-The site loads Tailwind and web fonts from external CDNs, so an internet connection is still required for the intended styling. GitHub Pages paths are case-sensitive; preserve asset filename capitalization.
-
-### Later updates
-
-After editing and validating the site:
+Run the following only after copying the locally verified changes into the local checkout of `wlele108.github.io`:
 
 ```bash
-cd "/Users/henry/Desktop/Daily Use/Resume/2025/personal website/demo"
 git status
 git add -A
 git status
-git commit -m "Update photography gallery"
+git commit -m "Describe the website update"
 git push
 ```
 
-Use a commit message that describes the actual change. GitHub Pages will redeploy automatically after a successful push to `main`.
+- First `git status`: inspect the unstaged local changes.
+- `git add -A`: stage new files, modified files, deleted old files, and detected moves/renames. This is essential after Photography folder migrations.
+- Second `git status`: inspect the exact staged result before committing.
+- `git commit`: create the local repository revision with a specific message.
+- `git push`: send the verified commit to `wlele108/wlele108.github.io`.
 
-Official references:
+### D. Verify what Git thinks changed
 
-- [Adding locally hosted code to GitHub](https://docs.github.com/en/migrations/importing-source-code/using-the-command-line-to-import-source-code/adding-locally-hosted-code-to-github)
-- [Configuring a publishing source for GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)
-- [About large files on GitHub](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github)
+Before committing, read the second `git status`. A Photography migration may appear as:
+
+```text
+renamed: old/path/image.jpeg -> new/path/image.jpeg
+```
+
+or as separate entries:
+
+```text
+deleted: old/path/image.jpeg
+new file: new/path/image.jpeg
+```
+
+Both representations can be normal; Git's similarity-based rename detection determines which one appears. The important requirement is that the new path is staged and the old path is staged for deletion.
+
+### E. Large photo warning
+
+- Do not place RAW camera files in the GitHub Pages repository.
+- Use web-exported JPEG or WebP files for the live website and keep RAW originals outside the repository.
+- GitHub normally hard-blocks individual Git objects above 100 MiB, and large assets below that limit can still make the page slow.
+- Do not automatically compress existing photographs; prepare and review any web derivative deliberately.
+
+### F. Final GitHub verification
+
+After pushing, verify:
+
+- the repository contains `nature-landscape/`, `city-architecture/`, and `night-atmosphere/` under `img/interests/photography/`;
+- all 19 obsolete root-level Photography paths are removed;
+- all 19 new categorized files exist;
+- `index.html` paths match GitHub filename capitalization exactly;
+- GitHub Pages loads without broken images;
+- `night-atmosphere/starry-sky-01.jpeg` is the default image;
+- hover playback and manual arrows work at the live URL.
+
+## Next GitHub Sync
+
+- [ ] Upload/update `index.html`.
+- [ ] Upload/update `README.md`.
+- [ ] Create `img/interests/photography/nature-landscape/` in the GitHub checkout.
+- [ ] Create `img/interests/photography/city-architecture/` in the GitHub checkout.
+- [ ] Create `img/interests/photography/night-atmosphere/` in the GitHub checkout.
+- [ ] Add all 19 renamed Photography files listed in the migration manifest.
+- [ ] Remove all 19 obsolete root-level Photography paths listed in the migration manifest.
+- [ ] Confirm `img/interests/photography/night-atmosphere/starry-sky-01.jpeg` exists and is the first `.photography-frame`.
+- [ ] Verify every `index.html` Photography path against the case-sensitive GitHub filenames.
+- [ ] Verify the migration manifest against the staged GitHub changes.
+- [ ] Confirm no PDF change is included in this revision.
+- [ ] Run `git status` before staging.
+- [ ] Stage the migration with `git add -A`.
+- [ ] Run `git status` again before committing.
+- [ ] Commit with a descriptive message.
+- [ ] Push to `wlele108/wlele108.github.io`.
+- [ ] Verify GitHub Pages, the starry-sky resting image, one-second slideshow timing, and manual arrows.

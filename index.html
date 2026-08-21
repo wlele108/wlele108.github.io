@@ -283,7 +283,6 @@
             --cyan-label-size-en: .74rem;
             --cyan-label-size-zh: .84rem;
             --cyan-label-line-height: 1.25;
-            --photography-slideshow-interval: 1000ms;
         }
 
         body { background: var(--off-white) !important; }
@@ -357,7 +356,8 @@
         #home .hero-index a:not(:first-child) { padding-left: 1.2rem; }
         #home .hero-index a:last-child { border-right: 0; }
         #home .hero-index-label { color: var(--cyan); font-size: var(--cyan-label-size-en); line-height: var(--cyan-label-line-height); letter-spacing: .2em; text-transform: uppercase; }
-        #home .hero-index-title { margin: .45rem 0 .7rem; font-family: var(--serif); font-size: clamp(1.35rem,2vw,2rem); font-weight: 300; line-height: 1.05; }
+        #home .hero-index-title { margin: .45rem 0 .2rem; font-family: var(--serif); font-size: clamp(1.35rem,2vw,2rem); font-weight: 300; line-height: 1.05; }
+        #home .hero-index-description { margin-bottom: .7rem; color: rgba(255,255,255,.56); font-family: var(--sans); font-size: .76rem; line-height: 1.35; letter-spacing: .015em; }
         #home .hero-index-arrow { opacity: .55; transition: transform 300ms var(--ease-editorial), opacity 300ms var(--ease-editorial); }
         #home .hero-index a:hover .hero-index-arrow { opacity: 1; transform: translateX(5px); }
 
@@ -467,7 +467,8 @@
             color: var(--off-white) !important;
         }
         section > .container > .text-center > div { background: var(--cyan) !important; }
-        #experience .grid.md\:grid-cols-2 { grid-template-columns: minmax(0,1.2fr) minmax(18rem,.8fr); }
+        #experience .grid.md\:grid-cols-2 { position: relative; grid-template-columns: repeat(2, minmax(0,1fr)); }
+        #experience .education-location { margin-top: .28rem; color: rgba(255,255,255,.5) !important; font-family: var(--sans); font-size: .72rem; line-height: 1.35; letter-spacing: .08em; text-transform: uppercase; }
         #experience .space-y-8 { border-top-color: rgba(255,255,255,.55); }
         #experience .space-y-8 > div { border-bottom-color: rgba(255,255,255,.16) !important; }
         #experience .space-y-8 > div:hover { border-bottom-color: var(--cyan) !important; }
@@ -476,6 +477,19 @@
         #experience [class*="bg-gray-100"] { color: rgba(255,255,255,.65) !important; border-bottom-color: rgba(255,255,255,.22); }
         #experience ul, #experience .text-gray-600, #experience .text-gray-500 { color: rgba(255,255,255,.68) !important; }
         #experience li::marker { color: var(--cyan); }
+
+        @media (min-width: 768px) {
+            #experience .grid.md\:grid-cols-2::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 50%;
+                border-left: 1px dashed rgba(255,255,255,.11);
+                transform: translateX(-.5px);
+                pointer-events: none;
+            }
+        }
 
         #projects .grid.sm\:grid-cols-2 { gap: 1.5rem !important; perspective: none; }
         #projects .grid.sm\:grid-cols-2 > .group {
@@ -856,8 +870,8 @@
                     </div>
                 </div>
 
-                <aside class="hero-about" aria-label="Short introduction">
-                    <p class="hero-about-label"><span class="en">A short introduction</span><span class="zh hidden">简短介绍</span></p>
+                <aside class="hero-about" aria-label="About Me">
+                    <p class="hero-about-label"><span class="en">About Me</span><span class="zh hidden">关于我</span></p>
                     <p class="en">I study at Chicago Booth and will be returning to BofA for S&amp;T.<br><br>I travel often, usually alone, and spend a lot of time taking photos, playing tennis, and playing basketball.<br><br>That’s mostly it.</p>
                     <p class="zh hidden">我在芝加哥大学 Booth 学习，之后会回到 BofA 做 S&amp;T。<br><br>我经常旅行，很多时候是一个人，也会拍照、打网球和篮球。<br><br>差不多就是这样。</p>
                 </aside>
@@ -866,22 +880,26 @@
                 <nav class="hero-index" aria-label="Selected portfolio paths">
                     <a href="#interests">
                         <span class="hero-index-label">01 · <span class="en">Interests</span><span class="zh hidden">兴趣</span></span>
-                        <span class="hero-index-title"><span class="en">Photography &amp; life beyond work</span><span class="zh hidden">摄影与工作之外</span></span>
+                        <span class="hero-index-title"><span class="en">Interests</span><span class="zh hidden">兴趣</span></span>
+                        <span class="hero-index-description"><span class="en">Photography &amp; life beyond work</span><span class="zh hidden">摄影与工作之外</span></span>
                         <span class="hero-index-arrow">→</span>
                     </a>
                     <a href="#experience">
                         <span class="hero-index-label">02 · <span class="en">Experience</span><span class="zh hidden">经历</span></span>
-                        <span class="hero-index-title"><span class="en">Experience &amp; Education</span><span class="zh hidden">经历与教育</span></span>
+                        <span class="hero-index-title"><span class="en">Experience</span><span class="zh hidden">经历</span></span>
+                        <span class="hero-index-description"><span class="en">Experience &amp; Education</span><span class="zh hidden">经历与教育</span></span>
                         <span class="hero-index-arrow">→</span>
                     </a>
                     <a href="#projects">
                         <span class="hero-index-label">03 · <span class="en">Research</span><span class="zh hidden">研究</span></span>
-                        <span class="hero-index-title"><span class="en">Quantitative &amp; academic work</span><span class="zh hidden">量化与学术研究</span></span>
+                        <span class="hero-index-title"><span class="en">Research</span><span class="zh hidden">研究</span></span>
+                        <span class="hero-index-description"><span class="en">Quantitative &amp; academic work</span><span class="zh hidden">量化与学术研究</span></span>
                         <span class="hero-index-arrow">→</span>
                     </a>
                     <a href="#contact">
                         <span class="hero-index-label">04 · <span class="en">Contact</span><span class="zh hidden">联系</span></span>
-                        <span class="hero-index-title"><span class="en">Connect with me</span><span class="zh hidden">与我联系</span></span>
+                        <span class="hero-index-title"><span class="en">Contact</span><span class="zh hidden">联系</span></span>
+                        <span class="hero-index-description"><span class="en">Connect with me</span><span class="zh hidden">与我联系</span></span>
                         <span class="hero-index-arrow">→</span>
                     </a>
                 </nav>
@@ -1237,6 +1255,8 @@
                                         </h4>
                                         <p class="en text-secondary font-medium">UChicago Booth School of Business</p>
                                         <p class="zh hidden text-primary font-medium">芝加哥大学布斯商学院</p>
+                                        <p class="education-location en">Chicago</p>
+                                        <p class="education-location zh hidden">芝加哥</p>
                                     </div>
                                     <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full whitespace-nowrap">
                                         <span class="en">Aug 2025 - Dec 2026 (Expected)</span>
@@ -1265,6 +1285,8 @@
                                         </h4>
                                         <p class="en text-secondary font-medium">University of Southern California Dornsife</p>
                                         <p class="zh hidden text-primary font-medium">南加州大学</p>
+                                        <p class="education-location en">Los Angeles</p>
+                                        <p class="education-location zh hidden">洛杉矶</p>
                                     </div>
                                     <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
                                         <span class="en">Aug 2021 - May 2025</span>
@@ -1345,25 +1367,25 @@
                         <a href="gallery.html" target="_blank" class="interest-primary-link" aria-label="Open photography gallery">
                             <div class="photography-media" aria-hidden="true">
                                 <!-- Current contents of img/interests/photography/; keep every image in this list. -->
-                                <img class="photography-frame is-active" src="img/interests/photography/DSC_0637.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/DSC_0063.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/DSC_0087.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/DSC_0105.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/DSC_1532.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/DSC_1734.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/DSC_2078.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/DSC_2125.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/DSC_2516.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/DSC_3025.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/DSC_3834.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/DSC_3837.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/DSC_3853.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/DSC_3908.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/DSC_4161.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/IMG_1325.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/IMG_1359.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/Z30_0368.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/d3d4a6efc3df486c49779e9cfdf887f2.jpeg" alt="" decoding="async">
+                                <img class="photography-frame is-active" src="img/interests/photography/night-atmosphere/starry-sky-01.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/night-atmosphere/harbor-skyline-night-01.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/night-atmosphere/bridge-sunset-01.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/night-atmosphere/bridge-sunset-02.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/night-atmosphere/city-sunset-01.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/night-atmosphere/reflected-sunset-01.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/night-atmosphere/waterfront-dusk-01.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/night-atmosphere/beach-photographer-dusk-01.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/nature-landscape/balloon-moon-01.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/nature-landscape/coastal-lighthouse-01.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/nature-landscape/ocean-sunset-birds-01.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/nature-landscape/coastal-cliff-01.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/nature-landscape/snowy-mountain-road-01.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/nature-landscape/mountain-lake-dusk-01.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/nature-landscape/rainbow-bridge-01.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/city-architecture/station-clock-01.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/city-architecture/city-street-01.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/city-architecture/grand-staircase-01.jpeg" alt="" decoding="async">
+                                <img class="photography-frame" src="img/interests/photography/city-architecture/hillside-train-01.jpeg" alt="" decoding="async">
                             </div>
                             <div class="interest-caption">
                                 <span class="interest-label">01 · <span class="en">Primary</span><span class="zh hidden">主要兴趣</span></span>
@@ -2039,7 +2061,7 @@
         }
 
         const SITE_INTERACTION_CONFIG = {
-            PHOTOGRAPHY_SLIDE_INTERVAL: parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--photography-slideshow-interval')) || 1000,
+            PHOTOGRAPHY_SLIDE_INTERVAL: 1000,
             INTEREST_VIDEO_PLAYBACK_RATE: 1.35,
             ENABLE_PROJECT_PIN: true
         };
