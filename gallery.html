@@ -308,7 +308,7 @@
             const location = locationText(photo);
             return `
                 <figure class="gallery-item" data-photo-index="${photos.indexOf(photo)}">
-                    <figcaption class="gallery-photo-label">${escapeHTML(location)}</figcaption>
+                    <figcaption class="gallery-photo-label">${escapeHTML(compactDateText(photo))}</figcaption>
                     <button type="button" class="gallery-image-button" aria-label="${currentLanguage === 'zh' ? `打开第 ${position + 1} 张照片` : `Open photograph ${position + 1}`}">
                         <img src="${escapeHTML(photo.src)}" alt="" decoding="async">
                         ${location ? `<span class="image-location">${escapeHTML(location)}</span>` : ''}
