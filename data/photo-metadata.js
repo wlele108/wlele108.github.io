@@ -107,8 +107,8 @@ window.PHOTO_METADATA = [
     "year": 2025,
     "month": 5,
     "location": {
-      "en": "Oregon, USA",
-      "zh": "美国俄勒冈州"
+      "en": "Somewhere, Oregon",
+      "zh": "俄勒冈州某处"
     },
     "locationStatus": "confirmed-state-only",
     "locationNote": "Only the state has been confirmed.",
@@ -380,8 +380,8 @@ window.PHOTO_METADATA = [
     "year": 2025,
     "month": 5,
     "location": {
-      "en": "Oregon Coast, USA",
-      "zh": "美国俄勒冈海岸"
+      "en": "Oregon Coast, Oregon",
+      "zh": "俄勒冈州海岸"
     },
     "locationStatus": "approximate",
     "locationNote": "A more specific Oregon Coast location has not been confirmed.",
