@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+    <title>Kitchen | Henry Wang</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&amp;family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/subpage-shell.css">
+    <style>
+        .recipe-tools { position: sticky; top: var(--header-height); z-index: 20; padding: 1rem 0; border-bottom: 1px solid var(--rule); background: rgba(13,15,15,.96); backdrop-filter: blur(12px); }
+        .recipe-tools-inner { display: grid; grid-template-columns: minmax(13rem,.45fr) minmax(0,1.55fr); gap: 1.5rem; align-items: center; }
+        .search-field { width: 100%; min-height: 2.75rem; padding: .65rem .8rem; border: 1px solid var(--rule); border-radius: 0; background: transparent; color: var(--off-white); outline: none; }
+        .search-field::placeholder { color: var(--quiet); }
+        .search-field:focus { border-color: var(--cyan); }
+        .category-row { display: flex; align-items: center; overflow-x: auto; scrollbar-width: none; }
+        .category-row::-webkit-scrollbar { display: none; }
+        .category-button { flex: 0 0 auto; min-height: 2.75rem; padding: .55rem .8rem; border: 0; border-right: 1px solid var(--rule); border-radius: 0; background: transparent; color: rgba(255,255,255,.48); font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; cursor: pointer; }
+        .category-button:last-child { border-right: 0; }
+        .category-button:hover, .category-button.is-active { color: var(--cyan); }
+        .recipe-summary { display: flex; justify-content: space-between; gap: 1rem; padding: 1.2rem 0; color: var(--quiet); font-size: .68rem; letter-spacing: .11em; text-transform: uppercase; }
+        .recipe-list { padding-bottom: clamp(5rem,10vw,9rem); border-top: 1px solid var(--rule); }
+        .recipe-entry { border-bottom: 1px solid var(--rule); }
+        .recipe-heading { margin: 0; }
+        .recipe-toggle { display: grid; grid-template-columns: 4.5rem minmax(0,1fr) auto; gap: 1rem; align-items: center; width: 100%; min-height: 6rem; padding: 1.2rem .15rem; border: 0; border-radius: 0; background: transparent; text-align: left; cursor: pointer; }
+        .recipe-toggle:hover .recipe-title, .recipe-toggle[aria-expanded="true"] .recipe-title { color: var(--cyan); }
+        .recipe-number { color: var(--quiet); font-size: .7rem; letter-spacing: .12em; }
+        .recipe-title { font-family: var(--serif); font-size: clamp(1.45rem,2.6vw,2.3rem); font-weight: 300; line-height: 1.05; transition: color 220ms ease; }
+        .recipe-flags { display: flex; align-items: center; gap: .8rem; color: var(--quiet); font-size: .65rem; letter-spacing: .09em; text-transform: uppercase; }
+        .vegetarian-mark { color: var(--cyan); font-size: .9rem; line-height: 1; }
+        .recipe-plus { width: 1.1rem; color: rgba(255,255,255,.65); font-size: 1.1rem; text-align: center; transition: transform 260ms var(--ease-editorial); }
+        .recipe-toggle[aria-expanded="true"] .recipe-plus { transform: rotate(45deg); }
+        .recipe-detail { display: grid; grid-template-columns: minmax(13rem,.65fr) minmax(0,1.35fr); gap: clamp(2rem,6vw,6rem); padding: .5rem 0 clamp(3rem,6vw,5rem) 5.5rem; }
+        .recipe-detail h3 { margin: 0 0 1rem; color: var(--cyan); font-size: .67rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; }
+        .recipe-detail ul, .recipe-detail ol { margin: 0; padding-left: 1.2rem; color: var(--muted); font-size: .88rem; line-height: 1.68; }
+        .recipe-detail li + li { margin-top: .7rem; }
+        .recipe-notes { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
+        .title-only { grid-column: 1 / -1; margin: 0; padding-left: 1rem; border-left: 1px solid var(--cyan); color: var(--muted); line-height: 1.7; }
+        .empty-result { padding: 4rem 0; color: var(--muted); font-family: var(--serif); font-size: 1.6rem; }
+
+        @media (max-width: 820px) {
+            .recipe-tools { position: relative; top: 0; }
+            .recipe-tools-inner { grid-template-columns: 1fr; gap: .7rem; }
+            .recipe-detail { grid-template-columns: 1fr; gap: 2rem; padding-left: 0; }
+        }
+        @media (max-width: 600px) {
+            .recipe-toggle { grid-template-columns: 2.6rem minmax(0,1fr) auto; min-height: 5.25rem; gap: .65rem; }
+            .recipe-flags .category-name { display: none; }
+            .recipe-detail { padding-bottom: 3rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container navbar">
+            <a class="brand" href="index.html#home">Henry Wang</a>
+            <nav class="desktop-navigation" aria-label="Primary navigation">
+                <a class="navigation-link" href="index.html#home"><span class="en">Home</span><span class="zh hidden">首页</span></a>
+                <a class="navigation-link" href="index.html#experience"><span class="en">Work</span><span class="zh hidden">履历</span></a>
+                <a class="navigation-link" href="index.html#interests" aria-current="page"><span class="en">Interests</span><span class="zh hidden">兴趣</span></a>
+                <a class="navigation-link" href="index.html#contact"><span class="en">Contact</span><span class="zh hidden">联系</span></a>
+            </nav>
+            <div class="language-controls" aria-label="Language">
+                <button type="button" class="language-button is-active" data-language="en" aria-pressed="true">EN</button>
+                <button type="button" class="language-button" data-language="zh" aria-pressed="false">中文</button>
+            </div>
+            <button type="button" class="mobile-menu-button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-navigation"><span></span></button>
+        </div>
+        <nav class="mobile-navigation" id="mobile-navigation" aria-label="Mobile navigation">
+            <div class="container mobile-navigation-inner">
+                <a class="navigation-link" href="index.html#home"><span class="en">Home</span><span class="zh hidden">首页</span></a>
+                <a class="navigation-link" href="index.html#experience"><span class="en">Work</span><span class="zh hidden">履历</span></a>
+                <a class="navigation-link" href="index.html#interests" aria-current="page"><span class="en">Interests</span><span class="zh hidden">兴趣</span></a>
+                <a class="navigation-link" href="index.html#contact"><span class="en">Contact</span><span class="zh hidden">联系</span></a>
+                <div class="language-controls mobile-language-controls" aria-label="Language">
+                    <button type="button" class="language-button is-active" data-language="en" aria-pressed="true">EN</button>
+                    <button type="button" class="language-button" data-language="zh" aria-pressed="false">中文</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-intro" aria-labelledby="kitchen-title">
+            <div class="container">
+                <p class="editorial-label"><span class="en">Interests · Cooking</span><span class="zh hidden">兴趣 · 烹饪</span></p>
+                <h1 class="page-title" id="kitchen-title"><span class="en">Kitchen Notes</span><span class="zh hidden">厨房笔记</span></h1>
+                <p class="page-description"><span class="en">A working collection of recipes I return to. The Chinese notebook is preserved as the source of truth, with a complete English companion for every entry.</span><span class="zh hidden">一份我反复使用的菜谱记录。中文笔记作为事实原文完整保留，并为每条内容提供对应英文版本。</span></p>
+            </div>
+        </section>
+
+        <section class="recipe-tools" aria-label="Recipe controls">
+            <div class="container recipe-tools-inner">
+                <label>
+                    <span class="en hidden">Search recipes</span><span class="zh hidden">搜索菜谱</span>
+                    <input class="search-field" id="recipe-search" type="search" autocomplete="off" placeholder="Search recipes">
+                </label>
+                <div class="category-row" id="category-row" role="group" aria-label="Recipe categories"></div>
+            </div>
+        </section>
+
+        <section class="container" aria-label="Recipe collection">
+            <div class="recipe-summary"><span id="recipe-count" aria-live="polite"></span><span><span class="vegetarian-mark" aria-hidden="true">❧</span> <span class="en">Vegetarian</span><span class="zh hidden">素食</span></span></div>
+            <div class="recipe-list" id="recipe-list"></div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container site-footer-inner">
+            <div class="footer-links">
+                <a class="footer-link" href="index.html#home"><span class="en">Home</span><span class="zh hidden">首页</span></a>
+                <a class="footer-link" href="index.html#experience"><span class="en">Work</span><span class="zh hidden">履历</span></a>
+                <a class="footer-link" href="index.html#interests"><span class="en">Interests</span><span class="zh hidden">兴趣</span></a>
+                <a class="footer-link" href="index.html#contact"><span class="en">Contact</span><span class="zh hidden">联系</span></a>
+            </div>
+            <span>© 2026 Henry Wang</span>
+        </div>
+    </footer>
+
+    <script src="data/recipes.js"></script>
+    <script>
+        const recipes = Array.isArray(window.RECIPES) ? window.RECIPES : [];
+        const categories = {
+            all: { en: 'All', zh: '全部' },
+            mains: { en: 'Mains', zh: '主菜' },
+            'soups-stews': { en: 'Soups & Stews', zh: '汤与炖菜' },
+            'vegetables-tofu': { en: 'Vegetables & Tofu', zh: '蔬菜与豆腐' },
+            'noodles-staples': { en: 'Noodles & Staples', zh: '面食与主食' },
+            'small-plates-snacks': { en: 'Small Plates', zh: '小食' },
+            'baking-sweets': { en: 'Baking & Sweets', zh: '烘焙与甜点' }
+        };
+        const languageButtons = Array.from(document.querySelectorAll('[data-language]'));
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const mobileNavigation = document.getElementById('mobile-navigation');
+        const recipeSearch = document.getElementById('recipe-search');
+        const categoryRow = document.getElementById('category-row');
+        const recipeList = document.getElementById('recipe-list');
+        const recipeCount = document.getElementById('recipe-count');
+        let currentLanguage = localStorage.getItem('henry-site-language') === 'zh' ? 'zh' : 'en';
+        let activeCategory = 'all';
+        let query = '';
+        let openRecipeId = null;
+
+        const escapeHTML = value => String(value ?? '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
+        const visibleRecipes = () => recipes.filter(recipe => {
+            const categoryMatches = activeCategory === 'all' || recipe.category === activeCategory;
+            const text = `${recipe.title.en} ${recipe.title.zh}`.toLocaleLowerCase();
+            return categoryMatches && text.includes(query.toLocaleLowerCase());
+        });
+        const renderList = list => `<${list.length > 1 ? 'ol' : 'ul'}>${list.map(item => `<li>${escapeHTML(item)}</li>`).join('')}</${list.length > 1 ? 'ol' : 'ul'}>`;
+
+        const renderCategories = () => {
+            categoryRow.innerHTML = Object.entries(categories).filter(([key]) => key === 'all' || recipes.some(recipe => recipe.category === key)).map(([key, labels]) => {
+                const count = key === 'all' ? recipes.length : recipes.filter(recipe => recipe.category === key).length;
+                return `<button type="button" class="category-button${activeCategory === key ? ' is-active' : ''}" data-category="${key}" aria-pressed="${activeCategory === key}">${escapeHTML(labels[currentLanguage])} · ${count}</button>`;
+            }).join('');
+            categoryRow.querySelectorAll('[data-category]').forEach(button => button.addEventListener('click', () => {
+                activeCategory = button.dataset.category;
+                openRecipeId = null;
+                renderCategories();
+                renderRecipes();
+            }));
+        };
+
+        const detailMarkup = recipe => {
+            if (recipe.sourceStatus === 'title-only') return `<div class="recipe-detail"><p class="title-only">${currentLanguage === 'zh' ? '源文档目前仅记录了标题。' : 'The source document currently contains the title only.'}</p></div>`;
+            const ingredients = recipe.ingredients[currentLanguage] || [];
+            const steps = recipe.steps[currentLanguage] || [];
+            const notes = recipe.notes[currentLanguage] || [];
+            return `<div class="recipe-detail">
+                <section><h3>${currentLanguage === 'zh' ? '材料' : 'Ingredients'}</h3>${renderList(ingredients)}</section>
+                <section><h3>${currentLanguage === 'zh' ? '做法' : 'Method'}</h3>${renderList(steps)}${notes.length ? `<div class="recipe-notes"><h3>${currentLanguage === 'zh' ? '备注' : 'Notes'}</h3>${renderList(notes)}</div>` : ''}</section>
+            </div>`;
+        };
+
+        const renderRecipes = () => {
+            const visible = visibleRecipes();
+            const showingAll = visible.length === recipes.length && activeCategory === 'all' && !query;
+            recipeCount.textContent = currentLanguage === 'zh'
+                ? (showingAll ? `${recipes.length} 道菜谱` : `显示 ${visible.length} / 共 ${recipes.length} 道菜谱`)
+                : (showingAll ? `${recipes.length} recipes` : `${visible.length} of ${recipes.length} recipes`);
+            if (!visible.length) {
+                recipeList.innerHTML = `<p class="empty-result">${currentLanguage === 'zh' ? '没有找到匹配的菜谱。' : 'No matching recipes.'}</p>`;
+                return;
+            }
+            recipeList.innerHTML = visible.map(recipe => {
+                const isOpen = recipe.id === openRecipeId;
+                return `<article class="recipe-entry" id="${escapeHTML(recipe.id)}">
+                    <h2 class="recipe-heading"><button type="button" class="recipe-toggle" aria-expanded="${isOpen}" aria-controls="${escapeHTML(recipe.id)}-detail" data-recipe-id="${escapeHTML(recipe.id)}">
+                        <span class="recipe-number">${String(recipe.number).padStart(2,'0')}</span>
+                        <span class="recipe-title">${escapeHTML(recipe.title[currentLanguage])}</span>
+                        <span class="recipe-flags">${recipe.vegetarian ? `<span class="vegetarian-mark" aria-label="${currentLanguage === 'zh' ? '素食' : 'Vegetarian'}">❧</span>` : ''}<span class="category-name">${escapeHTML(categories[recipe.category][currentLanguage])}</span><span class="recipe-plus" aria-hidden="true">+</span></span>
+                    </button></h2>
+                    <div id="${escapeHTML(recipe.id)}-detail" ${isOpen ? '' : 'hidden'}>${isOpen ? detailMarkup(recipe) : ''}</div>
+                </article>`;
+            }).join('');
+            recipeList.querySelectorAll('[data-recipe-id]').forEach(button => button.addEventListener('click', () => {
+                openRecipeId = openRecipeId === button.dataset.recipeId ? null : button.dataset.recipeId;
+                renderRecipes();
+                if (openRecipeId) document.getElementById(openRecipeId)?.scrollIntoView({ block: 'nearest' });
+            }));
+        };
+
+        const setLanguage = language => {
+            currentLanguage = language;
+            localStorage.setItem('henry-site-language', language);
+            document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en';
+            document.title = language === 'zh' ? '厨房 | Henry Wang' : 'Kitchen | Henry Wang';
+            document.querySelectorAll('.en, .zh').forEach(element => element.classList.add('hidden'));
+            document.querySelectorAll(`.${language}`).forEach(element => element.classList.remove('hidden'));
+            languageButtons.forEach(button => {
+                const isActive = button.dataset.language === language;
+                button.classList.toggle('is-active', isActive);
+                button.setAttribute('aria-pressed', String(isActive));
+            });
+            recipeSearch.placeholder = language === 'zh' ? '搜索菜谱' : 'Search recipes';
+            mobileMenuButton.setAttribute('aria-label', language === 'zh' ? '打开导航' : 'Open navigation');
+            mobileNavigation.classList.remove('is-open');
+            mobileMenuButton.setAttribute('aria-expanded', 'false');
+            renderCategories();
+            renderRecipes();
+        };
+
+        languageButtons.forEach(button => button.addEventListener('click', () => setLanguage(button.dataset.language)));
+        mobileMenuButton.addEventListener('click', () => {
+            const isOpen = mobileNavigation.classList.toggle('is-open');
+            mobileMenuButton.setAttribute('aria-expanded', String(isOpen));
+        });
+        mobileNavigation.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+            mobileNavigation.classList.remove('is-open');
+            mobileMenuButton.setAttribute('aria-expanded', 'false');
+        }));
+        recipeSearch.addEventListener('input', () => { query = recipeSearch.value.trim(); openRecipeId = null; renderRecipes(); });
+
+        setLanguage(currentLanguage);
+    </script>
+</body>
+</html>

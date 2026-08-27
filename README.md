@@ -1,494 +1,565 @@
 # Henry Wang Personal Website — Maintenance Manual
 
-This repository is a static bilingual personal website. The live page is the top-level `index.html`; its CSS and JavaScript are embedded in the same file. There is no build step, package manager, framework, `styles.css`, or `app.js`.
+This is the source of truth for the current local bilingual portfolio. The site is static: there is no framework, package manager, bundler, or server-side production runtime. The approved visual system is dark, cinematic, restrained, and editorial.
 
-Use this file as the practical answer to: “Six months from now, what does every important file do, and where do I change something?”
+The source/development version documented here is:
 
-## 1. Quick Start and Source of Truth
+`/Users/henry/Desktop/Daily Use/Resume/2025/personal website/demo/`
 
-1. Open `index.html` directly in a browser for a quick review.
-2. For reliable local testing, serve this folder with a simple static HTTP server and open the local URL.
-3. Treat the current user request as the highest-priority instruction.
-4. Use the latest résumé PDF as the source of truth for employers, titles, dates, locations, and accomplishments.
-5. Keep every visible English `.en` field paired with a Chinese `.zh` field. The language switch works by adding and removing `.hidden`.
+This directory is **not** currently a Git repository. The separate local GitHub checkout is expected to be named `wlele108.github.io`; verify its real path before copying or staging anything.
 
-The main site does not use the Python files, notebooks, or `qixi-card/` to generate `index.html`. Editing or running those files will not update this website.
+## 1. Information Architecture
 
-## 2. Site Structure
+The permanent top-level navigation is:
 
-### Active site files and folders
+1. Home
+2. Work
+3. Interests
+4. Contact
 
-| File / Folder | Purpose | Edit when... | Usually do not touch when... |
-|---|---|---|---|
-| `index.html` | Main one-page website. Contains Home, Interests, Experience & Education, Projects & Research, Contact, all site CSS, `PROJECT_DATA`, and all site JavaScript. | Changing visible site copy, links, project data, section content, styling variables, or interaction settings. | Updating only an image or PDF without changing its filename. |
-| `README.md` | This maintenance manual. | Site structure, selectors, asset paths, or workflows change. | Making a small content correction that does not change the editing workflow. |
-| `img/` | Local website images, including the hero, project thumbnails, and Interests media. | Adding or replacing site imagery. | Changing text or links. |
-| `pdf/` | Résumé/CV downloads and older document files. | Replacing a downloadable CV or updating its filename. | Changing webpage content that does not affect downloads. |
-| `gallery.html` | Current standalone Photography entry opened by the Photography item in Interests. This page is temporary: its imagery, content, information architecture, and visual treatment are scheduled for a complete future rebuild. | Beginning the dedicated Photography-page redesign or temporarily maintaining the current link target. | Changing only the homepage Photography slideshow; do not treat the current gallery content as final. |
+Header and footer navigation must always use these four items in this order.
 
-### Reference, archive, and unrelated files
+`Work` contains Experience, Education, and Research. `Interests` contains Photography, Cooking, Tennis, Basketball, and Skiing.
 
-| File / Folder | Purpose | Edit when... | Usually do not touch when... |
-|---|---|---|---|
-| `gallery_calm_luxe.html` | Alternative/archived gallery visual experiment; not linked by the main page. | Intentionally developing that alternate gallery. | Maintaining the current `gallery.html`. |
-| `gallery_editorial_calm.html` | Alternative/archived gallery visual experiment; not linked by the main page. | Intentionally developing that alternate gallery. | Maintaining the current `gallery.html`. |
-| `index_old.html` | Legacy snapshot of an older homepage. It is not the main page. | Comparing historical implementation details. | Making current production changes. |
-| `trial.html` | Legacy visual experiment; not referenced by `index.html`. | Explicitly revisiting that experiment. | Maintaining the current site. |
-| `trial_1.html` | Legacy visual experiment; not referenced by `index.html`. | Explicitly revisiting that experiment. | Maintaining the current site. |
-| `CODEX_PHASE_2_PROMPT.md` | Archived Phase 2 implementation brief. | Reviewing design history. | Applying a newer user request. |
-| `CODEX_PHASE_2_1_PROMPT.md` | Archived Phase 2.1 implementation brief. | Reviewing design history. | Applying a newer user request. |
-| `CODEX_PHASE_2_2_PROMPT.md` | Archived Phase 2.2 implementation brief. | Reviewing design history. | Applying a newer user request. |
-| `qixi-card/` | Separate card project with its own assets, templates, Python generator, notebook, previews, and README. It does not generate the personal website. | Working specifically on the Qixi card project. | Updating `index.html`, Interests, Research, or the gallery. |
-| `roulette.py` | Standalone roulette simulation/experiment. | Working on that simulation. | Updating the website. |
-| `roulette_strategy_simulator (1).ipynb` | Standalone roulette notebook. | Working on that notebook. | Updating the website. |
-| `roulette_strategy_simulator (2).ipynb` | Standalone roulette notebook. | Working on that notebook. | Updating the website. |
-| `sketch.py` | Standalone experimental Python file. | Working explicitly on that experiment. | Updating the website. |
-| `.DS_Store` and `img/.DS_Store` | macOS Finder metadata. | Never intentionally. | All website work. |
+The active pages are:
 
-## 3. `index.html` Map
+- `index.html` — Home, Work, Interests, Contact, and the existing Research section.
+- `gallery.html` — Photography detail page beneath Interests.
+- `kitchen.html` — Cooking detail page beneath Interests.
 
-`index.html` is intentionally self-contained. Search for these stable IDs, selectors, and constants instead of relying on line numbers, which change over time.
+Gallery and Kitchen are child pages, not top-level navigation entries. On both child pages, Home, Work, Interests, and Contact point back to the corresponding `index.html` anchors.
 
-| Target | Search for | What lives there |
+## 2. Active File and Folder Map
+
+| Path | Runtime role | Maintenance rule |
 |---|---|---|
-| Global style variables | `:root` and `Phase 3: cinematic` | Colors, typography, hero image, cyan label sizes, slideshow timing. |
-| Navigation | `id="navbar"` | Desktop menu, mobile menu, language buttons. |
-| Home | `id="home"` | Hero name, Hero Identity, the embedded About Me introduction, CV and social links, editorial section links. |
-| Archived About content | `id="about-content-archive"` | Inactive `<template>` retained for reference; it does not render as a page section. |
-| Experience & Education | `id="experience"` | Bank of America first, other professional experience, and education. |
-| Projects & Research | `id="projects"` | Empty `#projects-grid` mount point. Cards are rendered from `PROJECT_DATA`. |
-| Interests | `id="interests"` | Photography slideshow, Skiing, Tennis, Basketball, Cooking. |
-| Contact | `id="contact"` | Contact details, email copy controls, external links. |
-| Project data | `const PROJECT_DATA` | The only content source for all nine default and detail project states. |
-| Interaction settings | `const SITE_INTERACTION_CONFIG` | Slideshow interval, future video playback speed, and project pin flag. |
+| `index.html` | Main portfolio, including the curated homepage Photography slideshow and Kitchen preview. | Preserve Work, Research, About, Contact, and current interactions unless a task explicitly targets them. |
+| `gallery.html` | Production Photography archive, orientation filters, balanced rows, and lightbox. | This is the public Gallery target; layout reads only from centralized photo metadata. |
+| `gallery2.html` | Read-only experimental Gallery archive. | Superseded layout experiments only; do not edit, publish, or use as the Photography link target. |
+| `kitchen.html` | Data-driven bilingual Kitchen Notes archive. | Recipe content reads only from the recipe dataset. |
+| `css/subpage-shell.css` | Shared Gallery/Kitchen navigation, type, spacing, and footer shell. | Keep both child pages visually coherent. |
+| `data/photo-metadata.js` | One metadata record per Gallery photograph. | Human-maintained location/style/comment fields and EXIF-derived fields live here. |
+| `data/recipes.js` | All 50 recipe records. | Chinese content follows the private source document; English remains a faithful companion. |
+| `scripts/build_photo_metadata.py` | Optional EXIF refresh utility. | Maintenance-only; the live website never requires Python. |
+| `img/interests/photography/` | Flat storage for all 25 Photography images. | All images live directly in this directory. No style subfolders. |
+| `img/interests/tennis/tennis-court-poster.jpg` | Current Tennis media. | Unchanged by the Photography system. |
+| `img/*.jpg` | Research and supporting images. | Preserve active filenames and `PROJECT_DATA` paths. |
+| `pdf/Resume.pdf` | English CV. | Replace only when explicitly supplied. |
+| `pdf/王乐桓中文简历.pdf` | Chinese CV. | Replace only when explicitly supplied. |
+| `菜谱.docx` | Private local recipe source of truth. | Not a public runtime asset; do not modify or publish without authorization. |
+| `README.md` | Architecture, maintenance, validation, and deployment handoff. | Update with every structural or data-system revision. |
 
-### Embedded CSS
+`gallery2.html`, other archived Gallery variants, old/trial HTML, `qixi-card/`, roulette files, notebooks, and unrelated experiments do not generate the active pages.
 
-There is no separate `styles.css`. The `<head>` contains Tailwind configuration and several embedded style blocks. The later rules intentionally override earlier historical rules, so add narrowly scoped fixes near the end of the final style block instead of broadly rewriting earlier layers.
+`gallery2.html` specifically preserves superseded justified-row, fixed 4:5 frame, square-frame, and alternative fit-strategy tests. Future maintenance must not copy its accumulated override layers back into production. `gallery.html` is the Gallery source of truth.
 
-Important variables:
+## 3. Navigation, Language, and Content Boundaries
 
-| Variable | Current role |
+When a top-level label or anchor changes, update the desktop header, mobile menu, footer, child-page shells, and Home modules together. All new visible copy needs paired `.en` and `.zh` content. Language preference is shared through `localStorage` key `henry-site-language`.
+
+The Interests section uses natural labels:
+
+1. Photography / 摄影
+2. Cooking / 烹饪
+3. Tennis / 网球
+4. Basketball / 篮球
+5. Skiing / 滑雪
+
+Photography and Cooking receive larger, content-rich layouts; their hierarchy comes from composition and scale rather than a mechanical hierarchy label. Tennis, Basketball, and Skiing remain restrained supporting entries.
+
+The Kitchen preview count is generated from `window.RECIPES.length` and appears as natural editorial copy such as `50 recipes`, never as a hard-coded KPI.
+
+Do not change Experience, Education, Research, `PROJECT_DATA`, Research hover/pin behavior, About Me, or Contact while maintaining Photography. The exact approved About sentence remains:
+
+> I study at Chicago Booth and will be returning to BofA in S&T.
+
+## 4. Homepage Photography Contract
+
+The homepage slideshow is curated separately from the Gallery dataset. Adding a Gallery photograph does **not** automatically add it to the homepage slideshow.
+
+Current behavior:
+
+- `starry-sky-01.jpeg` is the initial, resting, and first frame.
+- `SITE_INTERACTION_CONFIG.PHOTOGRAPHY_SLIDE_INTERVAL = 2000` is the only autoplay timing source.
+- The fade is approximately 220 ms.
+- Desktop/fine pointer: hover starts playback; leave stops and restores the starry frame; arrows affect the slideshow only.
+- Touch/coarse pointer: 44 px arrows remain visible, horizontal swipe works, and `IntersectionObserver` starts autoplay at about 50% visibility.
+- Leaving the viewport pauses playback and restores the starry frame.
+- Manual arrow/swipe input resets the same interval; overlapping intervals are not allowed.
+- Reduced-motion disables autoplay and collapses transitions while preserving manual controls.
+- Only the explicit Gallery CTA navigates to `gallery.html`.
+
+All homepage slideshow paths use the flat Photography directory. The six photographs added to the Gallery in the 2026-08-26 revision were intentionally not inserted into the curated homepage sequence.
+
+## 5. Production Gallery: Balanced Rows, Orientation, and Lightbox Filmstrip
+
+The Gallery is intentionally a dense, image-first photo album rather than a sparse exhibition page. `Moments & Places` keeps its reduced book-opening scale, and the space beneath the hero is shortened so photography begins sooner.
+
+The visible Gallery quote is user-provided content, not independently authenticated:
+
+> “A photograph is time held still. When we grow old enough to forget how to remember, it will still remember our youth for us.”
+>
+> — Ansel Adams
+
+> “照片是凝固的时间，等我们老到忘了如何回忆，它依然替我们年轻着”
+>
+> — 安塞尔·亚当斯  
+> 摄影界的“约塞米蒂诗人”
+
+Edit the wording and attribution only in the `.gallery-quote` block in `gallery.html`. Treat it as user-authored/provided copy.
+
+### Balanced three-photo overview
+
+The production overview is one continuous newest-to-oldest sequence. It has no physical year or month groups and no large year dividers. `renderGallery()` removes the pinned records from the later chronology, chunks the remaining filtered sequence into exactly three photographs per row, and allows only the final row to contain fewer than three. A one-photo final row is left-aligned at `MAX_CELL_SHARE` rather than enlarged to the full container width.
+
+Every photograph receives a compact capture label immediately above it (`AUG 2025` in English or `2025年8月` in Chinese). Repeated month/year labels are intentional because the date belongs to the photograph rather than a physical group.
+
+The balancing algorithm uses actual `aspectRatio` metadata, with natural image dimensions as a runtime fallback. It softens extreme ratios with `ratio ** ROW_BALANCE_POWER`, then bounds each full-row share before generating the row's CSS grid columns. Photographs remain in chronological order; they are never reordered for visual convenience.
+
+The exact production configuration is:
+
+```js
+GALLERY_CONFIG = {
+  SORT_DIRECTION: "newest-first",
+  PHOTOS_PER_ROW: 3,
+  ORIENTATION_SPLIT: 1,
+  ROW_BALANCE_POWER: 0.6,
+  MIN_CELL_SHARE: 0.24,
+  MAX_CELL_SHARE: 0.42
+}
+```
+
+Desktop/tablet gutters are `6px`; narrow-mobile gutters are `4px`. The same three-photo row system is retained at 390 px and 430 px because the current dataset remains usable at that density. Overview images use `width: 100%; height: auto` and never use `object-fit: cover`, so they are not cropped, stretched, or compressed into fixed frames.
+
+### Thumbnail location behavior
+
+Normal thumbnails permanently show only the compact capture-month label. Location, comment, style, and EXIF are not permanently visible. `photoMarkup()` places the metadata-driven `.image-location` inside `.gallery-image-button`. On fine-pointer desktop, `.gallery-image-button:hover .image-location` fades in a small bottom-left location tag; keyboard `:focus-visible` receives the same cue. The image change is limited to a very slight brightness/scale adjustment.
+
+Under `@media (hover: none), (pointer: coarse)` and the narrow-mobile breakpoint, `.image-location` stays hidden, so mobile never depends on hover or accumulates a returned-focus label after closing the lightbox. A single tap continues to open the lightbox. Full location, date, optional comment, and EXIF remain in `renderLightbox()`.
+
+### Pinned opening photographs
+
+The understated opening selection is rendered by `#gallery-pinned` and `#gallery-pinned-grid` before the chronological archive. It is configured only through `pinnedOrder` in `data/photo-metadata.js`:
+
+1. `starry-sky-01.jpeg` — Joshua Tree National Park, California — `pinnedOrder: 1`
+2. `balloon-moon-01.jpeg` — Mexico City area, Mexico — `pinnedOrder: 2`
+3. `coastal-cliff-01.jpeg` — Oregon Coast, USA — `pinnedOrder: 3`
+
+`renderGallery()` sorts positive `pinnedOrder` values and omits those records from the later archive, so no image file or rendered thumbnail is duplicated. The pinned selection uses the same softened, bounded row-width logic as chronology. Under All, all three remain pinned. Under an orientation filter, only pinned photographs with the matching derived orientation appear; an empty pinned group is hidden.
+
+To pin or unpin a photograph later, change only its metadata field: use a unique positive integer for its order or `pinnedOrder: null` to return it to chronology. Do not modify `gallery.html`.
+
+### Chronology and orientation filters
+
+Gallery ordering is controlled by one value:
+
+```js
+GALLERY_CONFIG.SORT_DIRECTION = "newest-first"
+```
+
+The visible filters are `All / Landscape / Portrait` and `全部 / 横幅 / 竖幅`. Orientation is derived automatically: `aspectRatio < ORIENTATION_SPLIT` is portrait and `aspectRatio >= ORIENTATION_SPLIT` is landscape. `styleTags` remain intact in metadata for future use but do not drive the production filter controls.
+
+Filtering preserves the same newest-to-oldest sequence before it is chunked into rows. The All lightbox sequence contains 25 unique photographs. The overview renders the three pinned photographs once and the other 22 once; the lightbox filmstrip uses the complete filtered unique sequence.
+
+### Lightbox filmstrip
+
+The approved main-image and information layout remains unchanged. `#lightbox-filmstrip` is a single horizontal, no-wrap, touch-scrollable strip rendered by `renderFilmstrip()` from the exact same `filteredPhotos()` sequence used by the counter and previous/next controls.
+
+- Each thumbnail directly selects its photograph without closing the lightbox.
+- `renderLightbox()` synchronizes the main image, bilingual location, date, optional comment, EXIF, counter, and the single `.is-active` thumbnail.
+- Previous/next buttons, Arrow Left/Arrow Right, and thumbnail clicks all use the same `lightboxIndex`.
+- `centerActiveThumbnail()` scrolls only the filmstrip to center the active thumbnail; reduced-motion uses immediate scrolling and other users receive restrained smooth scrolling.
+- Thumbnail height is `56px` on desktop and approximately `45px` on mobile. Only these filmstrip thumbnails use `object-fit: cover`; the overview and main lightbox image do not.
+- The scrollbar is visually hidden, while horizontal wheel/touch scrolling and keyboard-focusable thumbnail buttons remain available.
+
+## 6. Flat Photography Storage
+
+All Photography files live directly in:
+
+`img/interests/photography/`
+
+**STYLE TAG ≠ FILESYSTEM LOCATION.** Style classification lives only in `styleTags`. Never move an image merely to change a Gallery filter.
+
+### Complete 2026-08-26 migration manifest
+
+| Old path | New path |
 |---|---|
-| `--hero-image` | Home hero background. Currently points to `img/hero-ocean.jpg`. |
-| `--cyan` | Restrained cyan accent used for labels and rules. |
-| `--cyan-label-size-en` | English cyan-label size. |
-| `--cyan-label-size-zh` | Chinese cyan-label size; intentionally optically larger. |
-| `SITE_INTERACTION_CONFIG.PHOTOGRAPHY_SLIDE_INTERVAL` | Single JavaScript source of truth for the Photography hover slideshow interval; currently `1000`. |
-| `#home::before` / `#home::after` rgba alpha | Hero overlay strength and text contrast. |
+| `img/interests/photography/city-architecture/city-street-01.jpeg` | `img/interests/photography/city-street-01.jpeg` |
+| `img/interests/photography/city-architecture/grand-staircase-01.jpeg` | `img/interests/photography/grand-staircase-01.jpeg` |
+| `img/interests/photography/city-architecture/hillside-train-01.jpeg` | `img/interests/photography/hillside-train-01.jpeg` |
+| `img/interests/photography/city-architecture/station-clock-01.jpeg` | `img/interests/photography/station-clock-01.jpeg` |
+| `img/interests/photography/nature-landscape/balloon-moon-01.jpeg` | `img/interests/photography/balloon-moon-01.jpeg` |
+| `img/interests/photography/nature-landscape/coastal-cliff-01.jpeg` | `img/interests/photography/coastal-cliff-01.jpeg` |
+| `img/interests/photography/nature-landscape/coastal-lighthouse-01.jpeg` | `img/interests/photography/coastal-lighthouse-01.jpeg` |
+| `img/interests/photography/nature-landscape/mountain-lake-dusk-01.jpeg` | `img/interests/photography/mountain-lake-dusk-01.jpeg` |
+| `img/interests/photography/nature-landscape/ocean-sunset-birds-01.jpeg` | `img/interests/photography/ocean-sunset-birds-01.jpeg` |
+| `img/interests/photography/nature-landscape/rainbow-bridge-01.jpeg` | `img/interests/photography/rainbow-bridge-01.jpeg` |
+| `img/interests/photography/nature-landscape/snowy-mountain-road-01.jpeg` | `img/interests/photography/snowy-mountain-road-01.jpeg` |
+| `img/interests/photography/night-atmosphere/beach-photographer-dusk-01.jpeg` | `img/interests/photography/beach-photographer-dusk-01.jpeg` |
+| `img/interests/photography/night-atmosphere/bridge-sunset-01.jpeg` | `img/interests/photography/bridge-sunset-01.jpeg` |
+| `img/interests/photography/night-atmosphere/bridge-sunset-02.jpeg` | `img/interests/photography/bridge-sunset-02.jpeg` |
+| `img/interests/photography/night-atmosphere/city-sunset-01.jpeg` | `img/interests/photography/city-sunset-01.jpeg` |
+| `img/interests/photography/night-atmosphere/harbor-skyline-night-01.jpeg` | `img/interests/photography/harbor-skyline-night-01.jpeg` |
+| `img/interests/photography/night-atmosphere/reflected-sunset-01.jpeg` | `img/interests/photography/reflected-sunset-01.jpeg` |
+| `img/interests/photography/night-atmosphere/starry-sky-01.jpeg` | `img/interests/photography/starry-sky-01.jpeg` |
+| `img/interests/photography/night-atmosphere/waterfront-dusk-01.jpeg` | `img/interests/photography/waterfront-dusk-01.jpeg` |
 
-Research images must remain `object-fit: contain`, centered on a neutral charcoal frame. Do not switch them to `cover`; the full source image is more important than filling every pixel.
+The obsolete `nature-landscape/`, `city-architecture/`, and `night-atmosphere/` directories are removed only after their files are moved and verified.
 
-### Embedded JavaScript
+### Newly supplied Photography files
 
-There is no separate `app.js`. The scripts in `index.html` handle:
+These files were already present in the development folder and are now registered in Gallery metadata:
 
-- desktop and mobile language switching;
-- mobile-menu opening and closing;
-- smooth anchor scrolling;
-- navbar scroll state;
-- email copying and icon feedback;
-- rendering all Research cards from `PROJECT_DATA`;
-- Research hover/focus detail visibility;
-- experimental click-to-pin behavior;
-- Photography hover slideshow;
-- Photography previous/next controls;
-- future Skiing/Tennis video preview behavior.
+- `img/interests/photography/DSC_0571.jpg`
+- `img/interests/photography/DSC_0709.jpg`
+- `img/interests/photography/DSC_1624.jpeg`
+- `img/interests/photography/DSC_2585 7F7E53F3.jpg`
+- `img/interests/photography/DSC_4175.jpg`
+- `img/interests/photography/Z30_0224.jpg`
 
-`SITE_INTERACTION_CONFIG.ENABLE_PROJECT_PIN` controls the experimental pin feature:
+There is no separate `DSC_2585.*` and no separate `7F7E53F3.*`. The actual filesystem contains one photograph named `DSC_2585 7F7E53F3.jpg`; it therefore receives one metadata record and is not duplicated or renamed.
 
-- `true`: clicking a project pins the same detail state used by hover; clicking it again unpins; pinning another project closes the previous one.
-- `false`: click-to-pin listeners are not installed; normal hover/focus and mobile static details still work.
+## 7. Central Photo Metadata Schema
 
-The comment `EXPERIMENTAL — PROJECT PIN` must remain next to this behavior until the feature is accepted permanently.
+`gallery.html` renders only from `window.PHOTO_METADATA` in `data/photo-metadata.js`. Each actual image has exactly one record:
 
-## 4. Asset Guide
-
-### `img/`
-
-| Path | Contents and use |
-|---|---|
-| `img/hero-ocean.jpg` | Current Home hero photograph, referenced by `--hero-image`. |
-| `img/trade.jpg` | Derivative-Trading Simulation Fund thumbnail. |
-| `img/reg.jpg` | Real Estate Financial Model thumbnail. |
-| `img/ghana.jpg` | Ghana Economic Research thumbnail. |
-| `img/epayment.jpg` | E-Payment Economic Impact thumbnail. |
-| `img/af.jpg` | Camera autofocus project thumbnail. |
-| `img/stata.jpg` | Work-From-Home project thumbnail. |
-| `img/figma3.jpg` | USC Transportation Heatmap thumbnail. |
-| `img/figma.jpg` | Sickle Cell Anaemia app thumbnail. |
-| `img/fossil.jpg` | Assistant Tutoring project thumbnail. |
-| `img/interests/photography/` | Categorized homepage Photography slideshow assets under `nature-landscape/`, `city-architecture/`, and `night-atmosphere/`. The explicit HTML order controls playback order. |
-| `img/interests/tennis/tennis-court-poster.jpg` | Current static Tennis poster and future video fallback image. |
-| Other root-level images | Existing education, portrait, legacy, or supporting assets. Confirm references with a text search before deleting or renaming any file. |
-
-Do not assume an image is unused merely because it is not part of `PROJECT_DATA`; Experience, archived About content, or legacy pages may still reference it.
-
-### `pdf/`
-
-The Home CV buttons currently reference:
-
-- English: `pdf/Resume.pdf`
-- Chinese: `pdf/王乐桓中文简历.pdf`
-
-To update a CV safely, either replace the existing PDF while keeping its filename, or update the matching Home `href`. Then open both language versions and confirm the correct file loads.
-
-`pdf/Resume.docx`, `pdf/王乐桓中文简历.docx`, `pdf/Jessie_Lyu_Resume.pdf`, and the remaining documents are not linked by the current Home CV controls. Do not replace them as part of a normal Henry website update unless explicitly requested.
-
-## 5. Editing Homepage Copy
-
-In `index.html`, search inside `#home` for these selectors:
-
-- Hero Identity English: `<p class="hero-identity en">`
-- Hero Identity Chinese: `<p class="hero-identity zh hidden">`
-- About Me visible label: `.hero-about-label` (`About Me` / `关于我`)
-- About Me paragraph English: the `<p class="en">` inside `.hero-about`
-- About Me paragraph Chinese: the `<p class="zh hidden">` inside `.hero-about`
-
-Edit English and Chinese together. Keep the existing element hierarchy so the language switch and layout continue to work. The casual tone is intentional; do not automatically turn the introduction into résumé or cover-letter language.
-
-The visible `About Me` label and the paragraph beneath it are separate fields. A label-only request must not rewrite the paragraph. This remains an embedded Home component; do not recreate a standalone About section.
-
-### Homepage module labels
-
-The four `.hero-index` modules use the same primary names as the persistent menu: `Interests`, `Experience`, `Research`, and `Contact`. The matching bilingual primary names live in `.hero-index-title`; the smaller explanatory phrases live separately in `.hero-index-description`. Keep the primary titles synchronized with the menu whenever navigation labels change.
-
-To update the hero background, add the photograph under `img/`, then change `--hero-image`. Adjust only the overlay alpha values if the new photograph needs more or less contrast.
-
-### Experience & Education maintenance
-
-- Desktop: `#experience .grid.md\:grid-cols-2` uses two equal `1fr` columns, approximately 50% Experience and 50% Education.
-- Desktop divider: `#experience .grid.md\:grid-cols-2::after` draws the subtle centered vertical dashed rule. It is inside a `min-width: 768px` media query, so it does not appear on mobile.
-- Mobile: the existing narrow-layout rule changes the grid to one column, stacking Experience above Education without a vertical divider.
-- Booth location fields: `Chicago` / `芝加哥`.
-- USC location fields: `Los Angeles` / `洛杉矶`.
-- Location fields use `.education-location`; update the English and Chinese values together and do not globally replace city names.
-
-## 6. Adding or Editing a Project
-
-All project content now lives once in `const PROJECT_DATA` near the bottom of `index.html`. The default card and hover/pinned detail view are rendered from that same object.
-
-Each project record contains:
-
-```text
-id
-image
-title.en / title.zh
-shortDescription.en / shortDescription.zh
-tags.en[] / tags.zh[]
-detailTitle.en / detailTitle.zh
-details.en[] / details.zh[]
+```js
+{
+  file: "starry-sky-01.jpeg",
+  src: "img/interests/photography/starry-sky-01.jpeg",
+  dateTaken: "2025-01-20T11:09:12",
+  year: 2025,
+  month: 1,
+  location: {
+    en: "Joshua Tree National Park, California",
+    zh: "加州约书亚树国家公园"
+  },
+  locationStatus: "confirmed",
+  locationNote: "",
+  styleTags: ["night-atmosphere"],
+  styleStatus: "classified",
+  pinnedOrder: 1,
+  aspectRatio: 1.5,
+  camera: "NIKON Z 7_2",
+  lens: "NIKKOR Z 24-200mm f/4-6.3 VR",
+  focalLength: "30 mm",
+  aperture: "f/4.5",
+  shutter: "13 s",
+  iso: "6400",
+  comment: { en: "", zh: "" },
+  exifSource: "DateTimeOriginal",
+  rawCaptureTime: "2025:01:20 11:09:12"
+}
 ```
 
-Workflow:
+Human-maintained fields:
 
-1. Add the project image to `img/` using a descriptive filename.
-2. Add a new object to `PROJECT_DATA`, or edit the existing object.
-3. Provide paired English and Chinese titles.
-4. Provide paired English and Chinese short descriptions.
-5. Provide English and Chinese tags in the same order and with the same array length.
-6. Provide paired detail titles and detailed bullet arrays.
-7. Keep each English and Chinese bullet array factually equivalent.
-8. Verify the default card shows image, title, short description, and tags.
-9. Verify hover and keyboard focus show non-empty details.
-10. Switch EN/中文 and verify both default and detail content change.
-11. Verify click, second-click unpin, and one-pinned-at-a-time behavior when `ENABLE_PROJECT_PIN` is `true`.
-12. Verify desktop hover does not change card dimensions and mobile details remain directly accessible.
+- `location.en`, `location.zh`
+- `locationStatus`, `locationNote`
+- `styleTags`, `styleStatus`
+- `comment.en`, `comment.zh`
+- `pinnedOrder`
 
-Default content and hover content are different levels of detail, but they must belong to the same project data source. Do not paste a second copy of project content into `#projects-grid`; that element must remain an empty rendering mount point.
+EXIF/machine-derived fields:
 
-To change project order, move the complete object within `PROJECT_DATA`. To change a thumbnail, update only that object’s `image` field. Keep `object-fit: contain` in the Research CSS.
+- `dateTaken`, `year`, `month`, `exifSource`, `rawCaptureTime`
+- `camera`, `lens`, `focalLength`, `aperture`, `shutter`, `iso`, `aspectRatio`
 
-### Research detail overlay contract
+Capture-time precedence is `DateTimeOriginal`, then `DateTimeDigitized`, then embedded image `DateTime`. Finder Created, Modified, and Last Opened timestamps are never photographic dates.
 
-The desktop Research interaction is intentionally an in-frame replacement, not a text panel below the image:
+The maintenance script scans only the flat Photography root, refreshes machine-derived fields, and preserves human fields by exact filename. It preserves `pinnedOrder`, normalizes unpinned records to `null`, and stops rather than silently processing nested style folders, duplicate filenames, or duplicate positive pin positions.
 
-- `.project-card` is the fixed visual frame and remains the same size before, during, and after hover.
-- `.project-detail` must remain a child of that card and use `position: absolute`, `inset: 0`, `width: 100%`, and `height: 100%` so it covers the existing image/title outline inside the exact same border.
-- The detail layer uses `overflow-y: auto` and `overflow-x: hidden`. Long `<li>` content scrolls inside the project box; it must never expand the grid row or appear below the card.
-- Hidden detail layers use `pointer-events: none`. A visible `.is-detail-preview` or `.is-detail-open` layer uses `pointer-events: auto`, which is required for trackpad, mouse-wheel, and scrollbar access.
-- Keep the card wrapper `position: relative` and `overflow: hidden` so the overlay cannot escape its border.
-- On coarse-pointer and narrow mobile layouts, the detail layer returns to normal relative flow and remains directly visible. Do not require hover on touch devices.
-- Project cards are generated after Tailwind's browser-side class scan. Do not rely only on generated utility classes such as `absolute` and `inset-0` for critical overlay positioning; preserve the explicit, narrowly scoped `#projects ... > .project-detail` CSS fallback near the end of the final style block.
+## 8. Location Confidence Table
 
-When this interaction is edited, inspect one long-detail card as well as all nine cards. Confirm that the detail layer's bounding box matches the card, `scrollHeight` may exceed `clientHeight`, internal scrolling changes the detail layer's `scrollTop`, and the surrounding grid does not move.
+| Filename | English location | Status |
+|---|---|---|
+| `DSC_0571.jpg` | Joshua Tree National Park, California | confirmed |
+| `DSC_0709.jpg` | Dockweiler State Beach, Los Angeles | confirmed |
+| `DSC_1624.jpeg` | Mexico City, Mexico | confirmed-city-only |
+| `DSC_2585 7F7E53F3.jpg` | Oregon, USA | confirmed-state-only |
+| `DSC_4175.jpg` | Las Vegas, Nevada | confirmed-city-only |
+| `Z30_0224.jpg` | Deep Water Bay, Hong Kong | confirmed |
+| `balloon-moon-01.jpeg` | Mexico City area, Mexico | approximate |
+| `beach-photographer-dusk-01.jpeg` | Dockweiler State Beach, Los Angeles | confirmed |
+| `bridge-sunset-01.jpeg` | Yangpu Bridge, Shanghai | confirmed |
+| `bridge-sunset-02.jpeg` | Yangpu Bridge, Shanghai | confirmed |
+| `city-street-01.jpeg` | Mid-Levels, Hong Kong | approximate |
+| `city-sunset-01.jpeg` | Yangpu Bridge, Shanghai | confirmed |
+| `coastal-cliff-01.jpeg` | Oregon Coast, USA | approximate |
+| `coastal-lighthouse-01.jpeg` | Point Vicente, Rancho Palos Verdes, California | confirmed |
+| `grand-staircase-01.jpeg` | Museo Nacional de Arte (MUNAL), Mexico City | confirmed |
+| `harbor-skyline-night-01.jpeg` | East Coast Park Precinct, Hong Kong | confirmed |
+| `hillside-train-01.jpeg` | Near The Chinese University of Hong Kong, Sha Tin | approximate |
+| `mountain-lake-dusk-01.jpeg` | Near Las Vegas, Nevada | approximate |
+| `ocean-sunset-birds-01.jpeg` | Point Vicente, Rancho Palos Verdes, California | confirmed |
+| `rainbow-bridge-01.jpeg` | Shenzhen Talent Park, Shenzhen | confirmed |
+| `reflected-sunset-01.jpeg` | Chicago, Illinois | confirmed-city-only |
+| `snowy-mountain-road-01.jpeg` | Near Crater Lake National Park, Oregon | approximate |
+| `starry-sky-01.jpeg` | Joshua Tree National Park, California | confirmed |
+| `station-clock-01.jpeg` | Central Market, Central, Hong Kong | confirmed |
+| `waterfront-dusk-01.jpeg` | Shenzhen Talent Park, Shenzhen | confirmed |
 
-## 7. Interests Media Guide
+Point Vicente, Dockweiler State Beach, and East Coast Park Precinct are confirmed user-provided locations. They must not be downgraded to “likely.”
 
-### Photography
+The corrected bilingual Yangpu Bridge records are:
 
-- Add new slideshow photographs to the most appropriate category folder, not directly to the Photography root.
-- Every compatible image should have one `.photography-frame` `<img>` inside `[data-photography-slideshow]` in `#interests`. A static `file://` page cannot enumerate folders, so filenames and playback order remain explicit in the HTML.
-- The first HTML frame is the resting image and must carry `.is-active`. The current default is `img/interests/photography/night-atmosphere/starry-sky-01.jpeg`.
-- Slideshow timing has one source of truth: `SITE_INTERACTION_CONFIG.PHOTOGRAPHY_SLIDE_INTERVAL` in the embedded JavaScript. Its value is `1000`, so the resting frame and every later frame each receive one full second after hover begins.
-- Hover starts one interval; mouse leave clears it and preserves the currently displayed frame. Manual previous/next selection restarts the same interval so the newly selected frame also gets a full second.
-- To reorder the slideshow later, move the complete `.photography-frame` elements within `[data-photography-slideshow]`; do not duplicate paths in JavaScript.
-- If fewer images appear than expected, compare the explicit `src` list with the category folders. The slideshow skips missing, unfinished, or failed images (`complete === false` or `naturalWidth === 0`) instead of displaying a broken frame.
-- Previous/next buttons use `[data-photography-direction]`. They appear only while the Photography item is hovered and remain siblings of `.interest-primary-link`, preventing a manual step from opening `gallery.html`.
-- Images use `object-fit: contain` and must not be compressed, stretched, cropped, or dimensionally altered without explicit approval.
-- The whole Photography item links to `gallery.html`. The homepage slideshow and future gallery remain separate image lists; `gallery.html` is still a temporary destination scheduled for a later rebuild.
+| Filename | English | Chinese | Status |
+|---|---|---|---|
+| `bridge-sunset-01.jpeg` | Yangpu Bridge, Shanghai | 上海杨浦大桥 | confirmed |
+| `bridge-sunset-02.jpeg` | Yangpu Bridge, Shanghai | 上海杨浦大桥 | confirmed |
+| `city-sunset-01.jpeg` | Yangpu Bridge, Shanghai | 上海杨浦大桥 | confirmed |
 
-### Photography folder structure
+The six newly supplied photos intentionally remain `styleTags: []` and `styleStatus: "unclassified"` until the user assigns styles manually.
 
-```text
-img/interests/photography/
-├── nature-landscape/
-├── city-architecture/
-└── night-atmosphere/
+## 9. Photo Maintenance Workflows
+
+### Update a style
+
+Edit only `styleTags` and `styleStatus` in `data/photo-metadata.js`:
+
+```js
+styleTags: ["city-architecture"],
+styleStatus: "classified"
 ```
 
-- `nature-landscape/`: coastlines, weather, mountains, open roads, the lighthouse, and other outdoor subjects led by the natural environment.
-- `city-architecture/`: urban streets, interiors, transit, and built-environment studies.
-- `night-atmosphere/`: the star field, night city scenes, dusk silhouettes, sunsets, reflections, and mood-led low-light work.
+No file move, image rename, or `gallery.html` edit is required.
 
-### Nature & Landscape
+### Update a location
 
-- `balloon-moon-01.jpeg`
-- `coastal-lighthouse-01.jpeg`
-- `ocean-sunset-birds-01.jpeg`
-- `coastal-cliff-01.jpeg`
-- `snowy-mountain-road-01.jpeg`
-- `mountain-lake-dusk-01.jpeg`
-- `rainbow-bridge-01.jpeg`
+Edit only `location.en`, `location.zh`, `locationStatus`, and `locationNote`. Do not edit Gallery layout code.
 
-### City & Architecture
+### Add a comment
 
-- `station-clock-01.jpeg`
-- `city-street-01.jpeg`
-- `grand-staircase-01.jpeg`
-- `hillside-train-01.jpeg`
+Edit `comment.en` and `comment.zh`. Blank comments render no placeholder. Populated comments appear in the lightbox between date and camera information.
 
-### Night & Atmosphere
+### Pin or unpin a Gallery photograph
 
-- `starry-sky-01.jpeg` — default/resting slideshow image
-- `harbor-skyline-night-01.jpeg`
-- `bridge-sunset-01.jpeg`
-- `bridge-sunset-02.jpeg`
-- `city-sunset-01.jpeg`
-- `reflected-sunset-01.jpeg`
-- `waterfront-dusk-01.jpeg`
-- `beach-photographer-dusk-01.jpeg`
+Edit only `pinnedOrder` in `data/photo-metadata.js`:
 
-### Skiing
-
-- Skiing is currently an editorial text card with no image, poster, or video path.
-- If a Skiing video is supplied later, create `img/interests/skiing/`, store the video and optional poster there, add a muted looping `<video>` inside a media wrapper, and add `data-video-interest="skiing"` to the card.
-- Playback speed comes from `SITE_INTERACTION_CONFIG.INTEREST_VIDEO_PLAYBACK_RATE`.
-
-### Tennis
-
-- Current poster: `img/interests/tennis/tennis-court-poster.jpg`.
-- Future video: place it beside the poster, then replace the image in `.interest-media` with a muted, looping, `playsinline` `<video>` using the poster as fallback.
-- Keep `data-video-interest="tennis"`; existing JavaScript will play on hover for compatible devices and use `INTEREST_VIDEO_PLAYBACK_RATE`.
-- There is no Tennis video in the repository yet; do not rename the poster to a video extension.
-
-### Basketball
-
-- Basketball currently uses the compact editorial supporting-card treatment and has no image.
-- To add one later, create `img/interests/basketball/`, add a contained media layer inside the existing Basketball article, and preserve its bilingual title and description.
-
-### Cooking
-
-- Cooking currently uses the compact editorial supporting-card treatment and has no image.
-- To add one later, create `img/interests/cooking/`, add a contained media layer inside the existing Cooking article, and preserve its bilingual title and description.
-
-## Photography Asset Migration Manifest
-
-This manifest is the source of truth for mirroring the local migration in `wlele108/wlele108.github.io`. Every row is a lossless filesystem move/rename; no image pixels, dimensions, or quality were changed.
-
-| Old path | New path | New filename | Category | Used where |
-|---|---|---|---|---|
-| `img/interests/photography/DSC_0637.jpeg` | `img/interests/photography/night-atmosphere/starry-sky-01.jpeg` | `starry-sky-01.jpeg` | Night & Atmosphere | Homepage Photography slideshow — first/default |
-| `img/interests/photography/DSC_0063.jpeg` | `img/interests/photography/night-atmosphere/harbor-skyline-night-01.jpeg` | `harbor-skyline-night-01.jpeg` | Night & Atmosphere | Homepage Photography slideshow |
-| `img/interests/photography/DSC_3834.jpeg` | `img/interests/photography/night-atmosphere/bridge-sunset-01.jpeg` | `bridge-sunset-01.jpeg` | Night & Atmosphere | Homepage Photography slideshow |
-| `img/interests/photography/DSC_3837.jpeg` | `img/interests/photography/night-atmosphere/bridge-sunset-02.jpeg` | `bridge-sunset-02.jpeg` | Night & Atmosphere | Homepage Photography slideshow |
-| `img/interests/photography/DSC_3853.jpeg` | `img/interests/photography/night-atmosphere/city-sunset-01.jpeg` | `city-sunset-01.jpeg` | Night & Atmosphere | Homepage Photography slideshow |
-| `img/interests/photography/DSC_3908.jpeg` | `img/interests/photography/night-atmosphere/reflected-sunset-01.jpeg` | `reflected-sunset-01.jpeg` | Night & Atmosphere | Homepage Photography slideshow |
-| `img/interests/photography/IMG_1325.jpeg` | `img/interests/photography/night-atmosphere/waterfront-dusk-01.jpeg` | `waterfront-dusk-01.jpeg` | Night & Atmosphere | Homepage Photography slideshow |
-| `img/interests/photography/d3d4a6efc3df486c49779e9cfdf887f2.jpeg` | `img/interests/photography/night-atmosphere/beach-photographer-dusk-01.jpeg` | `beach-photographer-dusk-01.jpeg` | Night & Atmosphere | Homepage Photography slideshow |
-| `img/interests/photography/DSC_1734.jpeg` | `img/interests/photography/nature-landscape/balloon-moon-01.jpeg` | `balloon-moon-01.jpeg` | Nature & Landscape | Homepage Photography slideshow |
-| `img/interests/photography/DSC_2078.jpeg` | `img/interests/photography/nature-landscape/coastal-lighthouse-01.jpeg` | `coastal-lighthouse-01.jpeg` | Nature & Landscape | Homepage Photography slideshow |
-| `img/interests/photography/DSC_2125.jpeg` | `img/interests/photography/nature-landscape/ocean-sunset-birds-01.jpeg` | `ocean-sunset-birds-01.jpeg` | Nature & Landscape | Homepage Photography slideshow |
-| `img/interests/photography/DSC_2516.jpeg` | `img/interests/photography/nature-landscape/coastal-cliff-01.jpeg` | `coastal-cliff-01.jpeg` | Nature & Landscape | Homepage Photography slideshow |
-| `img/interests/photography/DSC_3025.jpeg` | `img/interests/photography/nature-landscape/snowy-mountain-road-01.jpeg` | `snowy-mountain-road-01.jpeg` | Nature & Landscape | Homepage Photography slideshow |
-| `img/interests/photography/DSC_4161.jpeg` | `img/interests/photography/nature-landscape/mountain-lake-dusk-01.jpeg` | `mountain-lake-dusk-01.jpeg` | Nature & Landscape | Homepage Photography slideshow |
-| `img/interests/photography/IMG_1359.jpeg` | `img/interests/photography/nature-landscape/rainbow-bridge-01.jpeg` | `rainbow-bridge-01.jpeg` | Nature & Landscape | Homepage Photography slideshow |
-| `img/interests/photography/DSC_0087.jpeg` | `img/interests/photography/city-architecture/station-clock-01.jpeg` | `station-clock-01.jpeg` | City & Architecture | Homepage Photography slideshow |
-| `img/interests/photography/DSC_0105.jpeg` | `img/interests/photography/city-architecture/city-street-01.jpeg` | `city-street-01.jpeg` | City & Architecture | Homepage Photography slideshow |
-| `img/interests/photography/DSC_1532.jpeg` | `img/interests/photography/city-architecture/grand-staircase-01.jpeg` | `grand-staircase-01.jpeg` | City & Architecture | Homepage Photography slideshow |
-| `img/interests/photography/Z30_0368.jpeg` | `img/interests/photography/city-architecture/hillside-train-01.jpeg` | `hillside-train-01.jpeg` | City & Architecture | Homepage Photography slideshow |
-
-## 8. Editing Links and Contact Information
-
-- CV links: search for `pdf/Resume.pdf` and `pdf/王乐桓中文简历.pdf`.
-- LinkedIn: search for `linkedin.com/in/henry-wang`.
-- Instagram: search for `instagram.com/wlele__`.
-- Email, phone, and location: search the exact visible value and update all matching Home, Contact, and Footer occurrences.
-- Photography destination: search for `href="gallery.html"`.
-
-After changing any link, test it from the rendered page. Keep `target="_blank"` behavior where it already exists.
-
-## 9. Validation Checklist
-
-Before considering a website edit complete:
-
-- [ ] Home renders at desktop and mobile widths.
-- [ ] Mobile menu opens and its anchors work.
-- [ ] EN/中文 switch changes all paired content without mixing languages.
-- [ ] Home shows `About Me` / `关于我`, while the introduction paragraph remains unchanged.
-- [ ] Home module primary titles match the persistent menu in both languages.
-- [ ] Bank of America remains the first professional Experience entry.
-- [ ] Booth shows Chicago / 芝加哥 and USC shows Los Angeles / 洛杉矶.
-- [ ] Experience and Education are equal-width on desktop with one subtle centered dashed divider; mobile stacks without the vertical divider.
-- [ ] Both CV links, LinkedIn, Instagram, Photography, and contact links open the intended target.
-- [ ] Email copy still works.
-- [ ] No horizontal overflow appears at mobile width.
-- [ ] Browser console contains no new errors.
-- [ ] All local images and PDFs return successfully.
-- [ ] Reduced-motion and coarse-pointer users can still access Research detail content.
-- [ ] Desktop Research details cover the original card in the same frame and long bullet lists scroll inside that frame.
-- [ ] Photography hover reveals both translucent controls; previous/next changes only the image, and automatic hover playback advances every one second.
-- [ ] All 19 Photography files resolve from the three category folders, and `starry-sky-01.jpeg` is first/default.
-
-For each of the nine Research cards:
-
-- [ ] image visible and undistorted;
-- [ ] default title visible;
-- [ ] default short description visible;
-- [ ] default tags visible;
-- [ ] hover/focus detail content is not empty;
-- [ ] correct detail bullets appear;
-- [ ] mouse leave restores the outline unless pinned;
-- [ ] EN/中文 changes both default and detail content;
-- [ ] click pins when enabled;
-- [ ] second click unpins;
-- [ ] only one card is pinned at a time;
-- [ ] hover does not change card dimensions.
-
-## 10. Current TODO
-
-### Copy
-
-- [ ] Revisit Hero Identity if desired
-- [ ] Revisit the About Me paragraph if desired
-
-### Media
-
-- [ ] Final homepage background
-- [ ] Final Photography slideshow selection
-- [ ] Final Skiing video
-- [ ] Final Tennis video
-- [ ] Optional Basketball image
-- [ ] Optional Cooking image
-
-### Projects
-
-- [ ] Review project thumbnails
-- [ ] Review short descriptions
-- [ ] Review detailed bullets
-- [ ] Decide whether to keep `ENABLE_PROJECT_PIN`
-
-### Visual
-
-- [ ] Final cyan-label size
-- [ ] Final Chinese typography scale
-- [ ] Photography slideshow speed
-- [ ] Video preview speed
-- [ ] Hero overlay strength
-
-## Updating the Live GitHub Website
-
-The live repository is `wlele108/wlele108.github.io`. Local editing and review happen first. Synchronize to GitHub only after the local version has been verified; do not use GitHub as the first place to test path migrations.
-
-### A. Before uploading
-
-From the local checkout of `wlele108.github.io`, verify the intended versions of:
-
-- `index.html`;
-- `README.md`;
-- every changed, renamed, or moved image;
-- PDFs, only when a PDF was intentionally changed;
-- all local paths, with no broken image or document reference.
-
-### B. Photography folder changes require special care
-
-A Photography rename or folder migration requires GitHub to receive both:
-
-1. every new file at its new category path;
-2. deletion of every obsolete old path.
-
-Uploading only the new folders leaves duplicate assets in the repository. Use the `Photography Asset Migration Manifest` above as the source of truth for the exact old-to-new mapping.
-
-### C. Recommended Git workflow
-
-Run the following only after copying the locally verified changes into the local checkout of `wlele108.github.io`:
-
-```bash
-git status
-git add -A
-git status
-git commit -m "Describe the website update"
-git push
+```js
+pinnedOrder: 1 // positive, unique order in the opening selection
+pinnedOrder: null // unpinned; render in chronological archive
 ```
 
-- First `git status`: inspect the unstaged local changes.
-- `git add -A`: stage new files, modified files, deleted old files, and detected moves/renames. This is essential after Photography folder migrations.
-- Second `git status`: inspect the exact staged result before committing.
-- `git commit`: create the local repository revision with a specific message.
-- `git push`: send the verified commit to `wlele108/wlele108.github.io`.
+The Gallery reads this value dynamically. No image move, duplicate file, or `gallery.html` edit is required.
 
-### D. Verify what Git thinks changed
+### Add a new photograph
 
-Before committing, read the second `git status`. A Photography migration may appear as:
+1. Export a web-ready image while preserving EXIF.
+2. Place it directly in `img/interests/photography/`.
+3. Preserve the real extension and use a clean unique filename.
+4. Run `python3 scripts/build_photo_metadata.py` from the development project root.
+5. Verify the capture timestamp and camera fields.
+6. Manually enter the bilingual location and status.
+7. Optionally maintain `styleTags` for future metadata use; the current visible orientation filters ignore this field.
+8. Optionally add bilingual comments.
+9. Optionally assign a unique positive `pinnedOrder`; leave it `null` for normal chronology.
+10. Verify newest-first ordering, three-photo rows, orientation filters, pinned behavior, lightbox filmstrip, and mobile layout.
+11. Decide separately whether the photo belongs in the homepage slideshow.
+12. Later mirror the image and metadata change into the verified Git checkout.
 
-```text
-renamed: old/path/image.jpeg -> new/path/image.jpeg
+## 10. Kitchen Notes
+
+`kitchen.html` renders 50 recipes from `data/recipes.js`. Chinese source content comes from private `菜谱.docx`; English is a faithful companion. Recipe categories, vegetarian metadata, search, accordions, and future Wine/Cocktail collection architecture remain unchanged.
+
+The Kitchen page shows `50 recipes` when unfiltered and a natural `n of 50 recipes` result when filtering/searching. Counts come from the dataset.
+
+`window.RECIPE_COLLECTIONS` continues to reserve independent future collections:
+
+```js
+{ recipes: true, wine: false, cocktails: false }
 ```
 
-or as separate entries:
+Wine remains a future tasting/menu archive, not a food category. Cocktails remain a separate future drinks collection. No content may be invented.
 
-```text
-deleted: old/path/image.jpeg
-new file: new/path/image.jpeg
-```
+## 11. Validation Rules
 
-Both representations can be normal; Git's similarity-based rename detection determines which one appears. The important requirement is that the new path is staged and the old path is staged for deletion.
+Before deployment, verify:
 
-### E. Large photo warning
+- all actual image files have one metadata record and vice versa;
+- homepage and Gallery use only flat Photography paths;
+- chronological ordering remains newest-first without year/month physical groups;
+- every full overview row contains exactly three photographs and only the final row may contain fewer;
+- the balanced row shares use actual aspect ratios, the documented power, and the documented 24%–42% bounds without reordering;
+- the dense Gallery uses 6 px/4 px gutters, natural aspect ratios, and a compact date label above every photograph;
+- All/Landscape/Portrait filtering derives orientation from aspect ratio while preserving chronology;
+- unclassified style records remain available because visible filtering no longer depends on `styleTags`;
+- normal thumbnails contain no permanently visible location, comment, style, or EXIF metadata;
+- fine-pointer hover/focus reveals only the correct location tag, while coarse-pointer/mobile keeps that location hidden and shows only the compact date label;
+- the pinned opening contains exactly starry sky, balloon moon, and coastal cliff in metadata-driven order, without later thumbnail duplication;
+- full locations and dates render in the lightbox, whose filtered filmstrip stays synchronized with direct thumbnail, button, and keyboard navigation;
+- the active filmstrip thumbnail centers within the strip without scrolling the page, and reduced-motion disables smooth centering;
+- blank comments render nothing;
+- starry-sky remains the homepage default;
+- desktop hover, mobile arrows/swipe, 2000 ms autoplay, and 220 ms fade remain intact;
+- EN/中文, mobile menus, Header/Footer, Gallery/Kitchen CTAs, Research, Contact, links, PDFs, and local assets still work;
+- there is no horizontal overflow or revision-caused console error.
 
-- Do not place RAW camera files in the GitHub Pages repository.
-- Use web-exported JPEG or WebP files for the live website and keep RAW originals outside the repository.
-- GitHub normally hard-blocks individual Git objects above 100 MiB, and large assets below that limit can still make the page slow.
-- Do not automatically compress existing photographs; prepare and review any web derivative deliberately.
+## 12. Revision Log
 
-### F. Final GitHub verification
+### 2026-08-26 — Chronological Photography Metadata, Locations & Flat Storage
 
-After pushing, verify:
+- Removed the former mechanical hierarchy wording from visible Interests labels.
+- Naturalized the dynamic Kitchen count.
+- Softened the Gallery `Moments & Places` display scale.
+- Replaced the technical Gallery intro with the user-provided Ansel Adams wording.
+- Implemented newest-to-oldest year/month rendering with one heading per group.
+- Removed repeated thumbnail dates and made location the thumbnail label.
+- Flattened Photography storage without changing filenames, bytes, pixels, dimensions, compression, quality, or EXIF.
+- Converted the three former physical categories into metadata-only style tags.
+- Centralized 25 records with bilingual location/status/style/comment fields and EXIF fields.
+- Confirmed the user-provided Point Vicente, Dockweiler State Beach, and East Coast Park Precinct locations.
+- Processed six actual newly supplied files; no nonexistent separate DSC/7F file was fabricated.
+- Left all six newly supplied images style-unclassified.
+- Made Gallery photo count derive from the filtered metadata dataset.
+- Kept homepage slideshow selection separate and preserved its prior 19-frame sequence.
+- Prepared the deployment migration manifest and deletion list; no Git command was run.
+- Changed Gallery spacing from a loose exhibition layout to dense photo-album masonry with small gutters and natural image ratios.
+- Hid thumbnail metadata by default and moved the location to a subtle fine-pointer hover/focus label; full metadata remains in the lightbox.
+- Added the metadata-driven pinned opening: Joshua Tree star field, Mexico City balloon, then Oregon Coast.
+- Retained year/month chronology while compacting its headings and inter-group spacing.
+- Corrected the three bridge photographs to Yangpu Bridge, Shanghai / 上海杨浦大桥.
+- Preserved the flat storage and centralized metadata architecture; no image storage migration occurred in this Gallery refinement.
 
-- the repository contains `nature-landscape/`, `city-architecture/`, and `night-atmosphere/` under `img/interests/photography/`;
-- all 19 obsolete root-level Photography paths are removed;
-- all 19 new categorized files exist;
-- `index.html` paths match GitHub filename capitalization exactly;
-- GitHub Pages loads without broken images;
-- `night-atmosphere/starry-sky-01.jpeg` is the default image;
-- hover playback and manual arrows work at the live URL.
+## Revision — 2026-08-26: Production Gallery Balanced Rows + Lightbox Filmstrip
 
-## Next GitHub Sync
+- Confirmed `gallery.html` as the production Photography page; retained `gallery2.html` unchanged as a read-only archive of superseded experiments.
+- Replaced public style filters with bilingual All/Landscape/Portrait controls derived from each photograph's aspect ratio.
+- Removed year/month physical grouping and rendered one continuous newest-first sequence in three-photo rows.
+- Added a compact English/Chinese month-year label above every photograph, including the pinned selection.
+- Implemented softened aspect-ratio weights (`ratio ** 0.6`) with 24% minimum and 42% maximum full-row shares, without cropping, stretching, or visual reordering.
+- Consolidated the production overview into one balanced-row CSS/JavaScript system instead of retaining conflicting frame or fit overrides.
+- Preserved starry sky, balloon moon, and coastal cliff as the metadata-driven pinned opening and omitted those records from later chronology.
+- Retained the approved lightbox main-image and information layout, then added a synchronized horizontal filmstrip with direct navigation, active state, counter/keyboard/previous-next parity, active-thumbnail centering, touch scrolling, and reduced-motion handling.
+- Kept all 25 image files, all metadata content, and the Yangpu Bridge bilingual location records unchanged.
+- Modified only the production `gallery.html` and this `README.md`; no Git command was run.
 
-- [ ] Upload/update `index.html`.
-- [ ] Upload/update `README.md`.
-- [ ] Create `img/interests/photography/nature-landscape/` in the GitHub checkout.
-- [ ] Create `img/interests/photography/city-architecture/` in the GitHub checkout.
-- [ ] Create `img/interests/photography/night-atmosphere/` in the GitHub checkout.
-- [ ] Add all 19 renamed Photography files listed in the migration manifest.
-- [ ] Remove all 19 obsolete root-level Photography paths listed in the migration manifest.
-- [ ] Confirm `img/interests/photography/night-atmosphere/starry-sky-01.jpeg` exists and is the first `.photography-frame`.
-- [ ] Verify every `index.html` Photography path against the case-sensitive GitHub filenames.
-- [ ] Verify the migration manifest against the staged GitHub changes.
-- [ ] Confirm no PDF change is included in this revision.
-- [ ] Run `git status` before staging.
-- [ ] Stage the migration with `git add -A`.
-- [ ] Run `git status` again before committing.
-- [ ] Commit with a descriptive message.
-- [ ] Push to `wlele108/wlele108.github.io`.
-- [ ] Verify GitHub Pages, the starry-sky resting image, one-second slideshow timing, and manual arrows.
+## Next GitHub Sync — Deployment Handoff
+
+The **source/development version** is:
+
+`/Users/henry/Desktop/Daily Use/Resume/2025/personal website/demo/`
+
+The intended **GitHub local checkout** is a separate directory named `wlele108.github.io`. Its actual path and existing status must be verified before copying or staging. Do not assume the development directory is the Git checkout.
+
+### A. Files modified
+
+- `gallery.html`
+- `README.md`
+
+These are the only files changed in the Production Gallery Balanced Rows + Lightbox Filmstrip revision. The larger historical deployment inventory below remains for the earlier flat-storage migration, but it is not a claim that those files changed again in this revision.
+
+Additional 2026-08-26 production Gallery balanced-row sync delta:
+
+- `gallery.html`: production orientation filters, continuous balanced three-photo rows, per-photo date labels, and the synchronized lightbox filmstrip.
+- `README.md`: production/reference file distinction, exact balance configuration, filter/filmstrip behavior, validation, and this handoff.
+- `gallery2.html`: unchanged, read-only experimental archive; it is not a deployment target and remains outside the public Photography link.
+- `data/photo-metadata.js`, all image files, and all other site files: unchanged by this revision.
+- This revision created no files, moved no files, renamed nothing, changed no metadata content, and ran no Git command.
+
+### B. Files created
+
+- None
+
+### C. Files moved / renamed
+
+Use the complete 19-row old-path/new-path table in [Section 6](#complete-2026-08-26-migration-manifest). No filename or extension changed; each file moved from a style subdirectory directly into `img/interests/photography/`.
+
+### D. Files/directories that must be deleted from GitHub
+
+The old paths in the migration table must disappear from the remote checkout. After their tracked files move, these obsolete directories must no longer exist:
+
+- `img/interests/photography/city-architecture/`
+- `img/interests/photography/nature-landscape/`
+- `img/interests/photography/night-atmosphere/`
+
+### E. New Photography files
+
+- `img/interests/photography/DSC_0571.jpg`
+- `img/interests/photography/DSC_0709.jpg`
+- `img/interests/photography/DSC_1624.jpeg`
+- `img/interests/photography/DSC_2585 7F7E53F3.jpg`
+- `img/interests/photography/DSC_4175.jpg`
+- `img/interests/photography/Z30_0224.jpg`
+
+Requested-basename audit:
+
+- `DSC_0571`: found
+- `DSC_0709`: found
+- `DSC_1624`: found
+- `DSC_2585`: no separate basename; appears only inside `DSC_2585 7F7E53F3.jpg`
+- `7F7E53F3`: no separate basename; appears only inside `DSC_2585 7F7E53F3.jpg`
+- `DSC_4175`: found
+- `Z30_0224`: found
+
+The combined DSC/7F filename is one file and one photograph, not two.
+
+Final deployment counts:
+
+- Actual Photography files: **25**
+- Metadata records: **25**
+- Counts match: **Yes**
+
+### F. Files intentionally NOT changed
+
+- CV PDFs and other PDFs are unchanged.
+- Research project content and assets are unchanged.
+- Experience, Education, About, Contact, and `PROJECT_DATA` are unchanged.
+- `data/recipes.js` and the private `菜谱.docx` recipe source are unchanged.
+- `css/subpage-shell.css` is unchanged.
+- No photo was renamed, duplicated, recompressed, resized, or edited.
+- Archived/trial HTML, notebooks, `qixi-card/`, and unrelated scripts are unchanged.
+
+### Local verification completed
+
+- [x] `index.html` opens
+- [x] `gallery.html` opens
+- [x] `kitchen.html` opens
+- [x] Home navigation works
+- [x] Gallery CTA works
+- [x] Kitchen CTA works
+- [x] Header/footer navigation is consistent
+- [x] EN / 中文 works
+- [x] Photography homepage slideshow works
+- [x] Desktop hover playback works
+- [x] Mobile/touch arrows work
+- [ ] Mobile swipe works
+- [x] Slideshow still uses 2000 ms interval
+- [x] Starry-sky image remains the default
+- [x] Gallery sorts newest → oldest
+- [x] Gallery renders one continuous sequence without year/month physical groups
+- [x] Compact month/year labels appear above every photograph
+- [x] Every full chronology row contains three photographs; only the final row may contain fewer
+- [x] Dense Gallery gutters are 6 px desktop/tablet and 4 px narrow mobile
+- [x] Natural thumbnail aspect ratios are preserved without crop or stretch
+- [x] Desktop location labels reveal on hover and hide on leave
+- [x] Mobile thumbnails keep locations hidden before and after lightbox use; only compact date labels remain visible
+- [x] Pinned order is starry sky, balloon moon, coastal cliff; none repeat in chronology
+- [x] All/Landscape/Portrait filters work, including filter-aware pinned photographs
+- [x] Orientation derives from aspect ratio rather than `styleTags`
+- [x] Unclassified style records remain visible under the orientation filters
+- [x] Lightbox works
+- [x] Filmstrip order, active thumbnail, counter, direct selection, previous/next, and keyboard navigation remain synchronized
+- [x] Filmstrip touch scrolling and active-thumbnail centering remain isolated to the strip
+- [x] Reduced-motion uses immediate filmstrip centering
+- [x] EXIF metadata renders where available
+- [x] Blank comments do not render placeholder UI
+- [x] Yangpu Bridge renders correctly in English and Chinese
+- [x] No broken image paths
+- [x] No horizontal overflow at tested desktop and mobile widths
+- [x] No browser-console errors caused by this revision
+
+The desktop in-app browser cannot emit a native `TouchEvent`, so the existing swipe listener could not be conclusively exercised on actual touch hardware. Its code path and threshold were preserved; verify this one unchecked item on a physical phone before deployment.
+
+Because this migration contains modifications, additions, deletions, and file moves, the future verified Git checkout should eventually use `git add -A`. That command stages modifications, additions, deletions, and detected moves/renames together. **Do not run it in the development folder and do not run it before ChatGPT has inspected the real `wlele108.github.io` checkout.** No staging, commit, or push was performed in this revision.
+
+## What to Send ChatGPT for Deployment
+
+Return to ChatGPT with:
+
+1. this updated `README.md`;
+2. the final Codex completion summary;
+3. preferably the output of `git status` from the local `wlele108.github.io` checkout **before** copying or staging anything;
+4. the actual local path to that checkout, plus the development path above if either location changes.
+
+ChatGPT can then compare the exact migration manifest against the real checkout and provide safe copy/staging/commit/push commands without guessing.

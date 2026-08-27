@@ -349,7 +349,7 @@
         #home .hero-index {
             margin-top: clamp(3.5rem, 8vw, 7rem);
             display: grid;
-            grid-template-columns: repeat(4, minmax(0,1fr));
+            grid-template-columns: repeat(3, minmax(0,1fr));
             border-top: 1px solid rgba(255,255,255,.3);
         }
         #home .hero-index a { min-height: 9.35rem; padding: 1.45rem 1.2rem 1.25rem 0; color: white; border-right: 1px solid rgba(255,255,255,.18); display: flex; flex-direction: column; justify-content: space-between; }
@@ -397,9 +397,9 @@
             #home::before { background: rgba(8,10,10,.62); }
             #home .hero-shell { min-height: 100svh; padding-top: 7.5rem; padding-bottom: 2rem; }
             #home h1 { font-size: 40px !important; }
-            #home .hero-index { grid-template-columns: repeat(2,minmax(0,1fr)); }
+            #home .hero-index { grid-template-columns: 1fr; }
             #home .hero-index a { min-height: 6.75rem; border-bottom: 1px solid rgba(255,255,255,.18); }
-            #home .hero-index a:nth-child(2) { border-right: 0; }
+            #home .hero-index a { padding-left: 0 !important; border-right: 0; }
             #projects .grid.sm\:grid-cols-2 { display: grid !important; grid-template-columns: 1fr; }
             #projects img { height: 12rem !important; }
         }
@@ -606,8 +606,14 @@
             background: #0b0e0d;
             color: var(--off-white);
         }
-        #interests .interest-photography { grid-column: 1 / -1; min-height: clamp(24rem, 48vw, 38rem); }
-        #interests .interest-primary-link { position: absolute; inset: 0; display: block; color: white; }
+        #interests .interest-feature { min-height: clamp(25rem, 36vw, 34rem); }
+        #interests .interest-photography { grid-column: span 7; }
+        #interests .interest-cooking { grid-column: span 5; display: flex; flex-direction: column; justify-content: space-between; padding: clamp(1.5rem,3vw,2.5rem); background: #111514; }
+        #interests .cooking-count { margin: .7rem 0 0; color: var(--cyan) !important; font-family: var(--sans); font-size: clamp(.82rem,1.25vw,1rem) !important; font-weight: 500; line-height: 1.2; letter-spacing: .13em; text-transform: uppercase; }
+        #interests .cooking-index { display: grid; gap: .55rem; margin: 2rem 0; padding: 0; list-style: none; color: rgba(255,255,255,.64); font-size: .75rem; }
+        #interests .cooking-index li { padding-bottom: .55rem; border-bottom: 1px solid rgba(255,255,255,.12); }
+        #interests .interest-detail-link { display: inline-flex; align-items: center; gap: .6rem; width: fit-content; margin-top: 1rem; color: var(--cyan); font-size: .7rem; letter-spacing: .13em; text-transform: uppercase; }
+        #interests .interest-detail-link:hover { color: white; }
         #interests .photography-media { position: absolute; inset: 0; background: #080a09; }
         #interests .photography-frame {
             position: absolute;
@@ -618,7 +624,7 @@
             object-position: center;
             opacity: 0;
             transform: scale(1);
-            transition: opacity 520ms var(--ease-editorial), transform 850ms var(--ease-editorial) !important;
+            transition: opacity 220ms ease, transform 850ms var(--ease-editorial) !important;
         }
         #interests .photography-frame.is-active { opacity: 1; }
         #interests .interest-photography:hover .photography-frame.is-active { transform: scale(1.008); }
@@ -647,6 +653,10 @@
             opacity: .72;
             pointer-events: auto;
         }
+        #interests .interest-photography:focus-within .photography-control {
+            opacity: .72;
+            pointer-events: auto;
+        }
         #interests .interest-photography .photography-control:hover {
             opacity: .96;
             border-color: rgba(255,255,255,.68);
@@ -662,6 +672,7 @@
             background: linear-gradient(to top, rgba(6,8,8,.92), transparent);
             pointer-events: none;
         }
+        #interests .interest-caption .interest-detail-link { pointer-events: auto; }
         #interests .interest-label {
             display: block;
             margin-bottom: .65rem;
@@ -676,14 +687,14 @@
         #interests .interest-item h3 { margin: 0 0 .35rem !important; color: var(--off-white) !important; font-size: clamp(1.7rem, 3vw, 2.8rem); }
         #interests .interest-item p { color: rgba(255,255,255,.68) !important; font-size: .86rem; }
         #interests .interest-arrow { position: absolute; z-index: 3; top: 1.25rem; right: 1.25rem; color: var(--cyan); font-size: 1.1rem; }
-        #interests .interest-secondary { grid-column: span 6; min-height: 21rem; }
+        #interests .interest-secondary { grid-column: span 4; min-height: 16rem; }
         #interests .interest-skiing { display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem; }
         #interests .interest-skiing::before { content: ""; position: absolute; left: 0; top: 0; width: 3rem; height: 1px; background: var(--cyan); pointer-events: none; transition: width 320ms var(--ease-editorial); }
         #interests .interest-skiing:hover::before { width: 6rem; }
         #interests .interest-tennis .interest-media { position: absolute; inset: 0; background: #080a09; }
         #interests .interest-tennis .interest-media img,
         #interests .interest-tennis .interest-media video { width: 100%; height: 100%; object-fit: contain; object-position: center; }
-        #interests .interest-supporting { grid-column: span 6; min-height: 12rem; padding: 1.4rem; transition: transform 320ms var(--ease-editorial), background 320ms var(--ease-editorial) !important; }
+        #interests .interest-supporting { padding: 1.4rem; transition: transform 320ms var(--ease-editorial), background 320ms var(--ease-editorial) !important; }
         #interests .interest-supporting:hover { background: #121615; transform: translateY(-2px); }
         #interests .interest-supporting h3 { font-size: clamp(1.45rem, 2vw, 2rem); }
 
@@ -704,17 +715,19 @@
             #projects img { height: 13rem !important; }
             #interests .grid > div:first-child { min-height: 16rem; }
             #interests .interest-grid { grid-template-columns: 1fr; }
-            #interests .interest-photography,
+            #interests .interest-feature,
             #interests .interest-secondary,
             #interests .interest-supporting { grid-column: 1; }
-            #interests .interest-photography { min-height: 26rem; }
-            #interests .interest-secondary { min-height: 18rem; }
+            #interests .interest-feature { min-height: 26rem; }
+            #interests .interest-cooking { min-height: 24rem; }
+            #interests .interest-secondary { min-height: 14rem; }
             #interests .interest-supporting { min-height: 10rem; }
-            #interests .photography-frame { transition: none !important; transform: none !important; }
+            #interests .photography-control { width: 44px; height: 44px; opacity: .68; pointer-events: auto; }
         }
 
         @media (hover: none), (pointer: coarse) {
-            #interests .photography-control { display: none; }
+            #interests .photography-control { width: 44px; height: 44px; opacity: .68; pointer-events: auto; }
+            #interests .interest-photography:hover .photography-frame.is-active { transform: none; }
             #projects .grid.sm\:grid-cols-2 > .group { height: auto; }
             #projects .absolute.inset-0,
             #projects .group:hover .absolute.inset-0,
@@ -778,22 +791,18 @@
                 </a>
                 
                 <!-- Desktop Navigation -->
-                <nav class="hidden md:flex space-x-8 items-center">
+                <nav class="hidden md:flex space-x-4 lg:space-x-8 items-center">
                     <a href="#home" class="text-dark hover:text-primary transition-colors duration-200 font-medium">
                         <span class="en">Home</span>
                         <span class="zh hidden">主页</span>
                     </a>
+                    <a href="#experience" class="text-dark hover:text-primary transition-colors duration-200 font-medium">
+                        <span class="en">Work</span>
+                        <span class="zh hidden">履历</span>
+                    </a>
                     <a href="#interests" class="text-dark hover:text-primary transition-colors duration-200 font-medium">
                         <span class="en">Interests</span>
                         <span class="zh hidden">兴趣</span>
-                    </a>
-                    <a href="#experience" class="text-dark hover:text-primary transition-colors duration-200 font-medium">
-                        <span class="en">Experience</span>
-                        <span class="zh hidden">经历</span>
-                    </a>
-                    <a href="#projects" class="text-dark hover:text-primary transition-colors duration-200 font-medium">
-                        <span class="en">Research</span>
-                        <span class="zh hidden">研究</span>
                     </a>
                     <a href="#contact" class="text-dark hover:text-primary transition-colors duration-200 font-medium">
                         <span class="en">Contact</span>
@@ -821,17 +830,13 @@
                     <span class="en">Home</span>
                     <span class="zh hidden">主页</span>
                 </a>
+                <a href="#experience" class="block px-3 py-2 rounded-md text-base font-medium text-dark hover:bg-primary/10 hover:text-primary transition-colors duration-200">
+                    <span class="en">Work</span>
+                    <span class="zh hidden">履历</span>
+                </a>
                 <a href="#interests" class="block px-3 py-2 rounded-md text-base font-medium text-dark hover:bg-primary/10 hover:text-primary transition-colors duration-200">
                     <span class="en">Interests</span>
                     <span class="zh hidden">兴趣</span>
-                </a>
-                <a href="#experience" class="block px-3 py-2 rounded-md text-base font-medium text-dark hover:bg-primary/10 hover:text-primary transition-colors duration-200">
-                    <span class="en">Experience</span>
-                    <span class="zh hidden">经历</span>
-                </a>
-                <a href="#projects" class="block px-3 py-2 rounded-md text-base font-medium text-dark hover:bg-primary/10 hover:text-primary transition-colors duration-200">
-                    <span class="en">Research</span>
-                    <span class="zh hidden">研究</span>
                 </a>
                 <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-dark hover:bg-primary/10 hover:text-primary transition-colors duration-200">
                     <span class="en">Contact</span>
@@ -872,32 +877,26 @@
 
                 <aside class="hero-about" aria-label="About Me">
                     <p class="hero-about-label"><span class="en">About Me</span><span class="zh hidden">关于我</span></p>
-                    <p class="en">I study at Chicago Booth and will be returning to BofA for S&amp;T.<br><br>I travel often, usually alone, and spend a lot of time taking photos, playing tennis, and playing basketball.<br><br>That’s mostly it.</p>
+                    <p class="en">I study at Chicago Booth and will be returning to BofA in S&amp;T.<br><br>I travel often, usually alone, and spend a lot of time taking photos, playing tennis, and playing basketball.<br><br>That’s mostly it.</p>
                     <p class="zh hidden">我在芝加哥大学 Booth 学习，之后会回到 BofA 做 S&amp;T。<br><br>我经常旅行，很多时候是一个人，也会拍照、打网球和篮球。<br><br>差不多就是这样。</p>
                 </aside>
                 </div>
 
                 <nav class="hero-index" aria-label="Selected portfolio paths">
-                    <a href="#interests">
-                        <span class="hero-index-label">01 · <span class="en">Interests</span><span class="zh hidden">兴趣</span></span>
-                        <span class="hero-index-title"><span class="en">Interests</span><span class="zh hidden">兴趣</span></span>
-                        <span class="hero-index-description"><span class="en">Photography &amp; life beyond work</span><span class="zh hidden">摄影与工作之外</span></span>
-                        <span class="hero-index-arrow">→</span>
-                    </a>
                     <a href="#experience">
-                        <span class="hero-index-label">02 · <span class="en">Experience</span><span class="zh hidden">经历</span></span>
-                        <span class="hero-index-title"><span class="en">Experience</span><span class="zh hidden">经历</span></span>
-                        <span class="hero-index-description"><span class="en">Experience &amp; Education</span><span class="zh hidden">经历与教育</span></span>
+                        <span class="hero-index-label">01 · <span class="en">Work</span><span class="zh hidden">履历</span></span>
+                        <span class="hero-index-title"><span class="en">Work</span><span class="zh hidden">履历</span></span>
+                        <span class="hero-index-description"><span class="en">Experience, education &amp; research</span><span class="zh hidden">经历、教育与研究</span></span>
                         <span class="hero-index-arrow">→</span>
                     </a>
-                    <a href="#projects">
-                        <span class="hero-index-label">03 · <span class="en">Research</span><span class="zh hidden">研究</span></span>
-                        <span class="hero-index-title"><span class="en">Research</span><span class="zh hidden">研究</span></span>
-                        <span class="hero-index-description"><span class="en">Quantitative &amp; academic work</span><span class="zh hidden">量化与学术研究</span></span>
+                    <a href="#interests">
+                        <span class="hero-index-label">02 · <span class="en">Interests</span><span class="zh hidden">兴趣</span></span>
+                        <span class="hero-index-title"><span class="en">Interests</span><span class="zh hidden">兴趣</span></span>
+                        <span class="hero-index-description"><span class="en">Photography, cooking &amp; life beyond work</span><span class="zh hidden">摄影、烹饪与工作之外</span></span>
                         <span class="hero-index-arrow">→</span>
                     </a>
                     <a href="#contact">
-                        <span class="hero-index-label">04 · <span class="en">Contact</span><span class="zh hidden">联系</span></span>
+                        <span class="hero-index-label">03 · <span class="en">Contact</span><span class="zh hidden">联系</span></span>
                         <span class="hero-index-title"><span class="en">Contact</span><span class="zh hidden">联系</span></span>
                         <span class="hero-index-description"><span class="en">Connect with me</span><span class="zh hidden">与我联系</span></span>
                         <span class="hero-index-arrow">→</span>
@@ -1362,50 +1361,55 @@
                     <div class="w-20 h-1 bg-primary mx-auto rounded-full"></div>
                 </div>
                 <div class="interest-grid">
-                    <!-- Primary interest: Photography hover contact sheet -->
-                    <article class="interest-item interest-photography" data-photography-slideshow>
-                        <a href="gallery.html" target="_blank" class="interest-primary-link" aria-label="Open photography gallery">
-                            <div class="photography-media" aria-hidden="true">
-                                <!-- Current contents of img/interests/photography/; keep every image in this list. -->
-                                <img class="photography-frame is-active" src="img/interests/photography/night-atmosphere/starry-sky-01.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/night-atmosphere/harbor-skyline-night-01.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/night-atmosphere/bridge-sunset-01.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/night-atmosphere/bridge-sunset-02.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/night-atmosphere/city-sunset-01.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/night-atmosphere/reflected-sunset-01.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/night-atmosphere/waterfront-dusk-01.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/night-atmosphere/beach-photographer-dusk-01.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/nature-landscape/balloon-moon-01.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/nature-landscape/coastal-lighthouse-01.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/nature-landscape/ocean-sunset-birds-01.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/nature-landscape/coastal-cliff-01.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/nature-landscape/snowy-mountain-road-01.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/nature-landscape/mountain-lake-dusk-01.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/nature-landscape/rainbow-bridge-01.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/city-architecture/station-clock-01.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/city-architecture/city-street-01.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/city-architecture/grand-staircase-01.jpeg" alt="" decoding="async">
-                                <img class="photography-frame" src="img/interests/photography/city-architecture/hillside-train-01.jpeg" alt="" decoding="async">
-                            </div>
-                            <div class="interest-caption">
-                                <span class="interest-label">01 · <span class="en">Primary</span><span class="zh hidden">主要兴趣</span></span>
-                                <h3><span class="en">Photography</span><span class="zh hidden">摄影</span></h3>
-                                <p><span class="en">Nikon Z7II — Landscape + Street Photography</span><span class="zh hidden">尼康 Z7II — 风景与街拍</span></p>
-                            </div>
-                            <span class="interest-arrow">↗</span>
-                        </a>
+                    <!-- Content-rich Photography preview. Gallery remains a child page. -->
+                    <article class="interest-item interest-feature interest-photography" data-photography-slideshow>
+                        <div class="photography-media" aria-hidden="true">
+                            <img class="photography-frame is-active" src="img/interests/photography/starry-sky-01.jpeg" alt="" decoding="async">
+                            <img class="photography-frame" src="img/interests/photography/harbor-skyline-night-01.jpeg" alt="" decoding="async">
+                            <img class="photography-frame" src="img/interests/photography/bridge-sunset-01.jpeg" alt="" decoding="async">
+                            <img class="photography-frame" src="img/interests/photography/bridge-sunset-02.jpeg" alt="" decoding="async">
+                            <img class="photography-frame" src="img/interests/photography/city-sunset-01.jpeg" alt="" decoding="async">
+                            <img class="photography-frame" src="img/interests/photography/reflected-sunset-01.jpeg" alt="" decoding="async">
+                            <img class="photography-frame" src="img/interests/photography/waterfront-dusk-01.jpeg" alt="" decoding="async">
+                            <img class="photography-frame" src="img/interests/photography/beach-photographer-dusk-01.jpeg" alt="" decoding="async">
+                            <img class="photography-frame" src="img/interests/photography/balloon-moon-01.jpeg" alt="" decoding="async">
+                            <img class="photography-frame" src="img/interests/photography/coastal-lighthouse-01.jpeg" alt="" decoding="async">
+                            <img class="photography-frame" src="img/interests/photography/ocean-sunset-birds-01.jpeg" alt="" decoding="async">
+                            <img class="photography-frame" src="img/interests/photography/coastal-cliff-01.jpeg" alt="" decoding="async">
+                            <img class="photography-frame" src="img/interests/photography/snowy-mountain-road-01.jpeg" alt="" decoding="async">
+                            <img class="photography-frame" src="img/interests/photography/mountain-lake-dusk-01.jpeg" alt="" decoding="async">
+                            <img class="photography-frame" src="img/interests/photography/rainbow-bridge-01.jpeg" alt="" decoding="async">
+                            <img class="photography-frame" src="img/interests/photography/station-clock-01.jpeg" alt="" decoding="async">
+                            <img class="photography-frame" src="img/interests/photography/city-street-01.jpeg" alt="" decoding="async">
+                            <img class="photography-frame" src="img/interests/photography/grand-staircase-01.jpeg" alt="" decoding="async">
+                            <img class="photography-frame" src="img/interests/photography/hillside-train-01.jpeg" alt="" decoding="async">
+                        </div>
+                        <div class="interest-caption">
+                            <span class="interest-label">01 · <span class="en">Photography</span><span class="zh hidden">摄影</span></span>
+                            <h3><span class="en">Photography</span><span class="zh hidden">摄影</span></h3>
+                            <p><span class="en">Nikon Z7II — Landscape + Street Photography</span><span class="zh hidden">尼康 Z7II — 风景与街拍</span></p>
+                            <a class="interest-detail-link" href="gallery.html"><span class="en">View Gallery</span><span class="zh hidden">查看摄影集</span> <span aria-hidden="true">→</span></a>
+                        </div>
                         <button type="button" class="photography-control photography-control--previous" data-photography-direction="-1" aria-label="Previous photograph">‹</button>
                         <button type="button" class="photography-control photography-control--next" data-photography-direction="1" aria-label="Next photograph">›</button>
                     </article>
 
-                    <!-- Secondary interest: Skiing remains editorial until personal media is provided -->
-                    <article class="interest-item interest-secondary interest-skiing">
-                        <span class="interest-label">02 · <span class="en">Movement</span><span class="zh hidden">运动</span></span>
-                        <h3><span class="en">Skiing</span><span class="zh hidden">滑雪</span></h3>
-                        <p><span class="en">Beginner Level</span><span class="zh hidden">又菜又爱滑</span></p>
+                    <!-- Content-rich Cooking entry; the complete notebook lives in Kitchen. -->
+                    <article class="interest-item interest-feature interest-cooking">
+                        <div>
+                            <span class="interest-label">02 · <span class="en">Cooking</span><span class="zh hidden">烹饪</span></span>
+                            <p class="cooking-count"><span class="en"><span data-home-recipe-count></span> recipes</span><span class="zh hidden"><span data-home-recipe-count></span> 道菜谱</span></p>
+                            <h3><span class="en">Kitchen Notes</span><span class="zh hidden">厨房笔记</span></h3>
+                            <p><span class="en">Recipes I have kept, changed, and cooked over time.</span><span class="zh hidden">这些年留存、调整并反复做过的菜谱。</span></p>
+                        </div>
+                        <ul class="cooking-index" aria-hidden="true">
+                            <li><span class="en">Mains · Soups · Vegetables</span><span class="zh hidden">主菜 · 汤羹 · 蔬菜</span></li>
+                            <li><span class="en">Noodles · Small plates · Sweets</span><span class="zh hidden">面食 · 小食 · 甜点</span></li>
+                        </ul>
+                        <a class="interest-detail-link" href="kitchen.html"><span class="en">Browse Kitchen Notes</span><span class="zh hidden">浏览厨房笔记</span> <span aria-hidden="true">→</span></a>
                     </article>
 
-                    <!-- Secondary interest: Tennis poster; future video can replace this media block -->
+                    <!-- Secondary interests retain their existing factual content and media. -->
                     <article class="interest-item interest-secondary interest-tennis" data-video-interest="tennis">
                         <div class="interest-media">
                             <img src="img/interests/tennis/tennis-court-poster.jpg" alt="Henry Wang playing tennis" loading="lazy">
@@ -1417,18 +1421,16 @@
                         </div>
                     </article>
 
-                    <!-- Supporting interest: Basketball -->
-                    <article class="interest-item interest-supporting">
+                    <article class="interest-item interest-secondary interest-supporting">
                         <span class="interest-label">04 · <span class="en">Basketball</span><span class="zh hidden">篮球</span></span>
                         <h3><span class="en">Basketball</span><span class="zh hidden">篮球</span></h3>
                         <p><span class="en">Spurs Fan! Let's GO WEMBY</span><span class="zh hidden">马刺球迷</span></p>
                     </article>
 
-                    <!-- Supporting interest: Cooking -->
-                    <article class="interest-item interest-supporting">
-                        <span class="interest-label">05 · <span class="en">Cooking</span><span class="zh hidden">烹饪</span></span>
-                        <h3><span class="en">Cooking</span><span class="zh hidden">烹饪</span></h3>
-                        <p><span class="en">Charity cook for community events</span><span class="zh hidden">社区慈善烹饪活动参与者</span></p>
+                    <article class="interest-item interest-secondary interest-supporting interest-skiing">
+                        <span class="interest-label">05 · <span class="en">Skiing</span><span class="zh hidden">滑雪</span></span>
+                        <h3><span class="en">Skiing</span><span class="zh hidden">滑雪</span></h3>
+                        <p><span class="en">Beginner Level</span><span class="zh hidden">又菜又爱滑</span></p>
                     </article>
                 </div>
             </div>
@@ -1570,17 +1572,13 @@
                             <span class="en">Home</span>
                             <span class="zh hidden">主页</span>
                         </a></li>
+                        <li><a href="#experience" class="text-gray-400 hover:text-white transition-colors duration-200">
+                            <span class="en">Work</span>
+                            <span class="zh hidden">履历</span>
+                        </a></li>
                         <li><a href="#interests" class="text-gray-400 hover:text-white transition-colors duration-200">
                             <span class="en">Interests</span>
                             <span class="zh hidden">兴趣</span>
-                        </a></li>
-                        <li><a href="#experience" class="text-gray-400 hover:text-white transition-colors duration-200">
-                            <span class="en">Experience</span>
-                            <span class="zh hidden">经历</span>
-                        </a></li>
-                        <li><a href="#projects" class="text-gray-400 hover:text-white transition-colors duration-200">
-                            <span class="en">Research</span>
-                            <span class="zh hidden">研究</span>
                         </a></li>
                         <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors duration-200">
                             <span class="en">Contact</span>
@@ -1617,7 +1615,11 @@
         </div>
     </footer>
 
+    <script src="data/recipes.js"></script>
     <script>
+        const homepageRecipeTotal = Array.isArray(window.RECIPES) ? window.RECIPES.length : 0;
+        document.querySelectorAll('[data-home-recipe-count]').forEach(element => { element.textContent = homepageRecipeTotal; });
+
         // Mobile menu toggle
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -1632,6 +1634,8 @@
         langButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const lang = button.id.split('-')[1];
+                localStorage.setItem('henry-site-language', lang);
+                document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
                 
                 // Update active language button
                 document.querySelectorAll('[id^="lang-"]').forEach(btn => {
@@ -1653,6 +1657,9 @@
                 document.querySelectorAll(`.${lang}`).forEach(el => {
                     el.classList.remove('hidden');
                 });
+
+                document.querySelector('[data-photography-direction="-1"]')?.setAttribute('aria-label', lang === 'zh' ? '上一张照片' : 'Previous photograph');
+                document.querySelector('[data-photography-direction="1"]')?.setAttribute('aria-label', lang === 'zh' ? '下一张照片' : 'Next photograph');
                 
                 // Close mobile menu if open
                 if (!mobileMenu.classList.contains('hidden')) {
@@ -1674,6 +1681,10 @@
                         top: targetElement.offsetTop - 80,
                         behavior: 'smooth'
                     });
+
+                    if (mobileMenu.contains(this)) {
+                        mobileMenu.classList.add('hidden');
+                    }
                 }
             });
         });
@@ -2061,19 +2072,24 @@
         }
 
         const SITE_INTERACTION_CONFIG = {
-            PHOTOGRAPHY_SLIDE_INTERVAL: 1000,
+            PHOTOGRAPHY_SLIDE_INTERVAL: 2000,
             INTEREST_VIDEO_PLAYBACK_RATE: 1.35,
             ENABLE_PROJECT_PIN: true
         };
 
-        // Photography: hover-driven contact sheet. Touch and reduced-motion users keep a static frame.
+        // Photography preview: desktop hover, mobile in-view autoplay, arrows, and swipe share one timer.
         const photographySlideshow = document.querySelector('[data-photography-slideshow]');
         const photographyFrames = photographySlideshow ? Array.from(photographySlideshow.querySelectorAll('.photography-frame')) : [];
         const photographyControls = photographySlideshow ? Array.from(photographySlideshow.querySelectorAll('[data-photography-direction]')) : [];
-        const canCyclePhotography = window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
-            !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+        const mobilePhotographyLayout = window.matchMedia('(max-width: 767px)');
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
         let photographyFrameIndex = 0;
         let photographyTimer = null;
+        let photographyHovered = false;
+        let photographyInView = false;
+        let photographyTouchStartX = 0;
+        let photographyTouchStartY = 0;
 
         const showPhotographyFrame = index => {
             const nextFrame = photographyFrames[index];
@@ -2093,13 +2109,22 @@
         };
 
         const stopPhotographyCycle = () => {
-            window.clearInterval(photographyTimer);
+            if (photographyTimer !== null) window.clearInterval(photographyTimer);
             photographyTimer = null;
         };
 
+        const shouldCyclePhotography = () => !document.hidden && !reducedMotion.matches &&
+            (finePointer.matches && !mobilePhotographyLayout.matches ? photographyHovered : photographyInView);
+
         const startPhotographyCycle = () => {
             stopPhotographyCycle();
+            if (!shouldCyclePhotography() || photographyFrames.length < 2) return;
             photographyTimer = window.setInterval(() => stepPhotographyFrame(1), SITE_INTERACTION_CONFIG.PHOTOGRAPHY_SLIDE_INTERVAL);
+        };
+
+        const resetPhotographyCycle = () => {
+            if (shouldCyclePhotography()) startPhotographyCycle();
+            else stopPhotographyCycle();
         };
 
         photographyControls.forEach(control => {
@@ -2107,16 +2132,53 @@
                 event.preventDefault();
                 event.stopPropagation();
                 stepPhotographyFrame(Number(control.dataset.photographyDirection));
-                if (canCyclePhotography) startPhotographyCycle();
+                resetPhotographyCycle();
             });
         });
 
-        if (photographySlideshow && photographyFrames.length > 1 && canCyclePhotography) {
+        if (photographySlideshow && photographyFrames.length > 1) {
             photographySlideshow.addEventListener('mouseenter', () => {
-                if (photographyTimer) return;
-                startPhotographyCycle();
+                photographyHovered = true;
+                if (finePointer.matches && !mobilePhotographyLayout.matches) startPhotographyCycle();
             });
-            photographySlideshow.addEventListener('mouseleave', stopPhotographyCycle);
+            photographySlideshow.addEventListener('mouseleave', () => {
+                photographyHovered = false;
+                if (finePointer.matches && !mobilePhotographyLayout.matches) {
+                    stopPhotographyCycle();
+                    photographyFrameIndex = 0;
+                    showPhotographyFrame(0);
+                }
+            });
+            photographySlideshow.addEventListener('touchstart', event => {
+                const touch = event.changedTouches[0];
+                photographyTouchStartX = touch.clientX;
+                photographyTouchStartY = touch.clientY;
+            }, { passive: true });
+            photographySlideshow.addEventListener('touchend', event => {
+                const touch = event.changedTouches[0];
+                const deltaX = touch.clientX - photographyTouchStartX;
+                const deltaY = touch.clientY - photographyTouchStartY;
+                if (Math.abs(deltaX) >= 48 && Math.abs(deltaX) > Math.abs(deltaY)) {
+                    stepPhotographyFrame(deltaX > 0 ? -1 : 1);
+                    resetPhotographyCycle();
+                }
+            }, { passive: true });
+
+            const photographyObserver = new IntersectionObserver(entries => {
+                photographyInView = entries[0]?.intersectionRatio >= .5;
+                if (!finePointer.matches || mobilePhotographyLayout.matches) {
+                    resetPhotographyCycle();
+                    if (!photographyInView) {
+                        photographyFrameIndex = 0;
+                        showPhotographyFrame(0);
+                    }
+                }
+            }, { threshold: [0, .5, 1] });
+            photographyObserver.observe(photographySlideshow);
+            document.addEventListener('visibilitychange', resetPhotographyCycle);
+            finePointer.addEventListener?.('change', resetPhotographyCycle);
+            mobilePhotographyLayout.addEventListener?.('change', resetPhotographyCycle);
+            reducedMotion.addEventListener?.('change', resetPhotographyCycle);
         }
 
         // Video-ready Interests: activates automatically when a real <video> is added later.
@@ -2182,6 +2244,9 @@
                 });
             });
         }
+
+        const savedLanguage = localStorage.getItem('henry-site-language');
+        if (savedLanguage === 'zh') document.getElementById('lang-zh')?.click();
     </script>
 </body>
 </html>
