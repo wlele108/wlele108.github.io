@@ -63,10 +63,10 @@
         .lightbox-counter { position: absolute; left: 50%; bottom: 5.25rem; transform: translateX(-50%); color: rgba(255,255,255,.54); font-size: .68rem; letter-spacing: .14em; }
         .lightbox-filmstrip { position: absolute; left: 50%; bottom: 1rem; display: flex; gap: 4px; width: min(760px,calc(100% - 8rem)); height: 3.55rem; padding: 0; overflow-x: auto; overflow-y: hidden; transform: translateX(-50%); scrollbar-width: none; overscroll-behavior-inline: contain; touch-action: pan-x; }
         .lightbox-filmstrip::-webkit-scrollbar { display: none; }
-        .filmstrip-thumbnail { position: relative; flex: 0 0 auto; height: 3.5rem; aspect-ratio: 4 / 3; padding: 0; border: 1px solid transparent; border-radius: 0; overflow: hidden; background: transparent; opacity: .46; cursor: pointer; transition: border-color 160ms ease, opacity 160ms ease; }
+        .filmstrip-thumbnail { position: relative; flex: 0 0 auto; height: 3.5rem; aspect-ratio: var(--thumbnail-ratio,4 / 3); padding: 0; border: 1px solid transparent; border-radius: 0; overflow: hidden; background: transparent; opacity: .46; cursor: pointer; transition: border-color 160ms ease, opacity 160ms ease; }
         .filmstrip-thumbnail:hover, .filmstrip-thumbnail:focus-visible { opacity: .82; }
         .filmstrip-thumbnail.is-active { border-color: var(--cyan); opacity: 1; }
-        .filmstrip-thumbnail img { display: block; width: 100%; height: 100%; object-fit: cover; }
+        .filmstrip-thumbnail img { display: block; width: 100%; height: 100%; object-fit: contain; }
 
         @media (max-width: 900px) {
             .lightbox { grid-template-columns: 1fr; grid-template-rows: minmax(0,1fr) auto; gap: .5rem; }
@@ -244,7 +244,7 @@
         };
         const orientationFor = photo => photoRatio(photo) < GALLERY_CONFIG.ORIENTATION_SPLIT ? 'portrait' : 'landscape';
         const filteredPhotos = () => chronologicalPhotos.filter(photo => activeFilter === 'all' || orientationFor(photo) === activeFilter);
-        const locationText = photo => photo.location?.[currentLanguage] || '';
+        const locationText = photo => photo.location?.[currentLanguage] || (currentLanguage === 'zh' ? '某处' : 'Somewhere');
         const commentText = photo => photo.comment?.[currentLanguage] || '';
         const compactDateText = photo => {
             const year = Number(photo.year);
@@ -308,7 +308,7 @@
             const location = locationText(photo);
             return `
                 <figure class="gallery-item" data-photo-index="${photos.indexOf(photo)}">
-                    <figcaption class="gallery-photo-label">${escapeHTML(compactDateText(photo))}</figcaption>
+                    <figcaption class="gallery-photo-label">${escapeHTML(location)}</figcaption>
                     <button type="button" class="gallery-image-button" aria-label="${currentLanguage === 'zh' ? `打开第 ${position + 1} 张照片` : `Open photograph ${position + 1}`}">
                         <img src="${escapeHTML(photo.src)}" alt="" decoding="async">
                         ${location ? `<span class="image-location">${escapeHTML(location)}</span>` : ''}
@@ -378,7 +378,7 @@
             lightboxFilmstrip.innerHTML = visible.map((photo, index) => {
                 const active = index === lightboxIndex;
                 const location = locationText(photo);
-                return `<button type="button" class="filmstrip-thumbnail${active ? ' is-active' : ''}" data-filmstrip-index="${index}" aria-label="${escapeHTML(currentLanguage === 'zh' ? `查看第 ${index + 1} 张照片${location ? `：${location}` : ''}` : `View photograph ${index + 1}${location ? `: ${location}` : ''}`)}"${active ? ' aria-current="true"' : ''}><img src="${escapeHTML(photo.src)}" alt="" loading="lazy" decoding="async"></button>`;
+                return `<button type="button" class="filmstrip-thumbnail${active ? ' is-active' : ''}" data-filmstrip-index="${index}" style="--thumbnail-ratio:${photoRatio(photo)}" aria-label="${escapeHTML(currentLanguage === 'zh' ? `查看第 ${index + 1} 张照片：${location}` : `View photograph ${index + 1}: ${location}`)}"${active ? ' aria-current="true"' : ''}><img src="${escapeHTML(photo.src)}" alt="" loading="lazy" decoding="async"></button>`;
             }).join('');
             lightboxFilmstrip.querySelectorAll('[data-filmstrip-index]').forEach(button => button.addEventListener('click', () => {
                 lightboxIndex = Number(button.dataset.filmstripIndex);
