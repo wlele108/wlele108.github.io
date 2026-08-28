@@ -156,7 +156,7 @@
         <section class="container" aria-label="Photography collection">
             <div class="gallery-meta" aria-live="polite"><span class="en" id="gallery-count-en"></span><span class="zh hidden" id="gallery-count-zh"></span></div>
             <section class="gallery-pinned" id="gallery-pinned" aria-labelledby="gallery-pinned-heading" hidden>
-                <h2 class="gallery-pinned-heading" id="gallery-pinned-heading"><span class="en">A few I keep returning to</span><span class="zh hidden">常想起的几帧</span></h2>
+                <h2 class="gallery-pinned-heading" id="gallery-pinned-heading"><span class="en">Pinned</span><span class="zh hidden">置顶</span></h2>
                 <div class="gallery-pinned-grid" id="gallery-pinned-grid"></div>
             </section>
             <div class="gallery-chronology" id="gallery-chronology"></div>
@@ -195,6 +195,7 @@
         const GALLERY_CONFIG = Object.freeze({
             SORT_DIRECTION: 'newest-first',
             PHOTOS_PER_ROW: 3,
+            PORTRAIT_PHOTOS_PER_ROW: 4,
             ORIENTATION_SPLIT: 1,
             ROW_BALANCE_POWER: 0.6,
             MIN_CELL_SHARE: 0.24,
@@ -244,6 +245,7 @@
         };
         const orientationFor = photo => photoRatio(photo) < GALLERY_CONFIG.ORIENTATION_SPLIT ? 'portrait' : 'landscape';
         const filteredPhotos = () => chronologicalPhotos.filter(photo => activeFilter === 'all' || orientationFor(photo) === activeFilter);
+        const photosPerRow = () => activeFilter === 'portrait' ? GALLERY_CONFIG.PORTRAIT_PHOTOS_PER_ROW : GALLERY_CONFIG.PHOTOS_PER_ROW;
         const locationText = photo => photo.location?.[currentLanguage] || (currentLanguage === 'zh' ? '某处' : 'Somewhere');
         const commentText = photo => photo.comment?.[currentLanguage] || '';
         const compactDateText = photo => {
@@ -300,6 +302,7 @@
             return shares;
         };
         const rowColumns = row => {
+            if (activeFilter === 'portrait') return `repeat(${GALLERY_CONFIG.PORTRAIT_PHOTOS_PER_ROW},minmax(0,1fr))`;
             if (row.length === 1) return `${GALLERY_CONFIG.MAX_CELL_SHARE * 100}%`;
             return balancedShares(row).map(share => `${share.toFixed(6)}fr`).join(' ');
         };
@@ -348,7 +351,7 @@
             galleryPinned.hidden = pinned.length === 0;
             galleryPinnedGrid.style.setProperty('--row-columns', rowColumns(pinned));
             galleryPinnedGrid.innerHTML = pinned.map(photo => photoMarkup(photo, position.get(photo))).join('');
-            galleryChronology.innerHTML = chunksOf(archive, GALLERY_CONFIG.PHOTOS_PER_ROW).map(row => rowMarkup(row, position)).join('');
+            galleryChronology.innerHTML = chunksOf(archive, photosPerRow()).map(row => rowMarkup(row, position)).join('');
             galleryCountEnglish.textContent = `${visible.length} ${visible.length === 1 ? 'photograph' : 'photographs'}`;
             galleryCountChinese.textContent = `${visible.length} 张照片`;
             bindGalleryItems(galleryPinnedGrid);

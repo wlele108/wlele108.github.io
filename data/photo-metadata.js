@@ -14,14 +14,43 @@
 // Style tags control Gallery filters only. They never control file storage.
 window.PHOTO_METADATA = [
   {
+    "file": "DSC_0326.jpeg",
+    "src": "img/interests/photography/DSC_0326.jpeg",
+    "dateTaken": "2024-12-11T14:41:00",
+    "year": 2024,
+    "month": 12,
+    "location": {
+      "en": "USC, Los Angeles, CA",
+      "zh": "南加州大学，洛杉矶，CA"
+    },
+    "locationStatus": "confirmed",
+    "locationNote": "",
+    "styleTags": [],
+    "styleStatus": "unclassified",
+    "pinnedOrder": null,
+    "aspectRatio": 0.666667,
+    "camera": "NIKON Z 7_2",
+    "lens": "NIKKOR Z 50mm f/1.4",
+    "focalLength": "50 mm",
+    "aperture": "f/1.8",
+    "shutter": "1/30 s",
+    "iso": "400",
+    "comment": {
+      "en": "",
+      "zh": ""
+    },
+    "exifSource": "DateTimeOriginal",
+    "rawCaptureTime": "2024:12:11 14:41:00"
+  },
+  {
     "file": "DSC_0571.jpg",
     "src": "img/interests/photography/DSC_0571.jpg",
     "dateTaken": "2025-01-20T08:49:58",
     "year": 2025,
     "month": 1,
     "location": {
-      "en": "Joshua Tree National Park, California",
-      "zh": "加州约书亚树国家公园"
+      "en": "Joshua Tree National Park, CA",
+      "zh": "约书亚树国家公园，CA"
     },
     "locationStatus": "confirmed",
     "locationNote": "",
@@ -49,8 +78,8 @@ window.PHOTO_METADATA = [
     "year": 2025,
     "month": 2,
     "location": {
-      "en": "Dockweiler State Beach, Los Angeles",
-      "zh": "洛杉矶 Dockweiler State Beach"
+      "en": "Dockweiler State Beach, CA",
+      "zh": "Dockweiler State Beach，CA"
     },
     "locationStatus": "confirmed",
     "locationNote": "",
@@ -72,14 +101,130 @@ window.PHOTO_METADATA = [
     "rawCaptureTime": "2025:02:08 09:35:22"
   },
   {
+    "file": "DSC_1098.jpeg",
+    "src": "img/interests/photography/DSC_1098.jpeg",
+    "dateTaken": "2025-02-23T09:57:49",
+    "year": 2025,
+    "month": 2,
+    "location": {
+      "en": "Santa Barbara, CA",
+      "zh": "圣巴巴拉，CA"
+    },
+    "locationStatus": "confirmed",
+    "locationNote": "",
+    "styleTags": [],
+    "styleStatus": "unclassified",
+    "pinnedOrder": null,
+    "aspectRatio": 1.5,
+    "camera": "NIKON Z 7_2",
+    "lens": "NIKKOR Z 24-200mm f/4-6.3 VR",
+    "focalLength": "54 mm",
+    "aperture": "f/6.3",
+    "shutter": "1/320 s",
+    "iso": "1600",
+    "comment": {
+      "en": "",
+      "zh": ""
+    },
+    "exifSource": "DateTimeOriginal",
+    "rawCaptureTime": "2025:02:23 09:57:49"
+  },
+  {
+    "file": "DSC_1101.jpeg",
+    "src": "img/interests/photography/DSC_1101.jpeg",
+    "dateTaken": "2025-02-23T10:00:57",
+    "year": 2025,
+    "month": 2,
+    "location": {
+      "en": "Santa Barbara, CA",
+      "zh": "圣巴巴拉，CA"
+    },
+    "locationStatus": "confirmed",
+    "locationNote": "",
+    "styleTags": [],
+    "styleStatus": "unclassified",
+    "pinnedOrder": null,
+    "aspectRatio": 1.5,
+    "camera": "NIKON Z 7_2",
+    "lens": "NIKKOR Z 24-200mm f/4-6.3 VR",
+    "focalLength": "77 mm",
+    "aperture": "f/6.3",
+    "shutter": "1/125 s",
+    "iso": "1600",
+    "comment": {
+      "en": "",
+      "zh": ""
+    },
+    "exifSource": "DateTimeOriginal",
+    "rawCaptureTime": "2025:02:23 10:00:57"
+  },
+  {
+    "file": "DSC_1105.jpeg",
+    "src": "img/interests/photography/DSC_1105.jpeg",
+    "dateTaken": "2025-02-23T10:01:25",
+    "year": 2025,
+    "month": 2,
+    "location": {
+      "en": "Santa Monica, CA",
+      "zh": "圣莫尼卡，CA"
+    },
+    "locationStatus": "confirmed",
+    "locationNote": "",
+    "styleTags": [],
+    "styleStatus": "unclassified",
+    "pinnedOrder": null,
+    "aspectRatio": 1.5,
+    "camera": "NIKON Z 7_2",
+    "lens": "NIKKOR Z 24-200mm f/4-6.3 VR",
+    "focalLength": "115 mm",
+    "aperture": "f/6.3",
+    "shutter": "1/160 s",
+    "iso": "1600",
+    "comment": {
+      "en": "",
+      "zh": ""
+    },
+    "exifSource": "DateTimeOriginal",
+    "rawCaptureTime": "2025:02:23 10:01:25"
+  },
+  {
+    "file": "DSC_1118.jpeg",
+    "src": "img/interests/photography/DSC_1118.jpeg",
+    "dateTaken": "2025-02-23T10:09:10",
+    "year": 2025,
+    "month": 2,
+    "location": {
+      "en": "Santa Barbara, CA",
+      "zh": "圣巴巴拉，CA"
+    },
+    "locationStatus": "confirmed",
+    "locationNote": "",
+    "styleTags": [],
+    "styleStatus": "unclassified",
+    "pinnedOrder": null,
+    "aspectRatio": 1.5,
+    "camera": "NIKON Z 7_2",
+    "lens": "NIKKOR Z 24-200mm f/4-6.3 VR",
+    "focalLength": "58 mm",
+    "aperture": "f/6.3",
+    "shutter": "1/100 s",
+    "iso": "400",
+    "comment": {
+      "en": "",
+      "zh": ""
+    },
+    "exifSource": "DateTimeOriginal",
+    "rawCaptureTime": "2025:02:23 10:09:10"
+  },
+  {
     "file": "DSC_1624.jpeg",
     "src": "img/interests/photography/DSC_1624.jpeg",
     "dateTaken": "2025-03-17T06:20:59",
     "year": 2025,
     "month": 3,
     "location": {
-      "en": "Mexico City, Mexico",
-      "zh": "墨西哥城，墨西哥"
+      "en": "Mexico City",
+      "zh": "墨西哥城"
     },
     "locationStatus": "confirmed-city-only",
     "locationNote": "Only the city has been confirmed.",
@@ -101,14 +246,72 @@ window.PHOTO_METADATA = [
     "rawCaptureTime": "2025:03:17 06:20:59"
   },
   {
+    "file": "DSC_1691.jpeg",
+    "src": "img/interests/photography/DSC_1691.jpeg",
+    "dateTaken": "2025-03-17T20:52:12",
+    "year": 2025,
+    "month": 3,
+    "location": {
+      "en": "Mexico City",
+      "zh": "墨西哥城"
+    },
+    "locationStatus": "confirmed-city-only",
+    "locationNote": "",
+    "styleTags": [],
+    "styleStatus": "unclassified",
+    "pinnedOrder": null,
+    "aspectRatio": 1.777778,
+    "camera": "NIKON Z 7_2",
+    "lens": "NIKKOR Z 24-200mm f/4-6.3 VR",
+    "focalLength": "24 mm",
+    "aperture": "f/4.5",
+    "shutter": "1/125 s",
+    "iso": "64",
+    "comment": {
+      "en": "",
+      "zh": ""
+    },
+    "exifSource": "DateTimeOriginal",
+    "rawCaptureTime": "2025:03:17 20:52:12"
+  },
+  {
+    "file": "DSC_1701.jpeg",
+    "src": "img/interests/photography/DSC_1701.jpeg",
+    "dateTaken": "2025-03-17T20:54:38",
+    "year": 2025,
+    "month": 3,
+    "location": {
+      "en": "Mexico City",
+      "zh": "墨西哥城"
+    },
+    "locationStatus": "confirmed-city-only",
+    "locationNote": "",
+    "styleTags": [],
+    "styleStatus": "unclassified",
+    "pinnedOrder": null,
+    "aspectRatio": 1.5,
+    "camera": "NIKON Z 7_2",
+    "lens": "NIKKOR Z 24-200mm f/4-6.3 VR",
+    "focalLength": "98 mm",
+    "aperture": "f/6.3",
+    "shutter": "1/250 s",
+    "iso": "64",
+    "comment": {
+      "en": "",
+      "zh": ""
+    },
+    "exifSource": "DateTimeOriginal",
+    "rawCaptureTime": "2025:03:17 20:54:38"
+  },
+  {
     "file": "DSC_2585 7F7E53F3.jpg",
     "src": "img/interests/photography/DSC_2585 7F7E53F3.jpg",
     "dateTaken": "2025-05-27T08:32:31",
     "year": 2025,
     "month": 5,
     "location": {
-      "en": "Somewhere, Oregon",
-      "zh": "俄勒冈州某处"
+      "en": "Somewhere, OR",
+      "zh": "某处，OR"
     },
     "locationStatus": "confirmed-state-only",
     "locationNote": "Only the state has been confirmed.",
@@ -130,14 +333,101 @@ window.PHOTO_METADATA = [
     "rawCaptureTime": "2025:05:27 08:32:31"
   },
   {
+    "file": "DSC_2734.jpeg",
+    "src": "img/interests/photography/DSC_2734.jpeg",
+    "dateTaken": "2025-05-28T02:56:17",
+    "year": 2025,
+    "month": 5,
+    "location": {
+      "en": "Somewhere, OR",
+      "zh": "某处，OR"
+    },
+    "locationStatus": "approximate",
+    "locationNote": "",
+    "styleTags": [],
+    "styleStatus": "unclassified",
+    "pinnedOrder": null,
+    "aspectRatio": 1.5,
+    "camera": "NIKON Z 7_2",
+    "lens": "NIKKOR Z 24-200mm f/4-6.3 VR",
+    "focalLength": "54 mm",
+    "aperture": "f/8",
+    "shutter": "1/250 s",
+    "iso": "64",
+    "comment": {
+      "en": "",
+      "zh": ""
+    },
+    "exifSource": "DateTimeOriginal",
+    "rawCaptureTime": "2025:05:28 02:56:17"
+  },
+  {
+    "file": "DSC_3238.jpeg",
+    "src": "img/interests/photography/DSC_3238.jpeg",
+    "dateTaken": "2025-05-31T18:48:59",
+    "year": 2025,
+    "month": 5,
+    "location": {
+      "en": "Somewhere, OR",
+      "zh": "某处，OR"
+    },
+    "locationStatus": "approximate",
+    "locationNote": "",
+    "styleTags": [],
+    "styleStatus": "unclassified",
+    "pinnedOrder": null,
+    "aspectRatio": 0.5625,
+    "camera": "NIKON Z 7_2",
+    "lens": "NIKKOR Z 24-200mm f/4-6.3 VR",
+    "focalLength": "24 mm",
+    "aperture": "f/8",
+    "shutter": "13 s",
+    "iso": "12800",
+    "comment": {
+      "en": "",
+      "zh": ""
+    },
+    "exifSource": "DateTimeOriginal",
+    "rawCaptureTime": "2025:05:31 18:48:59"
+  },
+  {
+    "file": "DSC_3286.jpeg",
+    "src": "img/interests/photography/DSC_3286.jpeg",
+    "dateTaken": "2025-06-23T17:53:06",
+    "year": 2025,
+    "month": 6,
+    "location": {
+      "en": "Luoyang, Henan",
+      "zh": "洛阳，河南"
+    },
+    "locationStatus": "confirmed",
+    "locationNote": "",
+    "styleTags": [],
+    "styleStatus": "unclassified",
+    "pinnedOrder": null,
+    "aspectRatio": 0.666667,
+    "camera": "NIKON Z 7_2",
+    "lens": "NIKKOR Z 24-200mm f/4-6.3 VR",
+    "focalLength": "84 mm",
+    "aperture": "f/6.3",
+    "shutter": "1/80 s",
+    "iso": "80",
+    "comment": {
+      "en": "",
+      "zh": ""
+    },
+    "exifSource": "DateTimeOriginal",
+    "rawCaptureTime": "2025:06:23 17:53:06"
+  },
+  {
     "file": "DSC_4175.jpg",
     "src": "img/interests/photography/DSC_4175.jpg",
     "dateTaken": "2025-12-18T08:28:07",
     "year": 2025,
     "month": 12,
     "location": {
-      "en": "Las Vegas, Nevada",
-      "zh": "内华达州拉斯维加斯"
+      "en": "Las Vegas, NV",
+      "zh": "拉斯维加斯，NV"
     },
     "locationStatus": "confirmed-city-only",
     "locationNote": "Only the city has been confirmed.",
@@ -159,14 +449,217 @@ window.PHOTO_METADATA = [
     "rawCaptureTime": "2025:12:18 08:28:07"
   },
   {
+    "file": "IMG_0615.jpeg",
+    "src": "img/interests/photography/IMG_0615.jpeg",
+    "dateTaken": "2026-03-13T19:12:45",
+    "year": 2026,
+    "month": 3,
+    "location": {
+      "en": "Santa Monica, CA",
+      "zh": "圣莫尼卡，CA"
+    },
+    "locationStatus": "confirmed",
+    "locationNote": "",
+    "styleTags": [],
+    "styleStatus": "unclassified",
+    "pinnedOrder": null,
+    "aspectRatio": 1.333333,
+    "camera": "Apple iPhone 17 Pro Max",
+    "lens": "iPhone 17 Pro Max back triple camera 6.765mm f/1.78",
+    "focalLength": "6.8 mm",
+    "aperture": "f/1.8",
+    "shutter": "1/250 s",
+    "iso": "64",
+    "comment": {
+      "en": "",
+      "zh": ""
+    },
+    "exifSource": "DateTimeOriginal",
+    "rawCaptureTime": "2026:03:13 19:12:45"
+  },
+  {
+    "file": "IMG_0618.jpeg",
+    "src": "img/interests/photography/IMG_0618.jpeg",
+    "dateTaken": "2026-03-13T19:15:52",
+    "year": 2026,
+    "month": 3,
+    "location": {
+      "en": "Santa Monica, CA",
+      "zh": "圣莫尼卡，CA"
+    },
+    "locationStatus": "confirmed",
+    "locationNote": "",
+    "styleTags": [],
+    "styleStatus": "unclassified",
+    "pinnedOrder": null,
+    "aspectRatio": 1.333333,
+    "camera": "Apple iPhone 17 Pro Max",
+    "lens": "iPhone 17 Pro Max back triple camera 16.891mm f/2.8",
+    "focalLength": "16.9 mm",
+    "aperture": "f/2.8",
+    "shutter": "1/60 s",
+    "iso": "640",
+    "comment": {
+      "en": "",
+      "zh": ""
+    },
+    "exifSource": "DateTimeOriginal",
+    "rawCaptureTime": "2026:03:13 19:15:52"
+  },
+  {
+    "file": "IMG_0979.jpeg",
+    "src": "img/interests/photography/IMG_0979.jpeg",
+    "dateTaken": "2026-03-18T10:28:56",
+    "year": 2026,
+    "month": 3,
+    "location": {
+      "en": "Avalon, CA",
+      "zh": "阿瓦隆，CA"
+    },
+    "locationStatus": "confirmed",
+    "locationNote": "",
+    "styleTags": [],
+    "styleStatus": "unclassified",
+    "pinnedOrder": null,
+    "aspectRatio": 1.333452,
+    "camera": "Apple iPhone 17 Pro Max",
+    "lens": "iPhone 17 Pro Max back triple camera 16.891mm f/2.8",
+    "focalLength": "16.9 mm",
+    "aperture": "f/2.8",
+    "shutter": "1/928 s",
+    "iso": "20",
+    "comment": {
+      "en": "",
+      "zh": ""
+    },
+    "exifSource": "DateTimeOriginal",
+    "rawCaptureTime": "2026:03:18 10:28:56"
+  },
+  {
+    "file": "IMG_1157.jpeg",
+    "src": "img/interests/photography/IMG_1157.jpeg",
+    "dateTaken": "2026-03-18T18:45:47",
+    "year": 2026,
+    "month": 3,
+    "location": {
+      "en": "Avalon, CA",
+      "zh": "阿瓦隆，CA"
+    },
+    "locationStatus": "confirmed",
+    "locationNote": "",
+    "styleTags": [],
+    "styleStatus": "unclassified",
+    "pinnedOrder": null,
+    "aspectRatio": 1.333333,
+    "camera": "Apple iPhone 17 Pro Max",
+    "lens": "iPhone 17 Pro Max back triple camera 6.765mm f/1.78",
+    "focalLength": "6.8 mm",
+    "aperture": "f/1.8",
+    "shutter": "1/819 s",
+    "iso": "100",
+    "comment": {
+      "en": "",
+      "zh": ""
+    },
+    "exifSource": "DateTimeOriginal",
+    "rawCaptureTime": "2026:03:18 18:45:47"
+  },
+  {
+    "file": "IMG_1269.jpeg",
+    "src": "img/interests/photography/IMG_1269.jpeg",
+    "dateTaken": "2026-04-16T19:15:33",
+    "year": 2026,
+    "month": 4,
+    "location": {
+      "en": "Chicago, IL",
+      "zh": "芝加哥，IL"
+    },
+    "locationStatus": "confirmed",
+    "locationNote": "",
+    "styleTags": [],
+    "styleStatus": "unclassified",
+    "pinnedOrder": null,
+    "aspectRatio": 0.75,
+    "camera": "Apple iPhone 17 Pro Max",
+    "lens": "iPhone 17 Pro Max back triple camera 16.891mm f/2.8",
+    "focalLength": "16.9 mm",
+    "aperture": "f/2.8",
+    "shutter": "1/121 s",
+    "iso": "50",
+    "comment": {
+      "en": "",
+      "zh": ""
+    },
+    "exifSource": "DateTimeOriginal",
+    "rawCaptureTime": "2026:04:16 19:15:33"
+  },
+  {
+    "file": "IMG_7815.jpeg",
+    "src": "img/interests/photography/IMG_7815.jpeg",
+    "dateTaken": "2025-11-09T23:55:41",
+    "year": 2025,
+    "month": 11,
+    "location": {
+      "en": "Chicago, IL",
+      "zh": "芝加哥，IL"
+    },
+    "locationStatus": "confirmed",
+    "locationNote": "",
+    "styleTags": [],
+    "styleStatus": "unclassified",
+    "pinnedOrder": null,
+    "aspectRatio": 0.75,
+    "camera": "Apple iPhone 12 Pro Max",
+    "lens": "iPhone 12 Pro Max back triple camera 5.1mm f/1.6",
+    "focalLength": "5.1 mm",
+    "aperture": "f/1.6",
+    "shutter": "1/60 s",
+    "iso": "320",
+    "comment": {
+      "en": "",
+      "zh": ""
+    },
+    "exifSource": "DateTimeOriginal",
+    "rawCaptureTime": "2025:11:09 23:55:41"
+  },
+  {
+    "file": "IMG_7818.jpeg",
+    "src": "img/interests/photography/IMG_7818.jpeg",
+    "dateTaken": "2025-11-09T23:58:32",
+    "year": 2025,
+    "month": 11,
+    "location": {
+      "en": "Chicago, IL",
+      "zh": "芝加哥，IL"
+    },
+    "locationStatus": "confirmed",
+    "locationNote": "",
+    "styleTags": [],
+    "styleStatus": "unclassified",
+    "pinnedOrder": null,
+    "aspectRatio": 1.333333,
+    "camera": "Apple iPhone 12 Pro Max",
+    "lens": "iPhone 12 Pro Max back triple camera 5.1mm f/1.6",
+    "focalLength": "5.1 mm",
+    "aperture": "f/1.6",
+    "shutter": "1/120 s",
+    "iso": "125",
+    "comment": {
+      "en": "",
+      "zh": ""
+    },
+    "exifSource": "DateTimeOriginal",
+    "rawCaptureTime": "2025:11:09 23:58:32"
+  },
+  {
     "file": "Z30_0224.jpg",
     "src": "img/interests/photography/Z30_0224.jpg",
     "dateTaken": "2024-08-03T18:52:54",
     "year": 2024,
     "month": 8,
     "location": {
-      "en": "Deep Water Bay, Hong Kong",
-      "zh": "香港深水湾"
+      "en": "Deep Water Bay, HK",
+      "zh": "深水湾，HK"
     },
     "locationStatus": "confirmed",
     "locationNote": "",
@@ -194,8 +687,8 @@ window.PHOTO_METADATA = [
     "year": 2025,
     "month": 3,
     "location": {
-      "en": "Mexico City area, Mexico",
-      "zh": "墨西哥城周边，墨西哥"
+      "en": "Mexico City",
+      "zh": "墨西哥城"
     },
     "locationStatus": "approximate",
     "locationNote": "Do not label as Teotihuacán unless the location is later confirmed.",
@@ -225,8 +718,8 @@ window.PHOTO_METADATA = [
     "year": 2025,
     "month": 2,
     "location": {
-      "en": "Dockweiler State Beach, Los Angeles",
-      "zh": "洛杉矶 Dockweiler State Beach"
+      "en": "Dockweiler State Beach, CA",
+      "zh": "Dockweiler State Beach，CA"
     },
     "locationStatus": "confirmed",
     "locationNote": "",
@@ -318,8 +811,8 @@ window.PHOTO_METADATA = [
     "year": 2024,
     "month": 12,
     "location": {
-      "en": "Mid-Levels, Hong Kong",
-      "zh": "香港半山"
+      "en": "Mid-Levels, HK",
+      "zh": "半山，HK"
     },
     "locationStatus": "approximate",
     "locationNote": "The exact street has not been confirmed.",
@@ -380,8 +873,8 @@ window.PHOTO_METADATA = [
     "year": 2025,
     "month": 5,
     "location": {
-      "en": "Oregon Coast, Oregon",
-      "zh": "俄勒冈州海岸"
+      "en": "Oregon Coast, OR",
+      "zh": "俄勒冈海岸，OR"
     },
     "locationStatus": "approximate",
     "locationNote": "A more specific Oregon Coast location has not been confirmed.",
@@ -411,8 +904,8 @@ window.PHOTO_METADATA = [
     "year": 2025,
     "month": 5,
     "location": {
-      "en": "Point Vicente, Rancho Palos Verdes, California",
-      "zh": "加州兰乔帕洛斯弗迪斯，Point Vicente"
+      "en": "Point Vicente, CA",
+      "zh": "Point Vicente，CA"
     },
     "locationStatus": "confirmed",
     "locationNote": "",
@@ -442,8 +935,8 @@ window.PHOTO_METADATA = [
     "year": 2025,
     "month": 3,
     "location": {
-      "en": "Museo Nacional de Arte (MUNAL), Mexico City",
-      "zh": "墨西哥城国家艺术博物馆（MUNAL）"
+      "en": "MUNAL, Mexico City",
+      "zh": "国家艺术博物馆（MUNAL），墨西哥城"
     },
     "locationStatus": "confirmed",
     "locationNote": "",
@@ -473,8 +966,8 @@ window.PHOTO_METADATA = [
     "year": 2024,
     "month": 11,
     "location": {
-      "en": "East Coast Park Precinct, Hong Kong",
-      "zh": "香港东岸公园主题区"
+      "en": "East Coast Park Precinct, HK",
+      "zh": "东岸公园主题区，HK"
     },
     "locationStatus": "confirmed",
     "locationNote": "",
@@ -504,8 +997,8 @@ window.PHOTO_METADATA = [
     "year": 2024,
     "month": 10,
     "location": {
-      "en": "Near The Chinese University of Hong Kong, Sha Tin",
-      "zh": "香港中文大学附近，沙田"
+      "en": "Somewhere, Sha Tin",
+      "zh": "某处，沙田"
     },
     "locationStatus": "approximate",
     "locationNote": "The exact station has not been confirmed.",
@@ -535,8 +1028,8 @@ window.PHOTO_METADATA = [
     "year": 2025,
     "month": 12,
     "location": {
-      "en": "Near Las Vegas, Nevada",
-      "zh": "内华达州拉斯维加斯附近"
+      "en": "Somewhere, NV",
+      "zh": "某处，NV"
     },
     "locationStatus": "approximate",
     "locationNote": "The specific location has not been confirmed.",
@@ -566,8 +1059,8 @@ window.PHOTO_METADATA = [
     "year": 2025,
     "month": 5,
     "location": {
-      "en": "Point Vicente, Rancho Palos Verdes, California",
-      "zh": "加州兰乔帕洛斯弗迪斯，Point Vicente"
+      "en": "Point Vicente, CA",
+      "zh": "Point Vicente，CA"
     },
     "locationStatus": "confirmed",
     "locationNote": "",
@@ -628,8 +1121,8 @@ window.PHOTO_METADATA = [
     "year": 2025,
     "month": 10,
     "location": {
-      "en": "Chicago, Illinois",
-      "zh": "美国伊利诺伊州芝加哥"
+      "en": "Chicago, IL",
+      "zh": "芝加哥，IL"
     },
     "locationStatus": "confirmed-city-only",
     "locationNote": "Only the city has been confirmed.",
@@ -659,8 +1152,8 @@ window.PHOTO_METADATA = [
     "year": 2025,
     "month": 5,
     "location": {
-      "en": "Near Crater Lake National Park, Oregon",
-      "zh": "俄勒冈州火山口湖国家公园附近"
+      "en": "Somewhere, OR",
+      "zh": "某处，OR"
     },
     "locationStatus": "approximate",
     "locationNote": "The specific viewpoint has not been confirmed.",
@@ -690,8 +1183,8 @@ window.PHOTO_METADATA = [
     "year": 2025,
     "month": 1,
     "location": {
-      "en": "Joshua Tree National Park, California",
-      "zh": "加州约书亚树国家公园"
+      "en": "Joshua Tree National Park, CA",
+      "zh": "约书亚树国家公园，CA"
     },
     "locationStatus": "confirmed",
     "locationNote": "",
@@ -721,8 +1214,8 @@ window.PHOTO_METADATA = [
     "year": 2024,
     "month": 12,
     "location": {
-      "en": "Central Market, Central, Hong Kong",
-      "zh": "香港中环街市"
+      "en": "Central Market, HK",
+      "zh": "中环街市，HK"
     },
     "locationStatus": "confirmed",
     "locationNote": "",

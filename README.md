@@ -41,7 +41,7 @@ Gallery and Kitchen are child pages, not top-level navigation entries. On both c
 | `data/photo-metadata.js` | One metadata record per Gallery photograph. | Human-maintained location/style/comment fields and EXIF-derived fields live here. |
 | `data/recipes.js` | All 50 recipe records. | Chinese content follows the private source document; English remains a faithful companion. |
 | `scripts/build_photo_metadata.py` | Optional EXIF refresh utility. | Maintenance-only; the live website never requires Python. |
-| `img/interests/photography/` | Flat storage for all 25 Photography images. | All images live directly in this directory. No style subfolders. |
+| `img/interests/photography/` | Flat storage for all 42 Photography images. | All images live directly in this directory. No style subfolders. Keep `new/` as an empty staging folder between imports. |
 | `img/interests/tennis/tennis-court-poster.jpg` | Current Tennis media. | Unchanged by the Photography system. |
 | `img/*.jpg` | Research and supporting images. | Preserve active filenames and `PROJECT_DATA` paths. |
 | `pdf/Resume.pdf` | English CV. | Replace only when explicitly supplied. |
@@ -75,7 +75,7 @@ Do not change Experience, Education, Research, `PROJECT_DATA`, Research hover/pi
 
 ## 4. Homepage Photography Contract
 
-The homepage slideshow is curated separately from the Gallery dataset. Adding a Gallery photograph does **not** automatically add it to the homepage slideshow.
+The homepage slideshow is maintained separately from the Gallery dataset. A new Gallery photograph must be added to `index.html` explicitly when the user requests homepage inclusion.
 
 Current behavior:
 
@@ -89,7 +89,7 @@ Current behavior:
 - Reduced-motion disables autoplay and collapses transitions while preserving manual controls.
 - Only the explicit Gallery CTA navigates to `gallery.html`.
 
-All homepage slideshow paths use the flat Photography directory. The six photographs added to the Gallery in the 2026-08-26 revision were intentionally not inserted into the curated homepage sequence.
+All homepage slideshow paths use the flat Photography directory. The 17 photographs imported on 2026-08-27 were added after the resting starry frame in newest-to-oldest order; the six photographs from the 2026-08-26 revision remain intentionally excluded. The homepage sequence now contains 36 frames.
 
 ## 5. Production Gallery: Balanced Rows, Orientation, and Lightbox Filmstrip
 
@@ -108,9 +108,9 @@ The visible Gallery quote is user-provided content, not independently authentica
 
 Edit the wording and attribution only in the `.gallery-quote` block in `gallery.html`. Treat it as user-authored/provided copy.
 
-### Balanced three-photo overview
+### Balanced overview rows
 
-The production overview is one continuous newest-to-oldest sequence. It has no physical year or month groups and no large year dividers. `renderGallery()` removes the pinned records from the later chronology, chunks the remaining filtered sequence into exactly three photographs per row, and allows only the final row to contain fewer than three. A one-photo final row is left-aligned at `MAX_CELL_SHARE` rather than enlarged to the full container width.
+The production overview is one continuous newest-to-oldest sequence. It has no physical year or month groups and no large year dividers. `renderGallery()` removes the pinned records from the later chronology. All and Landscape retain the approved three-photo balanced rows; Portrait alone uses four equal-width photographs per desktop row so vertical images remain shorter. Final rows remain left-aligned and may contain fewer photographs.
 
 Every photograph receives a compact capture label immediately above it (`AUG 2025` in English or `2025年8月` in Chinese). Repeated month/year labels are intentional because the date belongs to the photograph rather than a physical group.
 
@@ -122,6 +122,7 @@ The exact production configuration is:
 GALLERY_CONFIG = {
   SORT_DIRECTION: "newest-first",
   PHOTOS_PER_ROW: 3,
+  PORTRAIT_PHOTOS_PER_ROW: 4,
   ORIENTATION_SPLIT: 1,
   ROW_BALANCE_POWER: 0.6,
   MIN_CELL_SHARE: 0.24,
@@ -129,7 +130,7 @@ GALLERY_CONFIG = {
 }
 ```
 
-Desktop/tablet gutters are `6px`; narrow-mobile gutters are `4px`. The same three-photo row system is retained at 390 px and 430 px because the current dataset remains usable at that density. Overview images use `width: 100%; height: auto` and never use `object-fit: cover`, so they are not cropped, stretched, or compressed into fixed frames.
+Desktop/tablet gutters are `6px`; narrow-mobile gutters are `4px`. Portrait remains four-across responsively, while All and Landscape remain three-across. Overview images use `width: 100%; height: auto` and never use `object-fit: cover`, so they are not cropped, stretched, or compressed into fixed frames.
 
 ### Thumbnail location behavior
 
@@ -141,9 +142,9 @@ Under `@media (hover: none), (pointer: coarse)` and the narrow-mobile breakpoint
 
 The understated opening selection is rendered by `#gallery-pinned` and `#gallery-pinned-grid` before the chronological archive. It is configured only through `pinnedOrder` in `data/photo-metadata.js`:
 
-1. `starry-sky-01.jpeg` — Joshua Tree National Park, California — `pinnedOrder: 1`
-2. `balloon-moon-01.jpeg` — Mexico City area, Mexico — `pinnedOrder: 2`
-3. `coastal-cliff-01.jpeg` — Oregon Coast, USA — `pinnedOrder: 3`
+1. `starry-sky-01.jpeg` — Joshua Tree National Park, CA — `pinnedOrder: 1`
+2. `balloon-moon-01.jpeg` — Mexico City — `pinnedOrder: 2`
+3. `coastal-cliff-01.jpeg` — Oregon Coast, OR — `pinnedOrder: 3`
 
 `renderGallery()` sorts positive `pinnedOrder` values and omits those records from the later archive, so no image file or rendered thumbnail is duplicated. The pinned selection uses the same softened, bounded row-width logic as chronology. Under All, all three remain pinned. Under an orientation filter, only pinned photographs with the matching derived orientation appear; an empty pinned group is hidden.
 
@@ -159,7 +160,7 @@ GALLERY_CONFIG.SORT_DIRECTION = "newest-first"
 
 The visible filters are `All / Landscape / Portrait` and `全部 / 横幅 / 竖幅`. Orientation is derived automatically: `aspectRatio < ORIENTATION_SPLIT` is portrait and `aspectRatio >= ORIENTATION_SPLIT` is landscape. `styleTags` remain intact in metadata for future use but do not drive the production filter controls.
 
-Filtering preserves the same newest-to-oldest sequence before it is chunked into rows. The All lightbox sequence contains 25 unique photographs. The overview renders the three pinned photographs once and the other 22 once; the lightbox filmstrip uses the complete filtered unique sequence.
+Filtering preserves the same newest-to-oldest sequence before it is chunked into rows. The All lightbox sequence contains 42 unique photographs. The overview renders the three pinned photographs once and the other 39 once; the lightbox filmstrip uses the complete filtered unique sequence.
 
 ### Lightbox filmstrip
 
@@ -169,7 +170,7 @@ The approved main-image and information layout remains unchanged. `#lightbox-fil
 - `renderLightbox()` synchronizes the main image, bilingual location, date, optional comment, EXIF, counter, and the single `.is-active` thumbnail.
 - Previous/next buttons, Arrow Left/Arrow Right, and thumbnail clicks all use the same `lightboxIndex`.
 - `centerActiveThumbnail()` scrolls only the filmstrip to center the active thumbnail; reduced-motion uses immediate scrolling and other users receive restrained smooth scrolling.
-- Thumbnail height is `56px` on desktop and approximately `45px` on mobile. Only these filmstrip thumbnails use `object-fit: cover`; the overview and main lightbox image do not.
+- Thumbnail height is `56px` on desktop and approximately `45px` on mobile. Filmstrip buttons use each photograph's real aspect ratio and `object-fit: contain`, so horizontal and vertical thumbnails remain fully visible.
 - The scrollbar is visually hidden, while horizontal wheel/touch scrolling and keyboard-focusable thumbnail buttons remain available.
 
 ## 6. Flat Photography Storage
@@ -219,6 +220,16 @@ These files were already present in the development folder and are now registere
 
 There is no separate `DSC_2585.*` and no separate `7F7E53F3.*`. The actual filesystem contains one photograph named `DSC_2585 7F7E53F3.jpg`; it therefore receives one metadata record and is not duplicated or renamed.
 
+### 2026-08-27 `new/` import
+
+Seventeen images were moved without renaming from `img/interests/photography/new/` into the flat Photography root and registered in Gallery metadata and the homepage slideshow:
+
+- `DSC_0326.jpeg`, `DSC_1098.jpeg`, `DSC_1101.jpeg`, `DSC_1105.jpeg`, `DSC_1118.jpeg`
+- `DSC_1691.jpeg`, `DSC_1701.jpeg`, `DSC_2734.jpeg`, `DSC_3238.jpeg`, `DSC_3286.jpeg`
+- `IMG_0615.jpeg`, `IMG_0618.jpeg`, `IMG_0979.jpeg`, `IMG_1157.jpeg`, `IMG_1269.jpeg`, `IMG_7815.jpeg`, `IMG_7818.jpeg`
+
+The library increased from 25 to 42 actual images and metadata records. Keep `img/interests/photography/new/` present but empty as the staging location for the next import. For each future batch: inspect exact filenames, check for root collisions, extract EXIF, move the files into the flat root, rebuild metadata, add user-supplied bilingual locations, decide homepage inclusion, verify counts, and leave `new/` empty.
+
 ## 7. Central Photo Metadata Schema
 
 `gallery.html` renders only from `window.PHOTO_METADATA` in `data/photo-metadata.js`. Each actual image has exactly one record:
@@ -231,8 +242,8 @@ There is no separate `DSC_2585.*` and no separate `7F7E53F3.*`. The actual files
   year: 2025,
   month: 1,
   location: {
-    en: "Joshua Tree National Park, California",
-    zh: "加州约书亚树国家公园"
+    en: "Joshua Tree National Park, CA",
+    zh: "约书亚树国家公园，CA"
   },
   locationStatus: "confirmed",
   locationNote: "",
@@ -269,47 +280,13 @@ Capture-time precedence is `DateTimeOriginal`, then `DateTimeDigitized`, then em
 
 The maintenance script scans only the flat Photography root, refreshes machine-derived fields, and preserves human fields by exact filename. It preserves `pinnedOrder`, normalizes unpinned records to `null`, and stops rather than silently processing nested style folders, duplicate filenames, or duplicate positive pin positions.
 
-## 8. Location Confidence Table
+## 8. Location Display Convention
 
-| Filename | English location | Status |
-|---|---|---|
-| `DSC_0571.jpg` | Joshua Tree National Park, California | confirmed |
-| `DSC_0709.jpg` | Dockweiler State Beach, Los Angeles | confirmed |
-| `DSC_1624.jpeg` | Mexico City, Mexico | confirmed-city-only |
-| `DSC_2585 7F7E53F3.jpg` | Oregon, USA | confirmed-state-only |
-| `DSC_4175.jpg` | Las Vegas, Nevada | confirmed-city-only |
-| `Z30_0224.jpg` | Deep Water Bay, Hong Kong | confirmed |
-| `balloon-moon-01.jpeg` | Mexico City area, Mexico | approximate |
-| `beach-photographer-dusk-01.jpeg` | Dockweiler State Beach, Los Angeles | confirmed |
-| `bridge-sunset-01.jpeg` | Yangpu Bridge, Shanghai | confirmed |
-| `bridge-sunset-02.jpeg` | Yangpu Bridge, Shanghai | confirmed |
-| `city-street-01.jpeg` | Mid-Levels, Hong Kong | approximate |
-| `city-sunset-01.jpeg` | Yangpu Bridge, Shanghai | confirmed |
-| `coastal-cliff-01.jpeg` | Oregon Coast, USA | approximate |
-| `coastal-lighthouse-01.jpeg` | Point Vicente, Rancho Palos Verdes, California | confirmed |
-| `grand-staircase-01.jpeg` | Museo Nacional de Arte (MUNAL), Mexico City | confirmed |
-| `harbor-skyline-night-01.jpeg` | East Coast Park Precinct, Hong Kong | confirmed |
-| `hillside-train-01.jpeg` | Near The Chinese University of Hong Kong, Sha Tin | approximate |
-| `mountain-lake-dusk-01.jpeg` | Near Las Vegas, Nevada | approximate |
-| `ocean-sunset-birds-01.jpeg` | Point Vicente, Rancho Palos Verdes, California | confirmed |
-| `rainbow-bridge-01.jpeg` | Shenzhen Talent Park, Shenzhen | confirmed |
-| `reflected-sunset-01.jpeg` | Chicago, Illinois | confirmed-city-only |
-| `snowy-mountain-road-01.jpeg` | Near Crater Lake National Park, Oregon | approximate |
-| `starry-sky-01.jpeg` | Joshua Tree National Park, California | confirmed |
-| `station-clock-01.jpeg` | Central Market, Central, Hong Kong | confirmed |
-| `waterfront-dusk-01.jpeg` | Shenzhen Talent Park, Shenzhen | confirmed |
+Visible locations use the concise `city/location, state/region` scale and do not append country names. US states use abbreviations such as `CA`, `OR`, `IL`, and `NV`; Hong Kong uses `HK`. Examples include `Joshua Tree National Park, CA`, `Chicago, IL`, `Deep Water Bay, HK`, `Yangpu Bridge, Shanghai`, and `Mexico City`.
 
-Point Vicente, Dockweiler State Beach, and East Coast Park Precinct are confirmed user-provided locations. They must not be downgraded to “likely.”
+Do not display `Near ...` or `...附近`. When the exact place is intentionally unknown, use `Somewhere, [region]` / `某处，[region]`; if no reliable region is known, use `Somewhere` / `某处`. Locations remain human-maintained metadata and must not be inferred from adjacent filenames.
 
-The corrected bilingual Yangpu Bridge records are:
-
-| Filename | English | Chinese | Status |
-|---|---|---|---|
-| `bridge-sunset-01.jpeg` | Yangpu Bridge, Shanghai | 上海杨浦大桥 | confirmed |
-| `bridge-sunset-02.jpeg` | Yangpu Bridge, Shanghai | 上海杨浦大桥 | confirmed |
-| `city-sunset-01.jpeg` | Yangpu Bridge, Shanghai | 上海杨浦大桥 | confirmed |
-
-The six newly supplied photos intentionally remain `styleTags: []` and `styleStatus: "unclassified"` until the user assigns styles manually.
+Point Vicente, Dockweiler State Beach, East Coast Park Precinct, and all 2026-08-27 import locations are user-provided or previously confirmed. The new files remain `styleTags: []` and `styleStatus: "unclassified"` until the user assigns styles manually.
 
 ## 9. Photo Maintenance Workflows
 
@@ -346,17 +323,15 @@ The Gallery reads this value dynamically. No image move, duplicate file, or `gal
 ### Add a new photograph
 
 1. Export a web-ready image while preserving EXIF.
-2. Place it directly in `img/interests/photography/`.
-3. Preserve the real extension and use a clean unique filename.
-4. Run `python3 scripts/build_photo_metadata.py` from the development project root.
-5. Verify the capture timestamp and camera fields.
-6. Manually enter the bilingual location and status.
-7. Optionally maintain `styleTags` for future metadata use; the current visible orientation filters ignore this field.
-8. Optionally add bilingual comments.
-9. Optionally assign a unique positive `pinnedOrder`; leave it `null` for normal chronology.
-10. Verify newest-first ordering, three-photo rows, orientation filters, pinned behavior, lightbox filmstrip, and mobile layout.
-11. Decide separately whether the photo belongs in the homepage slideshow.
-12. Later mirror the image and metadata change into the verified Git checkout.
+2. Place it in `img/interests/photography/new/`, preserving its real filename and extension.
+3. Inspect the complete staging batch and verify that no filename collides with the flat root.
+4. Extract EXIF, move each imported image into `img/interests/photography/`, and leave `new/` present but empty.
+5. Run `python3 scripts/build_photo_metadata.py` from the development project root.
+6. Verify the capture timestamp and camera fields, then enter the bilingual location and status manually.
+7. Optionally maintain `styleTags`, comments, and a unique positive `pinnedOrder`; leave unpinned records `null`.
+8. Add requested images to the homepage slideshow explicitly; the Gallery dataset does not inject them automatically.
+9. Verify newest-first Gallery ordering, All/Landscape three-across rows, Portrait four-across rows, pinned behavior, lightbox, homepage sequence, and mobile layout.
+10. Later mirror the documented image and code changes into the verified Git checkout.
 
 ## 10. Kitchen Notes
 
@@ -379,9 +354,9 @@ Before deployment, verify:
 - all actual image files have one metadata record and vice versa;
 - homepage and Gallery use only flat Photography paths;
 - chronological ordering remains newest-first without year/month physical groups;
-- every full overview row contains exactly three photographs and only the final row may contain fewer;
+- every full All/Landscape overview row contains three photographs and every full Portrait row contains four; only final rows may contain fewer;
 - the balanced row shares use actual aspect ratios, the documented power, and the documented 24%–42% bounds without reordering;
-- the dense Gallery uses 6 px/4 px gutters, natural aspect ratios, and a compact date label above every photograph;
+- the dense Gallery uses 6 px/4 px gutters, natural aspect ratios, and a compact date label above every photograph; Portrait remains visibly shorter at four-across;
 - All/Landscape/Portrait filtering derives orientation from aspect ratio while preserving chronology;
 - unclassified style records remain available because visible filtering no longer depends on `styleTags`;
 - normal thumbnails contain no permanently visible location, comment, style, or EXIF metadata;
@@ -434,7 +409,36 @@ Before deployment, verify:
 - Kept all 25 image files, all metadata content, and the Yangpu Bridge bilingual location records unchanged.
 - Modified only the production `gallery.html` and this `README.md`; no Git command was run.
 
+## Revision — 2026-08-27: Photo Import, Locations & Portrait Density
+
+- Imported 17 photographs from `new/` into flat storage, increasing the library from 25 to 42 files/records; all EXIF fields used by the site were readable.
+- Added all 17 imported photographs to the homepage slideshow while preserving starry sky as the resting first frame.
+- Normalized visible bilingual locations to concise place/region labels without country names or `Near / 附近`; vague locations use `Somewhere / 某处`.
+- Changed Portrait only to four equal-width photographs per row; All and Landscape remain three-photo balanced rows and every overview image retains its full natural ratio.
+- Renamed the visible pinned heading to `Pinned / 置顶` without changing the three pinned records or their order.
+- Kept `img/interests/photography/new/` present and empty for the next batch.
+- This was a local-only update; no Git command or GitHub push was performed.
+
 ## Next GitHub Sync — Deployment Handoff
+
+### Current local-only delta (2026-08-27)
+
+Files modified:
+
+- `index.html` — adds the 17 imported photographs to the homepage Photography sequence.
+- `gallery.html` — Portrait four-across logic and `Pinned / 置顶` heading.
+- `data/photo-metadata.js` — 42 EXIF-backed records and normalized bilingual locations.
+- `README.md` — inventory, workflow, conventions, validation, and this handoff.
+
+Files moved from `img/interests/photography/new/` to `img/interests/photography/` without renaming:
+
+- `DSC_0326.jpeg`, `DSC_1098.jpeg`, `DSC_1101.jpeg`, `DSC_1105.jpeg`, `DSC_1118.jpeg`
+- `DSC_1691.jpeg`, `DSC_1701.jpeg`, `DSC_2734.jpeg`, `DSC_3238.jpeg`, `DSC_3286.jpeg`
+- `IMG_0615.jpeg`, `IMG_0618.jpeg`, `IMG_0979.jpeg`, `IMG_1157.jpeg`, `IMG_1269.jpeg`, `IMG_7815.jpeg`, `IMG_7818.jpeg`
+
+Deployment counts: **42 actual Photography images / 42 metadata records**. The empty `img/interests/photography/new/` staging directory should remain local; Git does not track empty directories unless a placeholder is deliberately added. Verify the separate Git checkout before any eventual sync. Do not publish `.DS_Store` or unrelated/private files.
+
+The remainder of this section records the superseded 2026-08-26 deployment handoff for history.
 
 The **source/development version** is:
 
