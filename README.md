@@ -41,7 +41,7 @@ Gallery and Kitchen are child pages, not top-level navigation entries. On both c
 | `data/photo-metadata.js` | One metadata record per Gallery photograph. | Human-maintained location/style/comment fields and EXIF-derived fields live here. |
 | `data/recipes.js` | All 50 recipe records. | Chinese content follows the private source document; English remains a faithful companion. |
 | `scripts/build_photo_metadata.py` | Optional EXIF refresh utility. | Maintenance-only; the live website never requires Python. |
-| `img/interests/photography/` | Flat storage for all 42 Photography images. | All images live directly in this directory. No style subfolders. Keep `new/` as an empty staging folder between imports. |
+| `img/interests/photography/` | Flat storage for all 43 Photography images. | All images live directly in this directory. No style subfolders. Keep `new/` as an empty staging folder between imports. |
 | `img/interests/tennis/tennis-court-poster.jpg` | Current Tennis media. | Unchanged by the Photography system. |
 | `img/*.jpg` | Research and supporting images. | Preserve active filenames and `PROJECT_DATA` paths. |
 | `pdf/Resume.pdf` | English CV. | Replace only when explicitly supplied. |
@@ -89,11 +89,11 @@ Current behavior:
 - Reduced-motion disables autoplay and collapses transitions while preserving manual controls.
 - Only the explicit Gallery CTA navigates to `gallery.html`.
 
-All homepage slideshow paths use the flat Photography directory. The 17 photographs imported on 2026-08-27 were added after the resting starry frame in newest-to-oldest order; the six photographs from the 2026-08-26 revision remain intentionally excluded. The homepage sequence now contains 36 frames.
+All homepage slideshow paths use the flat Photography directory. The photographs imported on 2026-08-27 were added after the resting starry frame in newest-to-oldest order; the six photographs from the 2026-08-26 revision remain intentionally excluded. The homepage sequence now contains 37 frames, including `IMG_1737.jpeg`.
 
 ## 5. Production Gallery: Balanced Rows, Orientation, and Lightbox Filmstrip
 
-The Gallery is intentionally a dense, image-first photo album rather than a sparse exhibition page. `Moments & Places` keeps its reduced book-opening scale, and the space beneath the hero is shortened so photography begins sooner.
+The Gallery is intentionally a dense, image-first photo album rather than a sparse exhibition page. Its visible bilingual page title is `摄影集`, and the space beneath the hero is shortened so photography begins sooner.
 
 The visible Gallery quote is user-provided content, not independently authenticated:
 
@@ -160,7 +160,7 @@ GALLERY_CONFIG.SORT_DIRECTION = "newest-first"
 
 The visible filters are `All / Landscape / Portrait` and `全部 / 横幅 / 竖幅`. Orientation is derived automatically: `aspectRatio < ORIENTATION_SPLIT` is portrait and `aspectRatio >= ORIENTATION_SPLIT` is landscape. `styleTags` remain intact in metadata for future use but do not drive the production filter controls.
 
-Filtering preserves the same newest-to-oldest sequence before it is chunked into rows. The All lightbox sequence contains 42 unique photographs. The overview renders the three pinned photographs once and the other 39 once; the lightbox filmstrip uses the complete filtered unique sequence.
+Filtering preserves the same newest-to-oldest sequence before it is chunked into rows. The All lightbox sequence contains 43 unique photographs. The overview renders the three pinned photographs once and the other 40 once; the lightbox filmstrip uses the complete filtered unique sequence.
 
 ### Lightbox filmstrip
 
@@ -168,6 +168,7 @@ The approved main-image and information layout remains unchanged. `#lightbox-fil
 
 - Each thumbnail directly selects its photograph without closing the lightbox.
 - `renderLightbox()` synchronizes the main image, bilingual location, date, optional comment, EXIF, counter, and the single `.is-active` thumbnail.
+- Every lightbox view includes a visible `Comments / 备注` section. Its text remains empty until `comment.en` and `comment.zh` are populated in metadata.
 - Previous/next buttons, Arrow Left/Arrow Right, and thumbnail clicks all use the same `lightboxIndex`.
 - `centerActiveThumbnail()` scrolls only the filmstrip to center the active thumbnail; reduced-motion uses immediate scrolling and other users receive restrained smooth scrolling.
 - Thumbnail height is `56px` on desktop and approximately `45px` on mobile. Filmstrip buttons use each photograph's real aspect ratio and `object-fit: contain`, so horizontal and vertical thumbnails remain fully visible.
@@ -229,6 +230,8 @@ Seventeen images were moved without renaming from `img/interests/photography/new
 - `IMG_0615.jpeg`, `IMG_0618.jpeg`, `IMG_0979.jpeg`, `IMG_1157.jpeg`, `IMG_1269.jpeg`, `IMG_7815.jpeg`, `IMG_7818.jpeg`
 
 The library increased from 25 to 42 actual images and metadata records. Keep `img/interests/photography/new/` present but empty as the staging location for the next import. For each future batch: inspect exact filenames, check for root collisions, extract EXIF, move the files into the flat root, rebuild metadata, add user-supplied bilingual locations, decide homepage inclusion, verify counts, and leave `new/` empty.
+
+A later same-day follow-up replaced the existing bytes for `IMG_0615.jpeg`, `IMG_1157.jpeg`, and `IMG_1269.jpeg`, and added `IMG_1737.jpeg` (`Upstate New York / 纽约州北部`). The final library contains 43 images/records; the homepage slideshow contains 37 frames.
 
 ## 7. Central Photo Metadata Schema
 
@@ -416,18 +419,18 @@ Before deployment, verify:
 - Normalized visible bilingual locations to concise place/region labels without country names or `Near / 附近`; vague locations use `Somewhere / 某处`.
 - Changed Portrait only to four equal-width photographs per row; All and Landscape remain three-photo balanced rows and every overview image retains its full natural ratio.
 - Renamed the visible pinned heading to `Pinned / 置顶` without changing the three pinned records or their order.
+- Renamed the Gallery hero title to `摄影集`, added a visible empty `Comments / 备注` area to every lightbox view, replaced three supplied image files, and added `IMG_1737.jpeg` from Upstate New York.
 - Kept `img/interests/photography/new/` present and empty for the next batch.
-- This was a local-only update; no Git command or GitHub push was performed.
 
 ## Next GitHub Sync — Deployment Handoff
 
-### Current local-only delta (2026-08-27)
+### Current 2026-08-27 sync delta
 
 Files modified:
 
-- `index.html` — adds the 17 imported photographs to the homepage Photography sequence.
-- `gallery.html` — Portrait four-across logic and `Pinned / 置顶` heading.
-- `data/photo-metadata.js` — 42 EXIF-backed records and normalized bilingual locations.
+- `index.html` — adds the imported photographs, including `IMG_1737.jpeg`, to the homepage Photography sequence.
+- `gallery.html` — Portrait four-across logic, `Pinned / 置顶`, `摄影集`, and the empty lightbox Comments area.
+- `data/photo-metadata.js` — 43 EXIF-backed records and normalized bilingual locations.
 - `README.md` — inventory, workflow, conventions, validation, and this handoff.
 
 Files moved from `img/interests/photography/new/` to `img/interests/photography/` without renaming:
@@ -436,7 +439,9 @@ Files moved from `img/interests/photography/new/` to `img/interests/photography/
 - `DSC_1691.jpeg`, `DSC_1701.jpeg`, `DSC_2734.jpeg`, `DSC_3238.jpeg`, `DSC_3286.jpeg`
 - `IMG_0615.jpeg`, `IMG_0618.jpeg`, `IMG_0979.jpeg`, `IMG_1157.jpeg`, `IMG_1269.jpeg`, `IMG_7815.jpeg`, `IMG_7818.jpeg`
 
-Deployment counts: **42 actual Photography images / 42 metadata records**. The empty `img/interests/photography/new/` staging directory should remain local; Git does not track empty directories unless a placeholder is deliberately added. Verify the separate Git checkout before any eventual sync. Do not publish `.DS_Store` or unrelated/private files.
+Follow-up image delta: replace `IMG_0615.jpeg`, `IMG_1157.jpeg`, and `IMG_1269.jpeg`; add `IMG_1737.jpeg`.
+
+Deployment counts: **43 actual Photography images / 43 metadata records**. The empty `img/interests/photography/new/` staging directory should remain local; Git does not track empty directories unless a placeholder is deliberately added. Verify the separate Git checkout before any eventual sync. Do not publish `.DS_Store` or unrelated/private files.
 
 The remainder of this section records the superseded 2026-08-26 deployment handoff for history.
 

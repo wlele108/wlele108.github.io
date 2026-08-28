@@ -50,7 +50,9 @@
         .lightbox-information { align-self: center; padding: 1.5rem 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
         .lightbox-location { margin: 0 0 .75rem; color: var(--cyan); font-size: .72rem; letter-spacing: .11em; line-height: 1.45; text-transform: uppercase; }
         .lightbox-date { margin: 0 0 1.6rem; font-family: var(--serif); font-size: clamp(1.8rem,3vw,2.8rem); font-weight: 300; line-height: 1; }
-        .lightbox-comment { margin: 0 0 1.8rem; padding-left: .85rem; border-left: 1px solid var(--cyan); color: var(--muted); font-family: var(--serif); font-size: 1.02rem; font-style: italic; line-height: 1.55; }
+        .lightbox-comments { margin: 0 0 1.8rem; padding-left: .85rem; border-left: 1px solid var(--cyan); }
+        .lightbox-comments-label { margin: 0; color: var(--quiet); font-size: .68rem; font-weight: 500; letter-spacing: .12em; line-height: 1.4; text-transform: uppercase; }
+        .lightbox-comment { min-height: 1.45em; margin: .5rem 0 0; color: var(--muted); font-family: var(--serif); font-size: 1.02rem; font-style: italic; line-height: 1.55; }
         .technical-list { display: grid; grid-template-columns: auto 1fr; gap: .65rem 1.1rem; margin: 0; color: var(--muted); font-size: .76rem; line-height: 1.45; }
         .technical-list dt { color: var(--quiet); text-transform: uppercase; letter-spacing: .09em; }
         .technical-list dd { margin: 0; color: rgba(255,255,255,.78); }
@@ -132,7 +134,7 @@
         <section class="page-intro gallery-intro" aria-labelledby="gallery-title">
             <div class="container">
                 <p class="editorial-label"><span class="en">Interests · Photography</span><span class="zh hidden">兴趣 · 摄影</span></p>
-                <h1 class="page-title" id="gallery-title"><span class="en">Moments &amp; Places</span><span class="zh hidden">途中与日常</span></h1>
+                <h1 class="page-title" id="gallery-title"><span class="en">摄影集</span><span class="zh hidden">摄影集</span></h1>
                 <blockquote class="gallery-quote">
                     <p class="en">“A photograph is time held still. When we grow old enough to forget how to remember, it will still remember our youth for us.”</p>
                     <p class="zh hidden">“照片是凝固的时间，等我们老到忘了如何回忆，它依然替我们年轻着”</p>
@@ -182,7 +184,10 @@
         <aside class="lightbox-information" aria-live="polite">
             <p class="lightbox-location" id="lightbox-location"></p>
             <p class="lightbox-date" id="lightbox-date"></p>
-            <p class="lightbox-comment" id="lightbox-comment" hidden></p>
+            <section class="lightbox-comments" aria-labelledby="lightbox-comments-label">
+                <p class="lightbox-comments-label" id="lightbox-comments-label"><span class="en">Comments</span><span class="zh hidden">备注</span></p>
+                <p class="lightbox-comment" id="lightbox-comment"></p>
+            </section>
             <dl class="technical-list" id="technical-list"></dl>
         </aside>
         <button type="button" class="lightbox-button lightbox-next" data-lightbox-direction="1" aria-label="Next photograph">›</button>
@@ -403,7 +408,6 @@
             lightboxLocation.hidden = !location;
             lightboxDate.textContent = fullDateText(photo);
             lightboxComment.textContent = comment;
-            lightboxComment.hidden = !comment;
             technicalList.innerHTML = technicalRows(photo).map(([label, value]) => `<dt>${escapeHTML(label)}</dt><dd>${escapeHTML(value)}</dd>`).join('');
             lightboxCounter.textContent = `${lightboxIndex + 1} / ${visible.length}`;
             renderFilmstrip(visible);

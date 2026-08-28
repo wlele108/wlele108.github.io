@@ -594,6 +594,35 @@ window.PHOTO_METADATA = [
     "rawCaptureTime": "2026:04:16 19:15:33"
   },
   {
+    "file": "IMG_1737.jpeg",
+    "src": "img/interests/photography/IMG_1737.jpeg",
+    "dateTaken": "2026-07-26T12:47:08",
+    "year": 2026,
+    "month": 7,
+    "location": {
+      "en": "Upstate New York",
+      "zh": "纽约州北部"
+    },
+    "locationStatus": "confirmed-region-only",
+    "locationNote": "",
+    "styleTags": [],
+    "styleStatus": "unclassified",
+    "pinnedOrder": null,
+    "aspectRatio": 0.666667,
+    "camera": "Panasonic DC-GX9",
+    "lens": "LEICA DG SUMMILUX 15/F1.7",
+    "focalLength": "15 mm",
+    "aperture": "f/6.3",
+    "shutter": "1/125 s",
+    "iso": "400",
+    "comment": {
+      "en": "",
+      "zh": ""
+    },
+    "exifSource": "DateTimeOriginal",
+    "rawCaptureTime": "2026:07:26 12:47:08"
+  },
+  {
     "file": "IMG_7815.jpeg",
     "src": "img/interests/photography/IMG_7815.jpeg",
     "dateTaken": "2025-11-09T23:55:41",
