@@ -17,7 +17,7 @@
         .gallery-quote footer { display: grid; gap: .25rem; margin-top: 1rem; color: var(--quiet); font-size: .7rem; font-style: normal; letter-spacing: .08em; }
         .gallery-quote cite { color: rgba(255,255,255,.7); font-style: normal; }
         .quote-note { color: var(--quiet); }
-        .gallery-controls { padding: .7rem 0; border-bottom: 1px solid var(--rule); }
+        .gallery-controls { padding: .7rem 0 .65rem; border-bottom: 1px solid var(--rule); }
         .filter-row { display: flex; align-items: center; overflow-x: auto; scrollbar-width: none; }
         .filter-row::-webkit-scrollbar { display: none; }
         .filter-button { position: relative; flex: 0 0 auto; min-height: 2.35rem; padding: .35rem clamp(.75rem,2vw,1.4rem); border: 0; border-right: 1px solid rgba(255,255,255,.16); border-radius: 0; background: transparent; color: rgba(255,255,255,.5); font-size: .66rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; cursor: pointer; }
@@ -27,6 +27,13 @@
         .filter-button.is-active { color: var(--cyan); }
         .filter-button.is-active::after { content: ""; position: absolute; left: clamp(.75rem,2vw,1.4rem); right: clamp(.75rem,2vw,1.4rem); bottom: -.72rem; height: 1px; background: var(--cyan); pointer-events: none; }
         .filter-button:first-child.is-active::after { left: 0; }
+        .capture-filter-row { display: flex; align-items: center; gap: clamp(.85rem,2vw,1.4rem); padding-top: .72rem; }
+        .capture-filter-label { color: var(--quiet); font-size: .58rem; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; }
+        .capture-filter-option { display: inline-flex; align-items: center; gap: .42rem; color: rgba(255,255,255,.58); font-size: .61rem; font-weight: 500; letter-spacing: .11em; text-transform: uppercase; cursor: pointer; }
+        .capture-filter-option:hover { color: var(--off-white); }
+        .capture-filter-option input { appearance: none; width: .78rem; height: .78rem; margin: 0; border: 1px solid rgba(255,255,255,.38); border-radius: 0; background: transparent; cursor: pointer; }
+        .capture-filter-option input:checked { border-color: var(--cyan); background: var(--cyan); box-shadow: inset 0 0 0 2px var(--charcoal); }
+        .capture-filter-option input:focus-visible { outline: 1px solid var(--off-white); outline-offset: 3px; }
         .gallery-meta { display: flex; justify-content: flex-end; padding: .7rem 0 1rem; color: var(--quiet); font-size: .66rem; letter-spacing: .12em; text-transform: uppercase; }
         .gallery-pinned { margin: 0 0 clamp(1.75rem,4vw,3rem); }
         .gallery-pinned-heading { margin: 0 0 .55rem; color: var(--quiet); font-size: .66rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; }
@@ -82,6 +89,7 @@
             .filter-button { padding-inline: .75rem; }
             .filter-button.is-active::after { left: .75rem; right: .75rem; }
             .filter-button:first-child.is-active::after { left: 0; }
+            .capture-filter-row { flex-wrap: wrap; row-gap: .55rem; }
             .gallery-pinned-grid, .gallery-row { gap: 4px; }
             .gallery-chronology { gap: .72rem; }
             .gallery-photo-label { min-height: 1.05rem; margin-bottom: .2rem; font-size: .46rem; letter-spacing: .08em; }
@@ -153,6 +161,17 @@
                 <button type="button" class="filter-button" data-filter="landscape" aria-pressed="false"><span class="en">Landscape</span><span class="zh hidden">横幅</span></button>
                 <button type="button" class="filter-button" data-filter="portrait" aria-pressed="false"><span class="en">Portrait</span><span class="zh hidden">竖幅</span></button>
             </div>
+            <div class="container capture-filter-row" role="group" aria-label="Filter photographs by capture device">
+                <span class="capture-filter-label"><span class="en">Captured with</span><span class="zh hidden">拍摄设备</span></span>
+                <label class="capture-filter-option">
+                    <input type="checkbox" data-capture-filter="camera" checked>
+                    <span class="en">Camera</span><span class="zh hidden">相机</span>
+                </label>
+                <label class="capture-filter-option">
+                    <input type="checkbox" data-capture-filter="phone">
+                    <span class="en">Phone</span><span class="zh hidden">手机</span>
+                </label>
+            </div>
         </section>
 
         <section class="container" aria-label="Photography collection">
@@ -211,6 +230,8 @@
         const mobileMenuButton = document.querySelector('.mobile-menu-button');
         const mobileNavigation = document.getElementById('mobile-navigation');
         const filterButtons = Array.from(document.querySelectorAll('[data-filter]'));
+        const captureFilterInputs = Array.from(document.querySelectorAll('[data-capture-filter]'));
+        const captureFilterRow = document.querySelector('.capture-filter-row');
         const galleryPinned = document.getElementById('gallery-pinned');
         const galleryPinnedGrid = document.getElementById('gallery-pinned-grid');
         const galleryChronology = document.getElementById('gallery-chronology');
@@ -228,6 +249,7 @@
         const lightboxDirectionButtons = Array.from(document.querySelectorAll('[data-lightbox-direction]'));
         let currentLanguage = localStorage.getItem('henry-site-language') === 'zh' ? 'zh' : 'en';
         let activeFilter = 'all';
+        let activeCaptureFilters = new Set(captureFilterInputs.filter(input => input.checked).map(input => input.dataset.captureFilter));
         let lightboxIndex = 0;
         let lastFocusedElement = null;
         const naturalRatioBySource = new Map();
@@ -249,7 +271,11 @@
             return naturalRatioBySource.get(photo.src) || 1;
         };
         const orientationFor = photo => photoRatio(photo) < GALLERY_CONFIG.ORIENTATION_SPLIT ? 'portrait' : 'landscape';
-        const filteredPhotos = () => chronologicalPhotos.filter(photo => activeFilter === 'all' || orientationFor(photo) === activeFilter);
+        const captureTypeFor = photo => /iphone|pixel|galaxy|smartphone/i.test(photo.camera || '') ? 'phone' : 'camera';
+        const filteredPhotos = () => chronologicalPhotos.filter(photo =>
+            (activeFilter === 'all' || orientationFor(photo) === activeFilter) &&
+            activeCaptureFilters.has(captureTypeFor(photo))
+        );
         const photosPerRow = () => activeFilter === 'portrait' ? GALLERY_CONFIG.PORTRAIT_PHOTOS_PER_ROW : GALLERY_CONFIG.PHOTOS_PER_ROW;
         const locationText = photo => photo.location?.[currentLanguage] || (currentLanguage === 'zh' ? '某处' : 'Somewhere');
         const commentText = photo => photo.comment?.[currentLanguage] || '';
@@ -440,6 +466,11 @@
             if (!lightbox.hidden) closeLightbox();
             renderGallery();
         };
+        const applyCaptureFilters = () => {
+            activeCaptureFilters = new Set(captureFilterInputs.filter(input => input.checked).map(input => input.dataset.captureFilter));
+            if (!lightbox.hidden) closeLightbox();
+            renderGallery();
+        };
 
         const setLanguage = language => {
             currentLanguage = language;
@@ -458,6 +489,7 @@
             lightboxCloseButton.setAttribute('aria-label', language === 'zh' ? '关闭照片查看器' : 'Close photograph viewer');
             lightboxDirectionButtons[0].setAttribute('aria-label', language === 'zh' ? '上一张照片' : 'Previous photograph');
             lightboxDirectionButtons[1].setAttribute('aria-label', language === 'zh' ? '下一张照片' : 'Next photograph');
+            captureFilterRow.setAttribute('aria-label', language === 'zh' ? '按拍摄设备筛选照片' : 'Filter photographs by capture device');
             mobileNavigation.classList.remove('is-open');
             mobileMenuButton.setAttribute('aria-expanded', 'false');
             renderGallery();
@@ -474,6 +506,7 @@
             mobileMenuButton.setAttribute('aria-expanded', 'false');
         }));
         filterButtons.forEach(button => button.addEventListener('click', () => applyFilter(button.dataset.filter)));
+        captureFilterInputs.forEach(input => input.addEventListener('change', applyCaptureFilters));
         lightboxCloseButton.addEventListener('click', closeLightbox);
         lightboxDirectionButtons.forEach(button => button.addEventListener('click', () => stepLightbox(Number(button.dataset.lightboxDirection))));
         lightbox.addEventListener('click', event => { if (event.target === lightbox) closeLightbox(); });

@@ -91,7 +91,7 @@ Current behavior:
 
 All homepage slideshow paths use the flat Photography directory. The photographs imported on 2026-08-27 were added after the resting starry frame in newest-to-oldest order; the six photographs from the 2026-08-26 revision remain intentionally excluded. The homepage sequence now contains 37 frames, including `IMG_1737.jpeg`.
 
-## 5. Production Gallery: Balanced Rows, Orientation, and Lightbox Filmstrip
+## 5. Production Gallery: Balanced Rows, Filters, and Lightbox Filmstrip
 
 The Gallery is intentionally a dense, image-first photo album rather than a sparse exhibition page. Its visible bilingual page title is `摄影集`, and the space beneath the hero is shortened so photography begins sooner.
 
@@ -150,7 +150,7 @@ The understated opening selection is rendered by `#gallery-pinned` and `#gallery
 
 To pin or unpin a photograph later, change only its metadata field: use a unique positive integer for its order or `pinnedOrder: null` to return it to chronology. Do not modify `gallery.html`.
 
-### Chronology and orientation filters
+### Chronology, orientation, and capture-device filters
 
 Gallery ordering is controlled by one value:
 
@@ -159,6 +159,8 @@ GALLERY_CONFIG.SORT_DIRECTION = "newest-first"
 ```
 
 The visible filters are `All / Landscape / Portrait` and `全部 / 横幅 / 竖幅`. Orientation is derived automatically: `aspectRatio < ORIENTATION_SPLIT` is portrait and `aspectRatio >= ORIENTATION_SPLIT` is landscape. `styleTags` remain intact in metadata for future use but do not drive the production filter controls.
+
+A second, checkbox-based row filters by capture device. `Camera / 相机` is checked by default and `Phone / 手机` is unchecked, so the initial view shows the 36 dedicated-camera photographs. Camera includes both Nikon bodies as well as the Fujifilm and Panasonic records; the seven iPhone records are classified as Phone from their EXIF `camera` value. The device checkboxes combine with the orientation buttons, and users may select either, both, or neither without changing chronology or lightbox behavior.
 
 Filtering preserves the same newest-to-oldest sequence before it is chunked into rows. The All lightbox sequence contains 43 unique photographs. The overview renders the three pinned photographs once and the other 40 once; the lightbox filmstrip uses the complete filtered unique sequence.
 
@@ -361,6 +363,7 @@ Before deployment, verify:
 - the balanced row shares use actual aspect ratios, the documented power, and the documented 24%–42% bounds without reordering;
 - the dense Gallery uses 6 px/4 px gutters, natural aspect ratios, and a compact date label above every photograph; Portrait remains visibly shorter at four-across;
 - All/Landscape/Portrait filtering derives orientation from aspect ratio while preserving chronology;
+- Camera/Phone checkboxes derive capture type from EXIF camera names, default to Camera only (36), combine with orientation filters, and show all 43 photographs when both are checked;
 - unclassified style records remain available because visible filtering no longer depends on `styleTags`;
 - normal thumbnails contain no permanently visible location, comment, style, or EXIF metadata;
 - fine-pointer hover/focus reveals only the correct location tag, while coarse-pointer/mobile keeps that location hidden and shows only the compact date label;
@@ -422,6 +425,14 @@ Before deployment, verify:
 - Renamed the Gallery hero title to `摄影集`, added a visible empty `Comments / 备注` area to every lightbox view, replaced three supplied image files, and added `IMG_1737.jpeg` from Upstate New York.
 - Kept `img/interests/photography/new/` present and empty for the next batch.
 
+## Revision — 2026-08-27: Capture-device Filter
+
+- Added bilingual `Camera / 相机` and `Phone / 手机` checkboxes directly below the orientation controls.
+- Defaulted the Gallery to dedicated-camera photographs while keeping phone photographs available with one click.
+- Classified the current EXIF-backed collection as 36 camera photographs and seven phone photographs; both Nikon bodies, Fujifilm, and Panasonic remain in Camera.
+- Combined capture-device selection with the existing All/Landscape/Portrait filters, pinned selection, count, overview, and lightbox sequence.
+- Modified only production `gallery.html` and this `README.md` for this revision.
+
 ## Next GitHub Sync — Deployment Handoff
 
 ### Current 2026-08-27 sync delta
@@ -440,6 +451,8 @@ Files moved from `img/interests/photography/new/` to `img/interests/photography/
 - `IMG_0615.jpeg`, `IMG_0618.jpeg`, `IMG_0979.jpeg`, `IMG_1157.jpeg`, `IMG_1269.jpeg`, `IMG_7815.jpeg`, `IMG_7818.jpeg`
 
 Follow-up image delta: replace `IMG_0615.jpeg`, `IMG_1157.jpeg`, and `IMG_1269.jpeg`; add `IMG_1737.jpeg`.
+
+Follow-up capture-filter delta: sync only `gallery.html` and `README.md`; no photo or metadata files changed.
 
 Deployment counts: **43 actual Photography images / 43 metadata records**. The empty `img/interests/photography/new/` staging directory should remain local; Git does not track empty directories unless a placeholder is deliberately added. Verify the separate Git checkout before any eventual sync. Do not publish `.DS_Store` or unrelated/private files.
 
