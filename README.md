@@ -93,7 +93,7 @@ All homepage slideshow paths use the flat Photography directory. The photographs
 
 ## 5. Production Gallery: Balanced Rows, Filters, and Lightbox Filmstrip
 
-The Gallery is intentionally a dense, image-first photo album rather than a sparse exhibition page. Its visible bilingual page title is `摄影集`, and the space beneath the hero is shortened so photography begins sooner.
+The Gallery is intentionally a dense, image-first photo album rather than a sparse exhibition page. Its visible page title is `Photography` in English and `摄影集` in Chinese, and the space beneath the hero is shortened so photography begins sooner.
 
 The visible Gallery quote is user-provided content, not independently authenticated:
 
